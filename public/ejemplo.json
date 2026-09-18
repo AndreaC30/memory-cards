@@ -1,0 +1,10 @@
+{
+  "title": "Capitales",
+  "cards": [
+    { "front": "España", "back": "Madrid", "weight": 2 },
+    { "front": "Francia", "back": "París", "weight": 1 },
+    { "front": "Italia", "back": "Roma", "weight": 1 },
+    { "front": "Portugal", "back": "Lisboa", "weight": 3 },
+    { "front": "Alemania", "back": "Berlín", "weight": 1 }
+  ]
+}
