@@ -1,0 +1,68 @@
+{
+  "generatedAt": "2026-10-20T09:12:43.349Z",
+  "poolSize": 204,
+  "notebookSources": [
+    "https://docs.datadoghq.com/es/getting_started/",
+    "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+    "https://docs.datadoghq.com/es/metrics/",
+    "https://docs.datadoghq.com/es/infrastructure/list/",
+    "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+    "https://docs.datadoghq.com/es/extend/integrations/agent_integration/?tab=integraciónootb",
+    "https://docs.datadoghq.com/es/integrations/docker/",
+    "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+    "https://docs.datadoghq.com/es/containers/docker/?tab=linux",
+    "https://docs.datadoghq.com/es/api/latest/metrics/",
+    "https://docs.datadoghq.com/es/monitors/types/",
+    "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+    "https://ddtrace.readthedocs.io/en/stable/advanced_usage.html"
+  ],
+  "tests20": [
+    {
+      "id": "test-01",
+      "file": "test-01.json",
+      "title": "Test 1 (20)"
+    },
+    {
+      "id": "test-02",
+      "file": "test-02.json",
+      "title": "Test 2 (20)"
+    },
+    {
+      "id": "test-03",
+      "file": "test-03.json",
+      "title": "Test 3 (20)"
+    },
+    {
+      "id": "test-04",
+      "file": "test-04.json",
+      "title": "Test 4 (20)"
+    },
+    {
+      "id": "test-05",
+      "file": "test-05.json",
+      "title": "Test 5 (20)"
+    },
+    {
+      "id": "test-06",
+      "file": "test-06.json",
+      "title": "Test 6 (20)"
+    }
+  ],
+  "simulacros90": [
+    {
+      "id": "simulacro-a",
+      "file": "simulacro-a.json",
+      "title": "Simulacro A — 90 preguntas"
+    },
+    {
+      "id": "simulacro-b",
+      "file": "simulacro-b.json",
+      "title": "Simulacro B — 90 preguntas"
+    },
+    {
+      "id": "simulacro-c",
+      "file": "simulacro-c.json",
+      "title": "Simulacro C — 90 preguntas"
+    }
+  ]
+}

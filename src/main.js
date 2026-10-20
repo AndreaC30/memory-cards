@@ -1,5 +1,15 @@
 import './style.css'
 import {
+  defaultQuizSession,
+  loadManifest,
+  loadPack,
+  loadFullBank,
+  rebuildQueue,
+  renderQuiz,
+  handleQuizAction,
+  quizKeydown,
+} from './quiz.js'
+import {
   loadState,
   saveState,
   sessionWeight,
@@ -12,6 +22,7 @@ import {
   remainingCount,
   uid,
 } from './store.js'
+import { loadHistory, addAttempt, renderHistory, clearHistory } from './history.js'
 
 const SCHEMA_HINT = `{
   "title": "Nombre del mazo",
@@ -21,12 +32,21 @@ const SCHEMA_HINT = `{
 }`
 
 const state = loadState()
+const quiz = defaultQuizSession()
 let tab = 'study'
 let editingId = null
 let notice = ''
 let adminFilter = ''
+let historyList = loadHistory()
 
 const app = document.querySelector('#app')
+
+function saveQuizAttemptIfNeeded() {
+  if (tab !== 'quiz' || !quiz.finished || quiz.attemptSaved) return
+  addAttempt(quiz)
+  quiz.attemptSaved = true
+  historyList = loadHistory()
+}
 
 function persist() {
   saveState(state)
@@ -84,6 +104,15 @@ function bumpWeight(delta) {
 
 function render() {
   ensureCard()
+  saveQuizAttemptIfNeeded()
+  const body =
+    tab === 'study'
+      ? renderStudy()
+      : tab === 'quiz'
+        ? renderQuiz(quiz, escapeHtml)
+        : tab === 'history'
+          ? renderHistory(historyList, escapeHtml)
+          : renderAdmin()
   app.innerHTML = `
     <div class="shell">
       <header class="top">
@@ -92,12 +121,14 @@ function render() {
           <h1>${escapeHtml(state.deckTitle || 'Memory cards')}</h1>
         </div>
         <nav class="tabs" role="tablist">
-          <button type="button" class="${tab === 'study' ? 'is-on' : ''}" data-tab="study">Estudiar</button>
+          <button type="button" class="${tab === 'study' ? 'is-on' : ''}" data-tab="study">Tarjetas</button>
+          <button type="button" class="${tab === 'quiz' ? 'is-on' : ''}" data-tab="quiz">Test</button>
+          <button type="button" class="${tab === 'history' ? 'is-on' : ''}" data-tab="history">Historial</button>
           <button type="button" class="${tab === 'admin' ? 'is-on' : ''}" data-tab="admin">Administrar</button>
         </nav>
       </header>
       ${notice ? `<p class="notice" role="status">${escapeHtml(notice)}</p>` : ''}
-      ${tab === 'study' ? renderStudy() : renderAdmin()}
+      ${body}
     </div>
   `
 }
@@ -274,11 +305,93 @@ function importJson(replace) {
   input.click()
 }
 
+async function ensureQuizManifest() {
+  if (quiz.manifest) return
+  try {
+    quiz.manifest = await loadManifest(import.meta.env.BASE_URL)
+    quiz.packId = quiz.manifest.tests20?.[0]?.id || 'test-01'
+    quiz.packFile = quiz.manifest.tests20?.[0]?.file || 'test-01.json'
+  } catch (err) {
+    quiz.loadError = err instanceof Error ? err.message : 'Error al cargar índice'
+  }
+}
+
+async function loadQuizBank() {
+  try {
+    if (!quiz.manifest) await ensureQuizManifest()
+    const base = import.meta.env.BASE_URL
+    const file = quiz.packFile || 'test-01.json'
+    const data =
+      file === '__full__' ? await loadFullBank(base) : await loadPack(base, file)
+    quiz.bank = data.bank
+    quiz.domains = data.domains
+    quiz.title = data.title
+    quiz.packDescription = data.description || ''
+    quiz.fixedPack = data.fixedPack
+    quiz.passPercent =
+      data.type === 'simulacro90' ? (data.passPercent ?? 64) : (data.passPercent ?? 70)
+    quiz.examType = data.examType ?? data.type ?? null
+    quiz.scoring = data.scoring ?? null
+    quiz.answersLog = []
+    quiz.attemptSaved = false
+    quiz.loaded = true
+    quiz.loadError = ''
+    rebuildQueue(quiz)
+    state.deckTitle = data.title
+    notice = `${data.title}: ${data.bank.length} preguntas.`
+  } catch (err) {
+    quiz.loadError = err instanceof Error ? err.message : 'Error al cargar'
+    quiz.loaded = false
+    notice = quiz.loadError
+  }
+  render()
+}
+
 app.addEventListener('click', (event) => {
+  const historyClear = event.target.closest('[data-history="clear"]')
+  if (historyClear) {
+    if (!confirm('¿Borrar todo el historial de tests?')) return
+    clearHistory()
+    historyList = []
+    render()
+    return
+  }
+
+  const historyRetry = event.target.closest('[data-history-retry]')
+  if (historyRetry) {
+    quiz.packFile = historyRetry.dataset.historyRetry
+    quiz.packId = historyRetry.dataset.historyPackId || quiz.packId
+    tab = 'quiz'
+    notice = ''
+    loadQuizBank()
+    return
+  }
+
+  const quizBtn = event.target.closest('[data-quiz]')
+  if (quizBtn) {
+    const action = quizBtn.dataset.quiz
+    let detail
+    if (action === 'pick') detail = Number(quizBtn.dataset.index)
+    const result = handleQuizAction(quiz, action, detail)
+    if (result?.async) {
+      loadQuizBank()
+      return
+    }
+    render()
+    return
+  }
+
   const tabBtn = event.target.closest('[data-tab]')
   if (tabBtn) {
     tab = tabBtn.dataset.tab
     notice = ''
+    if (tab === 'quiz') {
+      ensureQuizManifest().then(() => render())
+      return
+    }
+    if (tab === 'history') {
+      historyList = loadHistory()
+    }
     render()
     return
   }
@@ -361,6 +474,25 @@ app.addEventListener('click', (event) => {
 })
 
 app.addEventListener('change', (event) => {
+  if (event.target.dataset.quiz === 'pack-select') {
+    const opt = event.target.selectedOptions[0]
+    handleQuizAction(quiz, 'pack-select', {
+      packId: opt.dataset.packId,
+      file: opt.value,
+    })
+    quiz.packFile = opt.value
+    return
+  }
+  if (event.target.dataset.quiz === 'domain') {
+    handleQuizAction(quiz, 'domain', event.target.value)
+    render()
+    return
+  }
+  if (event.target.dataset.quiz === 'mode') {
+    handleQuizAction(quiz, 'mode', event.target.value)
+    render()
+    return
+  }
   if (event.target.dataset.action === 'unique') {
     state.session.unique = event.target.checked
     persist()
@@ -414,6 +546,13 @@ app.addEventListener('submit', (event) => {
 })
 
 window.addEventListener('keydown', (event) => {
+  if (tab === 'quiz') {
+    const tag = event.target.tagName
+    if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') {
+      if (quizKeydown(quiz, event)) render()
+    }
+    return
+  }
   if (tab !== 'study') return
   const tag = event.target.tagName
   if (tag === 'INPUT' || tag === 'TEXTAREA') return
