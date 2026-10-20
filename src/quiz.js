@@ -366,28 +366,25 @@ export async function loadFullBank(baseUrl) {
 
 function packOptions(manifest, selectedId) {
   if (!manifest) return ''
-  const opts = []
-  for (const n of manifest.notebooklm || []) {
-    opts.push(
-      `<option value="${n.file}" data-pack-id="${n.id}" ${selectedId === n.id ? 'selected' : ''}>${n.title}</option>`,
-    )
+  const option = (p, label) =>
+    `<option value="${p.file}" data-pack-id="${p.id}" ${selectedId === p.id ? 'selected' : ''}>${label}</option>`
+  const tests = (manifest.tests20 || []).map((t, i) => option(t, `Test ${i + 1}`)).join('')
+  const sims = (manifest.simulacros90 || []).map((s) => option(s, s.title.replace(/ — 90 preguntas$/, ''))).join('')
+  const full = option({ file: '__full__', id: 'full' }, `Todas las preguntas (${manifest.poolSize || '?'})`)
+  return `
+    <optgroup label="Tests cortos · 20 preguntas">${tests}</optgroup>
+    <optgroup label="Simulacros del examen · 90 preguntas">${sims}</optgroup>
+    <optgroup label="Repaso libre">${full}</optgroup>`
+}
+
+function packSummary(manifest, packId) {
+  if (packId === 'full') {
+    return `Las ${manifest?.poolSize || ''} preguntas barajadas. Durante el repaso puedes filtrar por tema.`
   }
-  if ((manifest.notebooklm || []).length) opts.push('<option disabled>──────────</option>')
-  for (const t of manifest.tests20 || []) {
-    opts.push(
-      `<option value="${t.file}" data-pack-id="${t.id}" ${selectedId === t.id ? 'selected' : ''}>${t.title}</option>`,
-    )
+  if (String(packId).startsWith('simulacro')) {
+    return 'Como el examen real: 90 preguntas, de las que 75 puntúan y 15 son de prueba. Referencia de aprobado: 48 de 75 (64 %).'
   }
-  opts.push('<option disabled>──────────</option>')
-  for (const s of manifest.simulacros90 || []) {
-    opts.push(
-      `<option value="${s.file}" data-pack-id="${s.id}" ${selectedId === s.id ? 'selected' : ''}>${s.title}</option>`,
-    )
-  }
-  opts.push(
-    `<option value="__full__" data-pack-id="full" ${selectedId === 'full' ? 'selected' : ''}>Banco completo (${manifest.poolSize || '?'} preg.)</option>`,
-  )
-  return opts.join('')
+  return '20 preguntas de todos los temas. Apruebas con 14 aciertos (70 %).'
 }
 
 const SIMULACRO_GOAL_MARKERS = [
@@ -457,27 +454,6 @@ function applyCheck(quiz) {
   return { ok }
 }
 
-function optionInlineNote(q, quiz, i, escapeHtml) {
-  if (!quiz.checked) return ''
-  const correct = getCorrectIndices(q)
-  const selected = selectedIndices(quiz)
-  const isCorrect = correct.includes(i)
-  const isSel = selected.includes(i)
-  if (isSel && !isCorrect) {
-    const txt =
-      q.wrongNotes?.[i] ||
-      (q.hint ? `Pista: ${q.hint}` : 'Respuesta incorrecta.')
-    return `<p class="quiz-option-note is-bad">${escapeHtml(txt)}</p>`
-  }
-  if (isCorrect) {
-    const detail = q.hint || q.explanation || q.whyCorrect || ''
-    const short = detail.length > 220 ? `${detail.slice(0, 217)}…` : detail
-    const line = short ? `Respuesta correcta. ${short}` : 'Respuesta correcta.'
-    return `<p class="quiz-option-note is-ok">${escapeHtml(line)}</p>`
-  }
-  return ''
-}
-
 function optionClass(q, quiz, i) {
   const selected = selectedIndices(quiz)
   const correct = getCorrectIndices(q)
@@ -505,24 +481,30 @@ export function renderQuiz(quiz, escapeHtml) {
   }
 
   if (!quiz.loaded && !quiz.loadError) {
+    const flowCard = (value, title, text) => `
+          <label class="quiz-flow-card">
+            <input type="radio" name="quiz-flow" value="${value}" ${quiz.flow === value ? 'checked' : ''} />
+            <span><strong>${title}</strong><span>${text}</span></span>
+          </label>`
     return `
-      <section class="empty quiz-empty">
-        <h2>Practicar</h2>
-        <p>Tests con la misma lógica que un cuestionario de estudio: <strong>una pregunta</strong>, opciones claras, <strong>corrección al elegir</strong> y avance sin estar en un chat. El contenido sale de la <strong>documentación Datadog</strong> (tú generas el JSON desde tu cuaderno cuando quieras).</p>
-        <label class="quiz-pick-pack">Elige examen
+      <section class="empty quiz-empty quiz-start">
+        <h2>¿Qué quieres practicar?</h2>
+        <p class="quiz-start-lead">Preguntas basadas en la documentación oficial de Datadog para preparar la certificación <strong>Datadog Fundamentals</strong>.</p>
+        <label class="quiz-pick-pack"><span class="quiz-step-label">1. Elige un test</span>
           <select data-quiz="pack-select">${packOptions(quiz.manifest, quiz.packId)}</select>
         </label>
-        <label class="quiz-pick-flow">Estilo
-          <select data-quiz="flow">
-            <option value="instant" ${quiz.flow !== 'exam' ? 'selected' : ''}>Estudio (corregir al elegir)</option>
-            <option value="exam" ${quiz.flow === 'exam' ? 'selected' : ''}>Examen (Comprobar y revisar)</option>
-          </select>
-        </label>
-        <div class="row wrap">
-          <button type="button" class="primary" data-quiz="load">Empezar</button>
-          <button type="button" class="ghost" data-quiz="import-json">Importar JSON</button>
-        </div>
-        <p class="help">Para añadir preguntas nuevas: en tu cuaderno (con las URLs de docs Datadog) genera un JSON con <code>titulo</code> y <code>preguntas[]</code> — ver <code>notebook-import.example.json</code>. Importar o copiar a <code>data/notebooklm/</code> y <code>node scripts/build-exam-packs.mjs</code>.</p>
+        <p class="quiz-pack-summary">${escapeHtml(packSummary(quiz.manifest, quiz.packId))}</p>
+        <fieldset class="quiz-flow-choice">
+          <legend class="quiz-step-label">2. ¿Cómo quieres responder?</legend>
+          ${flowCard('instant', 'Modo estudio', 'Al elegir una opción ves al momento si aciertas y la explicación.')}
+          ${flowCard('exam', 'Modo examen', 'Eliges, pulsas «Comprobar» y después ves la explicación.')}
+        </fieldset>
+        <button type="button" class="primary quiz-start-btn" data-quiz="load">Empezar</button>
+        <details class="quiz-advanced">
+          <summary>Practicar con tus propias preguntas</summary>
+          <p>Si tienes un cuestionario en formato JSON (por ejemplo, generado con NotebookLM), cárgalo aquí para hacerlo como un test más.</p>
+          <button type="button" class="ghost" data-quiz="import-json">Cargar archivo JSON</button>
+        </details>
         <input type="file" id="quiz-import-file" accept="application/json,.json" hidden />
       </section>
     `
@@ -625,42 +607,32 @@ export function renderQuiz(quiz, escapeHtml) {
     .map((text, i) => {
       const key = OPTION_KEYS[i] || String(i + 1)
       const role = multi ? 'checkbox' : 'radio'
-      const inline = isInstant ? optionInlineNote(q, quiz, i, escapeHtml) : ''
       return `
       <button type="button" class="${optionClass(q, quiz, i)}"
         data-quiz="pick" data-index="${i}" ${quiz.checked ? 'disabled' : ''} role="${role}" aria-checked="${selected.includes(i)}">
         <span class="quiz-key">${key}</span>
         <span class="quiz-option-body">
           <span class="quiz-option-text">${escapeHtml(text)}</span>
-          ${inline}
         </span>
       </button>`
     })
     .join('')
 
   let feedback = ''
-  if (quiz.checked && !isInstant) {
-    const ok = isAnswerCorrect(q, selected)
+  const answerOk = quiz.checked && isAnswerCorrect(q, selected)
+  if (quiz.checked) {
     const correctLabels = correct.map((i) => OPTION_KEYS[i]).join(', ')
-    const correctTexts =
-      !multi && correct.length === 1 && q.explanation
-        ? q.explanation
-        : correct.map((i) => q.options[i]).filter(Boolean).join(' · ')
     const why = q.whyCorrect || q.explanation || ''
-    const sourceUrl = q.sourceUrl || ''
-    const sourceTitle = q.sourceTitle || 'Documentación Datadog'
-    const sourceLink = sourceUrl
-      ? `<p class="quiz-source-ref"><a href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener noreferrer">Consultar: ${escapeHtml(sourceTitle)}</a></p>`
+    const sourceLink = q.sourceUrl
+      ? `<p class="quiz-source-ref"><a href="${escapeHtml(q.sourceUrl)}" target="_blank" rel="noopener noreferrer">Leer en la documentación oficial: ${escapeHtml(q.sourceTitle || 'Datadog')} ↗</a></p>`
       : ''
     feedback = `
-      <div class="quiz-feedback ${ok ? 'is-ok' : 'is-bad'}">
-        <p class="quiz-verdict"><strong>${ok ? 'Correcto' : 'Incorrecto'}</strong></p>
-        <p class="quiz-correct-line">Respuesta correcta: <strong>${correctLabels}</strong>${multi ? ' (todas las que aplican)' : ''}</p>
-        <p class="quiz-correct-detail">${escapeHtml(correctTexts)}</p>
-        <h3 class="quiz-why-heading">Por qué ${multi ? 'son correctas' : 'es correcta'}</h3>
-        <p class="quiz-why-body">${escapeHtml(why)}</p>
+      <div class="quiz-feedback ${answerOk ? 'is-ok' : 'is-bad'}" aria-live="polite">
+        <p class="quiz-verdict"><strong>${answerOk ? '✓ Correcto' : '✗ Incorrecto'}</strong>${
+          answerOk ? '' : ` · La respuesta correcta es <strong>${correctLabels}</strong>`
+        }</p>
+        ${why ? `<p class="quiz-why-body">${escapeHtml(why)}</p>` : ''}
         ${sourceLink}
-        ${q.explanation && q.whyCorrect && q.explanation !== q.whyCorrect ? `<details class="quiz-more-detail"><summary>Más detalle</summary><p>${escapeHtml(q.explanation)}</p></details>` : ''}
       </div>
     `
   }
@@ -695,7 +667,7 @@ export function renderQuiz(quiz, escapeHtml) {
     : showCheckBtn
       ? `<button type="button" class="primary" data-quiz="check" ${checkDisabled ? 'disabled' : ''}>Comprobar</button>`
       : ''
-  const instantNav = isInstant
+  const instantNav = isInstant && !quiz.checked
     ? `<div class="quiz-nav row">
         <button type="button" class="ghost" data-quiz="prev" ${quiz.index === 0 ? 'disabled' : ''}>← Anterior</button>
         <span class="quiz-step-badge">${quiz.index + 1} / ${quiz.queue.length}</span>
@@ -713,8 +685,15 @@ export function renderQuiz(quiz, escapeHtml) {
       <div class="quiz-actions row">
         ${instantNav}
         ${primaryBtn}
-        ${quiz.checked && isInstant ? '<p class="quiz-continue-hint">Siguiente en ~2 s · o pulsa <strong>Siguiente</strong> / <strong>Enter</strong></p>' : ''}
-        ${quiz.checked && !isInstant ? '<p class="quiz-continue-hint">No hace falta acertar: pulsa <strong>Siguiente</strong> o <strong>Enter</strong> para continuar.</p>' : ''}
+        ${
+          quiz.checked
+            ? `<p class="quiz-continue-hint">${
+                isInstant && answerOk
+                  ? 'Pasa sola a la siguiente en unos segundos, o pulsa <strong>Siguiente</strong>.'
+                  : 'Lee la explicación y pulsa <strong>Siguiente</strong> (o Enter) cuando quieras.'
+              }</p>`
+            : ''
+        }
       </div>`
   const hintsLine = isInstant
     ? quiz.checked
@@ -730,19 +709,19 @@ export function renderQuiz(quiz, escapeHtml) {
 
   const toolbarDaypo = `
       <div class="quiz-toolbar quiz-toolbar-daypo">
-        <button type="button" class="ghost" data-quiz="pick-another">← Tests</button>
-        <span class="quiz-daypo-score">${quiz.correct} aciertos</span>
-        <button type="button" class="ghost quiz-daypo-toggle ${daypo ? 'is-on' : ''}" data-quiz="daypo-toggle" aria-pressed="${daypo}" title="Solo pregunta y opciones">Interfaz limpia</button>
+        <button type="button" class="ghost" data-quiz="pick-another">← Cambiar de test</button>
+        <span class="quiz-daypo-score">${quiz.correct} de ${quiz.answered} acertadas</span>
+        <button type="button" class="ghost quiz-daypo-toggle" data-quiz="daypo-toggle" aria-pressed="${daypo}" title="Mostrar barajar, filtros y progreso detallado">Más opciones</button>
       </div>`
   const toolbarFull = `
       <div class="quiz-toolbar">
         ${extraTools}
         <button type="button" class="ghost" data-quiz="shuffle">Barajar orden</button>
-        <button type="button" class="ghost" data-quiz="pick-another">Cambiar examen</button>
+        <button type="button" class="ghost" data-quiz="pick-another">← Cambiar de test</button>
         <button type="button" class="ghost quiz-focus-toggle ${quiz.focusMode ? 'is-on' : ''}" data-quiz="focus-toggle" aria-pressed="${quiz.focusMode}">
           ${quiz.focusMode ? 'Modo color' : 'Modo enfoque'}
         </button>
-        <button type="button" class="ghost quiz-daypo-toggle ${daypo ? 'is-on' : ''}" data-quiz="daypo-toggle" aria-pressed="${daypo}">Interfaz limpia</button>
+        <button type="button" class="ghost quiz-daypo-toggle" data-quiz="daypo-toggle" aria-pressed="${daypo}" title="Solo la pregunta y las opciones">Vista simple</button>
       </div>`
 
   return `
@@ -764,7 +743,7 @@ export function renderQuiz(quiz, escapeHtml) {
         daypo
           ? `<header class="quiz-daypo-head">
               <p class="quiz-daypo-counter">Pregunta ${quiz.index + 1} de ${quiz.queue.length}</p>
-              <p class="quiz-daypo-test-name">${escapeHtml(quiz.title)}</p>
+              ${q.sourceTitle ? `<p class="quiz-daypo-test-name">${escapeHtml(q.sourceTitle)}</p>` : ''}
             </header>`
           : `<p class="meta quiz-meta-line"><strong>${escapeHtml(quiz.title)}</strong> · Pregunta ${quiz.index + 1} de ${quiz.queue.length} · Aciertos ${quiz.correct} / ${quiz.answered}</p>`
       }
@@ -776,7 +755,7 @@ export function renderQuiz(quiz, escapeHtml) {
       ${quiz.checked ? '' : actionsBlock}
       ${feedback}
       ${quiz.checked ? actionsBlock : ''}
-      ${daypo && isInstant ? '' : `<p class="hints">${hintsLine}</p>`}
+      ${(daypo && isInstant) || quiz.checked ? '' : `<p class="hints">${hintsLine}</p>`}
     </section>
   `
 }
@@ -850,14 +829,13 @@ export function handleQuizAction(quiz, action, detail) {
     }
     if (quiz.flow === 'instant' && !isMultipleQuestion(q)) {
       const r = applyCheck(quiz)
-      if (r) return { scheduleAdvance: true }
+      if (r?.ok) return { scheduleAdvance: true }
     }
     return {}
   }
   if (action === 'check') {
     const r = applyCheck(quiz)
-    if (!r) return {}
-    if (quiz.flow === 'instant') return { scheduleAdvance: true }
+    if (r?.ok && quiz.flow === 'instant') return { scheduleAdvance: true }
     return {}
   }
   if (action === 'next-skip') {

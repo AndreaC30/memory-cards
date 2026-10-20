@@ -12,7 +12,7 @@ export const NOTEBOOKLM_SCHEMA_HINT = {
       opciones: ['A) …', 'B) …', 'C) …', 'D) …'],
       respuesta_correcta: 'B) …',
       explicacion: 'Por qué es correcta',
-      pista: 'Opcional — si falta, se usa fuente_tema',
+      pista: 'Opcional',
     },
   ],
 }
@@ -70,7 +70,7 @@ export function notebookLmQuestionToApp(q, i, { idPrefix = 'nb' } = {}) {
     ...(multiple ? { correctIndices } : {}),
     explanation: q.explicacion || q.explanation || '',
     whyCorrect: q.explicacion || q.explanation || '',
-    hint: q.pista || q.hint || (tema ? `Tema: ${tema}` : ''),
+    hint: q.pista || q.hint || '',
     sourceTitle: tema || 'Documentación Datadog',
     sourceUrl: q.url_fuente || q.sourceUrl || '',
     sourceTag: 'study-pack',

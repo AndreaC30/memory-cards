@@ -37,7 +37,7 @@ const SCHEMA_HINT = `{
 
 const state = loadState()
 const quiz = defaultQuizSession()
-let tab = 'study'
+let tab = 'quiz'
 let editingId = null
 let notice = ''
 let adminFilter = ''
@@ -153,17 +153,18 @@ function render() {
         : tab === 'history'
           ? renderHistory(historyList, escapeHtml)
           : renderAdmin()
+  const isDeckTab = tab === 'study' || tab === 'admin'
   app.innerHTML = `
     <div class="shell">
       <header class="top">
         <div>
-          <p class="kicker">Aprendizaje rápido</p>
-          <h1>${escapeHtml(state.deckTitle || 'Memory cards')}</h1>
+          <p class="kicker">${isDeckTab ? 'Tarjetas de memoria' : 'Práctica de certificación'}</p>
+          <h1>${escapeHtml(isDeckTab ? state.deckTitle || 'Memory cards' : 'Datadog Fundamentals')}</h1>
         </div>
         <nav class="tabs" role="tablist">
+          <button type="button" class="${tab === 'quiz' ? 'is-on' : ''}" data-tab="quiz">Tests</button>
+          <button type="button" class="${tab === 'history' ? 'is-on' : ''}" data-tab="history">Mis resultados</button>
           <button type="button" class="${tab === 'study' ? 'is-on' : ''}" data-tab="study">Tarjetas</button>
-          <button type="button" class="${tab === 'quiz' ? 'is-on' : ''}" data-tab="quiz">Test</button>
-          <button type="button" class="${tab === 'history' ? 'is-on' : ''}" data-tab="history">Historial</button>
           <button type="button" class="${tab === 'admin' ? 'is-on' : ''}" data-tab="admin">Administrar</button>
         </nav>
       </header>
@@ -379,8 +380,7 @@ async function loadQuizBank() {
     quiz.importedPack = false
     quiz.flow = loadFlowStyle()
     rebuildQueue(quiz)
-    state.deckTitle = data.title
-    notice = `${data.title}: ${data.bank.length} preguntas.`
+    notice = ''
   } catch (err) {
     quiz.loadError = err instanceof Error ? err.message : 'Error al cargar'
     quiz.loaded = false
@@ -527,6 +527,7 @@ app.addEventListener('change', (event) => {
       file: opt.value,
     })
     quiz.packFile = opt.value
+    render()
     return
   }
   if (event.target.dataset.quiz === 'domain') {
@@ -539,7 +540,7 @@ app.addEventListener('change', (event) => {
     render()
     return
   }
-  if (event.target.dataset.quiz === 'flow') {
+  if (event.target.name === 'quiz-flow') {
     handleQuizAction(quiz, 'flow', event.target.value)
     return
   }
@@ -635,7 +636,9 @@ window.addEventListener('keydown', (event) => {
       const wasChecked = quiz.checked
       if (quizKeydown(quiz, event)) {
         const schedule =
-          quiz.flow === 'instant' && !wasChecked && quiz.checked ? { scheduleAdvance: true } : {}
+          quiz.flow === 'instant' && !wasChecked && quiz.checked && quiz.answersLog.at(-1)?.ok
+            ? { scheduleAdvance: true }
+            : {}
         finishQuizInteraction('keydown', schedule)
       }
     }
@@ -660,3 +663,4 @@ window.addEventListener('keydown', (event) => {
 })
 
 render()
+ensureQuizManifest().then(() => render())
