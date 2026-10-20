@@ -145,10 +145,6 @@ export function saveFlowStyle(flow) {
   }
 }
 
-export function defaultFlowForPack(examType) {
-  return examType === 'simulacro90' ? 'exam' : loadFlowStyle()
-}
-
 export function clearAutoAdvance(quiz) {
   if (quiz._autoAdvanceTimer) {
     clearTimeout(quiz._autoAdvanceTimer)

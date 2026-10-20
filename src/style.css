@@ -686,11 +686,6 @@ textarea {
   color: var(--muted);
 }
 
-.quiz-pick-flow {
-  display: block;
-  margin: 0.75rem 0;
-}
-
 .quiz-option-text {
   flex: 1;
   min-width: 0;
@@ -1172,14 +1167,16 @@ textarea {
   margin-top: 1rem;
 }
 
-.quiz-pick-pack {
+.quiz-pick-pack,
+.quiz-pick-flow {
   display: grid;
   gap: 0.35rem;
   margin: 1rem 0;
   max-width: 22rem;
 }
 
-.quiz-pick-pack select {
+.quiz-pick-pack select,
+.quiz-pick-flow select {
   border: 1px solid var(--line);
   border-radius: 10px;
   padding: 0.55rem 0.65rem;

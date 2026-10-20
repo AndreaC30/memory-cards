@@ -11,7 +11,7 @@ import {
   parseImportedPack,
   scheduleAutoAdvance,
   clearAutoAdvance,
-  defaultFlowForPack,
+  loadFlowStyle,
 } from './quiz.js'
 import {
   loadState,
@@ -377,7 +377,7 @@ async function loadQuizBank() {
     quiz.loaded = true
     quiz.loadError = ''
     quiz.importedPack = false
-    quiz.flow = quiz.examType === 'simulacro90' ? 'exam' : defaultFlowForPack(quiz.examType)
+    quiz.flow = loadFlowStyle()
     rebuildQueue(quiz)
     state.deckTitle = data.title
     notice = `${data.title}: ${data.bank.length} preguntas.`
