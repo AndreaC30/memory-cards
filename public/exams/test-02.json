@@ -2,9 +2,9 @@
   "id": "test-02",
   "title": "Test 2 — 20 preguntas",
   "type": "test20",
-  "description": "Incluye preguntas NotebookLM (repartidas entre tests) y ~2 de respuesta múltiple. Aprobado: ≥70%.",
+  "description": "Mezcla preguntas de tu JSON de estudio (docs Datadog) con material extra. Aprobado práctica: ≥70%.",
   "passPercent": 70,
-  "count": 5,
+  "count": 4,
   "domains": {
     "essential": "Conceptos esenciales",
     "infra": "Infraestructura y Agent",
@@ -15,28 +15,23 @@
   },
   "questions": [
     {
-      "id": "c8b-multi",
-      "answerType": "multiple",
+      "id": "nb-14",
       "domain": "collection",
       "domainLabel": "Recolección de datos",
-      "question": "Marca todas las opciones correctas: ¿Cómo se agrega una timeseries en Datadog",
+      "question": "¿Qué método HTTP y endpoint de la API REST se utiliza para enviar métricas de series temporales directamente a Datadog sin usar el Agent?",
       "options": [
-        "sum · suma (peticiones, bytes)",
-        "Native (las pone el cloud): region, az, instance-type — filtra “solo eu-west-1”.",
-        "Shell: datadog-agent status, curl a la API, scripts de install. Si el YAML está mal indentado, el Agent no arranca o ignora el check.",
-        "avg · media (CPU típico)",
-        "hostname · el tag host canónico"
+        "GET /api/v1/metrics",
+        "POST /api/v1/series",
+        "PUT /api/v2/metrics/upload",
+        "POST /api/v1/ingest/metrics"
       ],
-      "correctIndices": [
-        0,
-        3
-      ],
-      "correctIndex": 0,
-      "explanation": "Una timeseries son muchos puntos. Datadog los resume: - avg · media (CPU típico) - sum · suma (peticiones, bytes) - min / max · extremos - count · cuántos puntos (no el valor) Rollup: en un rango largo compacta (p. ej. 1 punto/hora) para ver tendencia. En la query: avg:system.cpu.user{*}.rollup(max, 60). El avg: del principio es el space aggregation (entre series); el rollup es en el tiempo.",
-      "whyCorrect": "Son varias respuestas válidas. Según Métricas, la respuesta correcta («avg · media (CPU típico) · sum · suma (peticiones, bytes)») encaja con la documentación porque: Una timeseries son muchos puntos. Datadog los resume: - avg · media (CPU típico) - sum · suma (peticiones, bytes) - min / max · extremos - count · cuántos puntos (no el valor) Rollup: en un rango largo compacta (p. ej. 1 punto/hora) para ver tendencia. En la query: avg:system.cpu.user{*}.rollup(max, 60). El avg: del principio es el space aggregation (entre series); el rollup es en el tiempo.",
-      "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
-      "sourceTitle": "Métricas",
-      "sourceTag": "emberize"
+      "correctIndex": 1,
+      "explanation": "El endpoint 'POST /api/v1/series' acepta un objeto JSON con puntos de datos de series temporales para ingestar métricas directamente en Datadog.",
+      "whyCorrect": "El endpoint 'POST /api/v1/series' acepta un objeto JSON con puntos de datos de series temporales para ingestar métricas directamente en Datadog.",
+      "hint": "Tema: API de Métricas",
+      "sourceTitle": "API de Métricas",
+      "sourceTag": "study-pack",
+      "answerType": "single"
     },
     {
       "id": "nb-2",
@@ -54,7 +49,7 @@
       "whyCorrect": "El Agent Manager GUI se ejecuta por defecto en el puerto local 5002.",
       "hint": "Tema: Datadog Agent - GUI",
       "sourceTitle": "Datadog Agent - GUI",
-      "sourceTag": "notebooklm",
+      "sourceTag": "study-pack",
       "answerType": "single"
     },
     {
@@ -73,7 +68,7 @@
       "whyCorrect": "Los métodos básicos de agregación en la sintaxis de consultas de gráficos de Datadog son 'avg' (promedio), 'sum' (suma), 'min' (mínimo) y 'max' (máximo).",
       "hint": "Tema: Consulta al Gráfico - Agregadores",
       "sourceTitle": "Consulta al Gráfico - Agregadores",
-      "sourceTag": "notebooklm",
+      "sourceTag": "study-pack",
       "answerType": "single"
     },
     {
@@ -92,26 +87,7 @@
       "whyCorrect": "Outlier Detection utiliza algoritmos para identificar elementos de un grupo cuyo comportamiento se desvía estadísticamente del promedio de sus pares.",
       "hint": "Tema: Tipos de Monitores - Outlier",
       "sourceTitle": "Tipos de Monitores - Outlier",
-      "sourceTag": "notebooklm",
-      "answerType": "single"
-    },
-    {
-      "id": "nb-14",
-      "domain": "collection",
-      "domainLabel": "Recolección de datos",
-      "question": "¿Qué método HTTP y endpoint de la API REST se utiliza para enviar métricas de series temporales directamente a Datadog sin usar el Agent?",
-      "options": [
-        "GET /api/v1/metrics",
-        "POST /api/v1/series",
-        "PUT /api/v2/metrics/upload",
-        "POST /api/v1/ingest/metrics"
-      ],
-      "correctIndex": 1,
-      "explanation": "El endpoint 'POST /api/v1/series' acepta un objeto JSON con puntos de datos de series temporales para ingestar métricas directamente en Datadog.",
-      "whyCorrect": "El endpoint 'POST /api/v1/series' acepta un objeto JSON con puntos de datos de series temporales para ingestar métricas directamente en Datadog.",
-      "hint": "Tema: API de Métricas",
-      "sourceTitle": "API de Métricas",
-      "sourceTag": "notebooklm",
+      "sourceTag": "study-pack",
       "answerType": "single"
     }
   ]

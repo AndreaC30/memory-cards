@@ -276,7 +276,7 @@ async function main() {
   const notebookQs = loadNotebookLmQuestions()
   const generated = filterUsableQuestions(buildPool(emberize))
   console.log(
-    `  Emberize usable: ${generated.length} (NotebookLM: ${notebookQs.length} — prioridad en tests)`,
+    `  Tarjetas emberize legibles: ${generated.length} · Preguntas de estudio (JSON): ${notebookQs.length}`,
   )
   const nbKeys = new Set(notebookQs.map((q) => q.question.toLowerCase().slice(0, 90)))
   const pool = [
@@ -285,7 +285,7 @@ async function main() {
   ]
   const multiN = pool.filter(isMulti).length
   console.log(
-    `Banco total: ${pool.length} preguntas (${notebookQs.length} NotebookLM, ${multiN} múltiple)`,
+    `Banco total: ${pool.length} preguntas (${notebookQs.length} de tu JSON de estudio, ${multiN} múltiple)`,
   )
 
   const outDir = join(root, "public", "exams")
@@ -310,7 +310,7 @@ async function main() {
         id: "notebooklm-datadog",
         title: JSON.parse(readFileSync(NOTEBOOK_DATA, "utf8")).titulo || "NotebookLM — Datadog",
         type: "test20",
-        description: "Las 20 preguntas del cuaderno NotebookLM (mismo JSON que alimenta los tests).",
+        description: "20 preguntas de estudio basadas en la documentación Datadog (tu JSON de cuaderno).",
         passPercent: 70,
       },
       notebookQs,
@@ -318,7 +318,7 @@ async function main() {
     manifest.notebooklm.push({
       id: "notebooklm-datadog",
       file: "notebooklm-datadog-20.json",
-      title: "NotebookLM — Datadog (20)",
+      title: "Estudio Datadog (20)",
     })
   }
 
@@ -331,7 +331,7 @@ async function main() {
       title: `Test ${i} — 20 preguntas`,
       type: "test20",
       description:
-        "Incluye preguntas NotebookLM (repartidas entre tests) y ~2 de respuesta múltiple. Aprobado: ≥70%.",
+        "Mezcla preguntas de tu JSON de estudio (docs Datadog) con material extra. Aprobado práctica: ≥70%.",
       passPercent: 70,
     }, questions)
     manifest.tests20.push({ id: `test-${String(i).padStart(2, "0")}`, file, title: `Test ${i} (20)` })

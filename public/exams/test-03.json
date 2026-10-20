@@ -2,9 +2,9 @@
   "id": "test-03",
   "title": "Test 3 — 20 preguntas",
   "type": "test20",
-  "description": "Incluye preguntas NotebookLM (repartidas entre tests) y ~2 de respuesta múltiple. Aprobado: ≥70%.",
+  "description": "Mezcla preguntas de tu JSON de estudio (docs Datadog) con material extra. Aprobado práctica: ≥70%.",
   "passPercent": 70,
-  "count": 4,
+  "count": 3,
   "domains": {
     "essential": "Conceptos esenciales",
     "infra": "Infraestructura y Agent",
@@ -14,25 +14,6 @@
     "viz": "Visualización y uso"
   },
   "questions": [
-    {
-      "id": "nb-9",
-      "domain": "troubleshoot",
-      "domainLabel": "Troubleshooting",
-      "question": "¿Qué tipo de monitor analiza la tendencia de una métrica y alerta si calcula que cruzará un umbral en el futuro?",
-      "options": [
-        "Anomaly Monitor",
-        "Forecast Monitor",
-        "Composite Monitor",
-        "Audit Monitor"
-      ],
-      "correctIndex": 1,
-      "explanation": "El Forecast Monitor ajusta modelos predictivos para determinar si una métrica sobrepasará un límite predefinido dentro de un horizonte temporal futuro.",
-      "whyCorrect": "El Forecast Monitor ajusta modelos predictivos para determinar si una métrica sobrepasará un límite predefinido dentro de un horizonte temporal futuro.",
-      "hint": "Tema: Tipos de Monitores - Forecast",
-      "sourceTitle": "Tipos de Monitores - Forecast",
-      "sourceTag": "notebooklm",
-      "answerType": "single"
-    },
     {
       "id": "nb-3",
       "domain": "infra",
@@ -49,32 +30,8 @@
       "whyCorrect": "Montar el socket de Docker (/var/run/docker.sock) en modo lectura permite al Agente comunicarse con la API de Docker Daemon.",
       "hint": "Tema: Agente de Docker - Volúmenes",
       "sourceTitle": "Agente de Docker - Volúmenes",
-      "sourceTag": "notebooklm",
+      "sourceTag": "study-pack",
       "answerType": "single"
-    },
-    {
-      "id": "doc-metrics-2-multi",
-      "answerType": "multiple",
-      "domain": "collection",
-      "domainLabel": "Recolección de datos",
-      "question": "Marca todas las opciones correctas: En Métricas: «Lectura adicional» — ¿cuál afirmación es correcta",
-      "options": [
-        "Calcula percentiles globales en todo tu conjunto de datos. Métricas sin Límites™",
-        "Forwarder: hace el POST HTTPS a Datadog. Si este falla, el Collector corre pero la UI está vacía.",
-        "Filtra tus datos para reducir el alcance de las métricas devueltas. Métricas de Distribución",
-        "Terraform datadog_monitor, datadog_dashboard: IaC. El provider usa las keys del env DD_API_KEY / DD_APP_KEY.",
-        "Únete a una sesión interactiva para desbloquear el potencial completo de las métricas. Introducción a"
-      ],
-      "correctIndices": [
-        2,
-        4
-      ],
-      "correctIndex": 2,
-      "explanation": "Para continuar con métricas, consulte: Filtrado Avanzado - Filtra tus datos para reducir el alcance de las métricas devueltas. Métricas de Distribución - Calcula percentiles globales en todo tu conjunto de datos. Métricas sin Límites™ - Aprende cómo controlar los volúmenes de métricas personalizadas con configuraciones de etiquetas utilizando Métricas sin Límites™. Habilitación de Fundamentos - Únete a una sesión interactiva para desbloquear el potencial completo de las métricas. Introducción a",
-      "whyCorrect": "Son varias respuestas válidas. Según Métricas, la respuesta correcta («Únete a una sesión interactiva para desbloquear el potencial completo de las métricas. Introducción a · Filtra tus datos para reducir el alcance de las métricas devueltas. Métricas de Distribución») encaja con la documentación porque: Para continuar con métricas, consulte: Filtrado Avanzado - Filtra tus datos para reducir el alcance de las métricas devueltas. Métricas de Distribución - Calcula percentiles globales en todo tu conjunto de datos. Métricas sin Límites™ - Aprende cómo controlar los volúmenes de métricas personalizadas con configuraciones de etiquetas utilizando Métricas sin Límites™. Habilitación de Fundamentos - Únete a una sesión interactiva para desbloquear el potencial completo de las métricas. Introducción a",
-      "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
-      "sourceTitle": "Métricas",
-      "sourceTag": "emberize"
     },
     {
       "id": "nb-15",
@@ -92,7 +49,26 @@
       "whyCorrect": "Las métricas de tipo 'Count' o 'Rate' rastrean la frecuencia o total de ocurrencias de un evento en un intervalo de tiempo dado.",
       "hint": "Tema: Métricas - Tipos de datos",
       "sourceTitle": "Métricas - Tipos de datos",
-      "sourceTag": "notebooklm",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "nb-9",
+      "domain": "troubleshoot",
+      "domainLabel": "Troubleshooting",
+      "question": "¿Qué tipo de monitor analiza la tendencia de una métrica y alerta si calcula que cruzará un umbral en el futuro?",
+      "options": [
+        "Anomaly Monitor",
+        "Forecast Monitor",
+        "Composite Monitor",
+        "Audit Monitor"
+      ],
+      "correctIndex": 1,
+      "explanation": "El Forecast Monitor ajusta modelos predictivos para determinar si una métrica sobrepasará un límite predefinido dentro de un horizonte temporal futuro.",
+      "whyCorrect": "El Forecast Monitor ajusta modelos predictivos para determinar si una métrica sobrepasará un límite predefinido dentro de un horizonte temporal futuro.",
+      "hint": "Tema: Tipos de Monitores - Forecast",
+      "sourceTitle": "Tipos de Monitores - Forecast",
+      "sourceTag": "study-pack",
       "answerType": "single"
     }
   ]

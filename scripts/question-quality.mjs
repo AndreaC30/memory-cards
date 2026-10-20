@@ -23,7 +23,7 @@ export function isUsableMcqQuestion(q) {
   if (stem.length < 12 || stem.length > 320) return false
   if (BANNED_QUESTION.some((re) => re.test(stem))) return false
   if (!q.options.every((o) => isReadableOption(o))) return false
-  if (q.sourceTag === "notebooklm") return true
+  if (q.sourceTag === "study-pack" || q.sourceTag === "notebooklm") return true
   const correct = q.correctIndex ?? 0
   if (!q.options[correct]) return false
   return true

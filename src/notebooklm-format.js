@@ -1,4 +1,4 @@
-/** Formato NotebookLM (español) ↔ preguntas de la app. Sin dependencias del DOM. */
+/** JSON de cuestionario de estudio (exportado desde cuaderno / NotebookLM). Sin dependencias del DOM. */
 
 export const NOTEBOOKLM_SCHEMA_HINT = {
   titulo: 'Título del cuestionario',
@@ -66,8 +66,8 @@ export function notebookLmQuestionToApp(q, i, { idPrefix = 'nb' } = {}) {
     explanation: q.explicacion || q.explanation || '',
     whyCorrect: q.explicacion || q.explanation || '',
     hint: q.pista || q.hint || (tema ? `Tema: ${tema}` : ''),
-    sourceTitle: tema || 'NotebookLM',
-    sourceTag: 'notebooklm',
+    sourceTitle: tema || 'Documentación Datadog',
+    sourceTag: 'study-pack',
     answerType: 'single',
   }
 }

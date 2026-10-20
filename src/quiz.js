@@ -13,7 +13,7 @@ const FOCUS_KEY = 'memory-cards-quiz-focus'
 const FLOW_KEY = 'memory-cards-quiz-flow'
 const DAYPO_KEY = 'memory-cards-quiz-daypo'
 
-/** Interfaz simple tipo Daypo: pregunta clara, opciones grandes, poco ruido. */
+/** Interfaz de práctica: una pregunta, opciones legibles, poco ruido (estilo test clásico). */
 export function loadDaypoMode() {
   try {
     return localStorage.getItem(DAYPO_KEY) !== '0'
@@ -511,22 +511,22 @@ export function renderQuiz(quiz, escapeHtml) {
   if (!quiz.loaded && !quiz.loadError) {
     return `
       <section class="empty quiz-empty">
-        <h2>Practicar — estilo Daypo</h2>
-        <p>Preguntas claras (prioridad <strong>NotebookLM</strong>), corrección al instante y sin depender del chat. Tests de <strong>20</strong> y simulacros de <strong>90</strong> para el examen.</p>
+        <h2>Practicar</h2>
+        <p>Tests con la misma lógica que un cuestionario de estudio: <strong>una pregunta</strong>, opciones claras, <strong>corrección al elegir</strong> y avance sin estar en un chat. El contenido sale de la <strong>documentación Datadog</strong> (tú generas el JSON desde tu cuaderno cuando quieras).</p>
         <label class="quiz-pick-pack">Elige examen
           <select data-quiz="pack-select">${packOptions(quiz.manifest, quiz.packId)}</select>
         </label>
         <label class="quiz-pick-flow">Estilo
           <select data-quiz="flow">
-            <option value="instant" ${quiz.flow !== 'exam' ? 'selected' : ''}>Práctica rápida (revelar al elegir)</option>
-            <option value="exam" ${quiz.flow === 'exam' ? 'selected' : ''}>Modo examen (Comprobar)</option>
+            <option value="instant" ${quiz.flow !== 'exam' ? 'selected' : ''}>Estudio (corregir al elegir)</option>
+            <option value="exam" ${quiz.flow === 'exam' ? 'selected' : ''}>Examen (Comprobar y revisar)</option>
           </select>
         </label>
         <div class="row wrap">
           <button type="button" class="primary" data-quiz="load">Empezar</button>
           <button type="button" class="ghost" data-quiz="import-json">Importar JSON</button>
         </div>
-        <p class="help">NotebookLM: JSON con <code>titulo</code> y <code>preguntas[]</code> (ver <code>notebook-import.example.json</code>). Al importar, sustituye <code>data/notebooklm/preguntas_datadog.json</code> y regenera con <code>node scripts/build-exam-packs.mjs</code>.</p>
+        <p class="help">Para añadir preguntas nuevas: en tu cuaderno (con las URLs de docs Datadog) genera un JSON con <code>titulo</code> y <code>preguntas[]</code> — ver <code>notebook-import.example.json</code>. Importar o copiar a <code>data/notebooklm/preguntas_datadog.json</code> y <code>node scripts/build-exam-packs.mjs</code>.</p>
         <input type="file" id="quiz-import-file" accept="application/json,.json" hidden />
       </section>
     `
@@ -736,7 +736,7 @@ export function renderQuiz(quiz, escapeHtml) {
       <div class="quiz-toolbar quiz-toolbar-daypo">
         <button type="button" class="ghost" data-quiz="pick-another">← Tests</button>
         <span class="quiz-daypo-score">${quiz.correct} aciertos</span>
-        <button type="button" class="ghost quiz-daypo-toggle ${daypo ? 'is-on' : ''}" data-quiz="daypo-toggle" aria-pressed="${daypo}" title="Vista simple tipo Daypo">Vista simple</button>
+        <button type="button" class="ghost quiz-daypo-toggle ${daypo ? 'is-on' : ''}" data-quiz="daypo-toggle" aria-pressed="${daypo}" title="Solo pregunta y opciones">Interfaz limpia</button>
       </div>`
   const toolbarFull = `
       <div class="quiz-toolbar">
@@ -746,7 +746,7 @@ export function renderQuiz(quiz, escapeHtml) {
         <button type="button" class="ghost quiz-focus-toggle ${quiz.focusMode ? 'is-on' : ''}" data-quiz="focus-toggle" aria-pressed="${quiz.focusMode}">
           ${quiz.focusMode ? 'Modo color' : 'Modo enfoque'}
         </button>
-        <button type="button" class="ghost quiz-daypo-toggle ${daypo ? 'is-on' : ''}" data-quiz="daypo-toggle" aria-pressed="${daypo}">Vista simple</button>
+        <button type="button" class="ghost quiz-daypo-toggle ${daypo ? 'is-on' : ''}" data-quiz="daypo-toggle" aria-pressed="${daypo}">Interfaz limpia</button>
       </div>`
 
   return `

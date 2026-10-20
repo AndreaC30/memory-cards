@@ -2,9 +2,9 @@
   "id": "test-01",
   "title": "Test 1 — 20 preguntas",
   "type": "test20",
-  "description": "Incluye preguntas NotebookLM (repartidas entre tests) y ~2 de respuesta múltiple. Aprobado: ≥70%.",
+  "description": "Mezcla preguntas de tu JSON de estudio (docs Datadog) con material extra. Aprobado práctica: ≥70%.",
   "passPercent": 70,
-  "count": 5,
+  "count": 4,
   "domains": {
     "essential": "Conceptos esenciales",
     "infra": "Infraestructura y Agent",
@@ -14,6 +14,25 @@
     "viz": "Visualización y uso"
   },
   "questions": [
+    {
+      "id": "nb-13",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿En qué lenguaje de programación se desarrollan las comprobaciones personalizadas (Custom Agent Checks) del Datadog Agent?",
+      "options": [
+        "Go",
+        "Python",
+        "JavaScript / Node.js",
+        "C++"
+      ],
+      "correctIndex": 1,
+      "explanation": "Las verificaciones personalizadas (Agent Checks) que se integran directamente con la arquitectura del Agente se escriben en Python.",
+      "whyCorrect": "Las verificaciones personalizadas (Agent Checks) que se integran directamente con la arquitectura del Agente se escriben en Python.",
+      "hint": "Tema: Integraciones basadas en Agent",
+      "sourceTitle": "Integraciones basadas en Agent",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
     {
       "id": "nb-19",
       "domain": "troubleshoot",
@@ -30,7 +49,7 @@
       "whyCorrect": "Los 'Downtimes' permiten silenciar notificaciones automáticas en horarios específicos sin necesidad de pausar o modificar la lógica de los monitores.",
       "hint": "Tema: Gestión de Mantenimiento - Downtimes",
       "sourceTitle": "Gestión de Mantenimiento - Downtimes",
-      "sourceTag": "notebooklm",
+      "sourceTag": "study-pack",
       "answerType": "single"
     },
     {
@@ -49,52 +68,8 @@
       "whyCorrect": "En las versiones v6 y v7 del Datadog Agent en instalaciones de host, la configuración principal se gestiona en el archivo 'datadog.yaml'.",
       "hint": "Tema: Datadog Agent - Basado en Host",
       "sourceTitle": "Datadog Agent - Basado en Host",
-      "sourceTag": "notebooklm",
+      "sourceTag": "study-pack",
       "answerType": "single"
-    },
-    {
-      "id": "nb-13",
-      "domain": "infra",
-      "domainLabel": "Infraestructura y Agent",
-      "question": "¿En qué lenguaje de programación se desarrollan las comprobaciones personalizadas (Custom Agent Checks) del Datadog Agent?",
-      "options": [
-        "Go",
-        "Python",
-        "JavaScript / Node.js",
-        "C++"
-      ],
-      "correctIndex": 1,
-      "explanation": "Las verificaciones personalizadas (Agent Checks) que se integran directamente con la arquitectura del Agente se escriben en Python.",
-      "whyCorrect": "Las verificaciones personalizadas (Agent Checks) que se integran directamente con la arquitectura del Agente se escriben en Python.",
-      "hint": "Tema: Integraciones basadas en Agent",
-      "sourceTitle": "Integraciones basadas en Agent",
-      "sourceTag": "notebooklm",
-      "answerType": "single"
-    },
-    {
-      "id": "c5b-multi",
-      "answerType": "multiple",
-      "domain": "infra",
-      "domainLabel": "Infraestructura y Agent",
-      "question": "Marca todas las opciones correctas: ¿Con qué clientes consumes la API de Datadog",
-      "options": [
-        "Bits: chat que consulta esos datos. Si no hay Agent/crawler/librería enviando, estas pantallas están vacías.",
-        "Hostname: el tag host. Agrupa todo lo de esa máquina. datadog-agent hostname.",
-        "Terraform datadog_monitor, datadog_dashboard: IaC. El provider usa las keys del env DD_API_KEY / DD_APP_KEY.",
-        "Dogshell: CLI dog. Ejemplo: dog metric post my.metric 1 --tags env:lab.",
-        "curl / httpie: un GET/POST puntual. Headers DD-API-KEY y DD-APPLICATION-KEY."
-      ],
-      "correctIndices": [
-        2,
-        3,
-        4
-      ],
-      "correctIndex": 2,
-      "explanation": "Todos pegan a api.<DD_SITE> con las dos keys. - curl / httpie: un GET/POST puntual. Headers DD-API-KEY y DD-APPLICATION-KEY. - Postman: importas la colección oficial de Datadog y rellenas las keys. - Librerías (Python, Go…): el mismo API en código de CI. - Dogshell: CLI dog. Ejemplo: dog metric post my.metric 1 --tags env:lab. - Terraform datadog_monitor, datadog_dashboard: IaC. El provider usa las keys del env DD_API_KEY / DD_APP_KEY.",
-      "whyCorrect": "Son varias respuestas válidas. Según Datadog Agent (host), la respuesta correcta («curl / httpie: un GET/POST puntual. Headers DD-API-KEY y DD-APPLICATION-KEY. · Terraform datadog_monitor, datadog_dashboard: IaC. El provider usa las keys del env DD_API_KEY / DD_APP_KEY. · Dogshell: CLI dog. Ejemplo: do») encaja con la documentación porque: Todos pegan a api.<DD_SITE> con las dos keys. - curl / httpie: un GET/POST puntual. Headers DD-API-KEY y DD-APPLICATION-KEY. - Postman: importas la colección oficial de Datadog y rellenas las keys. - Librerías (Python, Go…): el mismo API en código de CI. - Dogshell: CLI dog. Ejemplo: dog metric post my.metric 1 --tags env:lab. - Terraform datadog_monitor, datadog_dashboard: IaC. El provider usa las keys del env DD_API_KEY / DD_APP_KEY.",
-      "sourceUrl": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
-      "sourceTitle": "Datadog Agent (host)",
-      "sourceTag": "emberize"
     },
     {
       "id": "nb-7",
@@ -112,7 +87,7 @@
       "whyCorrect": "La cláusula 'by {tag_key}' divide y agrupa la serie temporal resultante según los valores individuales de esa etiqueta.",
       "hint": "Tema: Consulta al Gráfico - Sintaxis",
       "sourceTitle": "Consulta al Gráfico - Sintaxis",
-      "sourceTag": "notebooklm",
+      "sourceTag": "study-pack",
       "answerType": "single"
     }
   ]

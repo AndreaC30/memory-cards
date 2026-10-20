@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-20T11:22:13.603Z",
-  "poolSize": 31,
+  "generatedAt": "2026-10-20T11:25:06.744Z",
+  "poolSize": 20,
   "notebookSources": [
     "https://docs.datadoghq.com/es/getting_started/",
     "https://docs.datadoghq.com/es/agent/?tab=Host-based",
@@ -71,7 +71,7 @@
     {
       "id": "notebooklm-datadog",
       "file": "notebooklm-datadog-20.json",
-      "title": "NotebookLM — Datadog (20)"
+      "title": "Estudio Datadog (20)"
     }
   ]
 }

@@ -2,9 +2,9 @@
   "id": "test-04",
   "title": "Test 4 — 20 preguntas",
   "type": "test20",
-  "description": "Incluye preguntas NotebookLM (repartidas entre tests) y ~2 de respuesta múltiple. Aprobado: ≥70%.",
+  "description": "Mezcla preguntas de tu JSON de estudio (docs Datadog) con material extra. Aprobado práctica: ≥70%.",
   "passPercent": 70,
-  "count": 4,
+  "count": 3,
   "domains": {
     "essential": "Conceptos esenciales",
     "infra": "Infraestructura y Agent",
@@ -14,30 +14,6 @@
     "viz": "Visualización y uso"
   },
   "questions": [
-    {
-      "id": "v6-multi",
-      "answerType": "multiple",
-      "domain": "viz",
-      "domainLabel": "Visualización y uso",
-      "question": "Marca todas las opciones correctas: ¿Cuáles son los estados de un monitor",
-      "options": [
-        "Traces (APM): un request recorre servicios. La app usa ddtrace → Agent TCP 8126.",
-        "Únete a una sesión interactiva para desbloquear el potencial completo de las métricas. Introducción a",
-        "Metric Streams + Firehose: AWS push. ~3 min. Más fresco, más setup (stream + Firehose a Datadog).",
-        "OK — query por debajo del umbral",
-        "Alert — cruzó el critical → notifica"
-      ],
-      "correctIndices": [
-        3,
-        4
-      ],
-      "correctIndex": 3,
-      "explanation": "El monitor es una máquina de estados. En su Status page ves transiciones: - OK — query por debajo del umbral - Warn — cruzó el warning (si lo definiste) - Alert — cruzó el critical → notifica - No Data — dejó de llegar la métrica (Agent caído o query vacía) Desde ahí mute (silencio puntual de notificaciones) o resolve (cierras este incidente; si la query sigue mala, puede volver a Alert).",
-      "whyCorrect": "Son varias respuestas válidas. Según Consulta al gráfico, la respuesta correcta («OK — query por debajo del umbral · Alert — cruzó el critical → notifica») encaja con la documentación porque: El monitor es una máquina de estados. En su Status page ves transiciones: - OK — query por debajo del umbral - Warn — cruzó el warning (si lo definiste) - Alert — cruzó el critical → notifica - No Data — dejó de llegar la métrica (Agent caído o query vacía) Desde ahí mute (silencio puntual de notificaciones) o resolve (cierras este incidente; si la query sigue mala, puede volver a Alert).",
-      "sourceUrl": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
-      "sourceTitle": "Consulta al gráfico",
-      "sourceTag": "emberize"
-    },
     {
       "id": "nb-10",
       "domain": "troubleshoot",
@@ -54,7 +30,7 @@
       "whyCorrect": "Un Composite Monitor permite definir reglas complejas como 'A && B' para gatillar una notificación solo cuando ambos monitores estén en estado crítico.",
       "hint": "Tema: Tipos de Monitores - Composite",
       "sourceTitle": "Tipos de Monitores - Composite",
-      "sourceTag": "notebooklm",
+      "sourceTag": "study-pack",
       "answerType": "single"
     },
     {
@@ -73,7 +49,7 @@
       "whyCorrect": "Establecer DD_DOGSTATSD_NON_LOCAL_TRAFFIC en 'true' le permite a DogStatsD escuchar tráfico UDP de contenedores no locales al contenedor del Agente.",
       "hint": "Tema: Agente de Docker - Variables de Entorno",
       "sourceTitle": "Agente de Docker - Variables de Entorno",
-      "sourceTag": "notebooklm",
+      "sourceTag": "study-pack",
       "answerType": "single"
     },
     {
@@ -92,7 +68,7 @@
       "whyCorrect": "Autodiscovery inspecciona las etiquetas de los contenedores (p. ej. 'com.datadoghq.ad.check_names') para activar integraciones automáticamente.",
       "hint": "Tema: Autodiscovery en Contenedores",
       "sourceTitle": "Autodiscovery en Contenedores",
-      "sourceTag": "notebooklm",
+      "sourceTag": "study-pack",
       "answerType": "single"
     }
   ]

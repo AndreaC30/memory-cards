@@ -2,9 +2,9 @@
   "id": "test-06",
   "title": "Test 6 — 20 preguntas",
   "type": "test20",
-  "description": "Incluye preguntas NotebookLM (repartidas entre tests) y ~2 de respuesta múltiple. Aprobado: ≥70%.",
+  "description": "Mezcla preguntas de tu JSON de estudio (docs Datadog) con material extra. Aprobado práctica: ≥70%.",
   "passPercent": 70,
-  "count": 4,
+  "count": 3,
   "domains": {
     "essential": "Conceptos esenciales",
     "infra": "Infraestructura y Agent",
@@ -14,49 +14,6 @@
     "viz": "Visualización y uso"
   },
   "questions": [
-    {
-      "id": "nb-18",
-      "domain": "infra",
-      "domainLabel": "Infraestructura y Agent",
-      "question": "¿Qué funcionalidad permite auditar, actualizar y gestionar la configuración de múltiples Datadog Agents de forma centralizada desde la UI?",
-      "options": [
-        "Fleet Automation",
-        "Cluster Agent",
-        "Agent Remote Control",
-        "Central Dashboard"
-      ],
-      "correctIndex": 0,
-      "explanation": "Fleet Automation ofrece visibilidad y control sobre el estado de la flota de agentes desplegados en toda la infraestructura de la empresa.",
-      "whyCorrect": "Fleet Automation ofrece visibilidad y control sobre el estado de la flota de agentes desplegados en toda la infraestructura de la empresa.",
-      "hint": "Tema: Fleet Automation",
-      "sourceTitle": "Fleet Automation",
-      "sourceTag": "notebooklm",
-      "answerType": "single"
-    },
-    {
-      "id": "e2-multi",
-      "answerType": "multiple",
-      "domain": "essential",
-      "domainLabel": "Conceptos esenciales",
-      "question": "Marca todas las opciones correctas: ¿Qué métricas de hardware reporta el Agent por defecto",
-      "options": [
-        "min / max · extremos",
-        "Calcula percentiles globales en todo tu conjunto de datos. Métricas sin Límites™",
-        "CPU · system.cpu.* — % uso, para Host Map y monitors de saturación",
-        "0 OK — el servicio responde",
-        "Disco · system.disk.* — espacio e I/O por volumen (device)"
-      ],
-      "correctIndices": [
-        2,
-        4
-      ],
-      "correctIndex": 2,
-      "explanation": "Nada más instalar el Agent, sin conf.d, ya salen (checks .default): - CPU · system.cpu.* — % uso, para Host Map y monitors de saturación - Memoria · system.mem.* — RAM libre/usada - Disco · system.disk.* — espacio e I/O por volumen (device) - Red · system.net.* — bytes/paquetes por interfaz Las ves en Infrastructure List y Host Map a los 1–2 min. Nginx/Postgres no salen hasta copiar conf.yaml.",
-      "whyCorrect": "Son varias respuestas válidas. Según Guía de inicio rápido, la respuesta correcta («CPU · system.cpu.* — % uso, para Host Map y monitors de saturación · Disco · system.disk.* — espacio e I/O por volumen (device)») encaja con la documentación porque: Nada más instalar el Agent, sin conf.d, ya salen (checks .default): - CPU · system.cpu.* — % uso, para Host Map y monitors de saturación - Memoria · system.mem.* — RAM libre/usada - Disco · system.disk.* — espacio e I/O por volumen (device) - Red · system.net.* — bytes/paquetes por interfaz Las ves en Infrastructure List y Host Map a los 1–2 min. Nginx/Postgres no salen hasta copiar conf.yaml.",
-      "sourceUrl": "https://docs.datadoghq.com/es/getting_started/",
-      "sourceTitle": "Guía de inicio rápido",
-      "sourceTag": "emberize"
-    },
     {
       "id": "nb-12",
       "domain": "infra",
@@ -73,7 +30,26 @@
       "whyCorrect": "La métrica 'docker.containers.running' mide la cantidad de contenedores en estado de ejecución en la instancia donde opera el Agente.",
       "hint": "Tema: Docker Daemon Integration",
       "sourceTitle": "Docker Daemon Integration",
-      "sourceTag": "notebooklm",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "nb-18",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Qué funcionalidad permite auditar, actualizar y gestionar la configuración de múltiples Datadog Agents de forma centralizada desde la UI?",
+      "options": [
+        "Fleet Automation",
+        "Cluster Agent",
+        "Agent Remote Control",
+        "Central Dashboard"
+      ],
+      "correctIndex": 0,
+      "explanation": "Fleet Automation ofrece visibilidad y control sobre el estado de la flota de agentes desplegados en toda la infraestructura de la empresa.",
+      "whyCorrect": "Fleet Automation ofrece visibilidad y control sobre el estado de la flota de agentes desplegados en toda la infraestructura de la empresa.",
+      "hint": "Tema: Fleet Automation",
+      "sourceTitle": "Fleet Automation",
+      "sourceTag": "study-pack",
       "answerType": "single"
     },
     {
@@ -92,7 +68,7 @@
       "whyCorrect": "DogStatsD es una implementación sobre el protocolo StatsD que escucha de forma predeterminada en el puerto UDP 8125.",
       "hint": "Tema: DogStatsD - Protocolo",
       "sourceTitle": "DogStatsD - Protocolo",
-      "sourceTag": "notebooklm",
+      "sourceTag": "study-pack",
       "answerType": "single"
     }
   ]
