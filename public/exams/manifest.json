@@ -16,6 +16,13 @@
     "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
     "https://ddtrace.readthedocs.io/en/stable/advanced_usage.html"
   ],
+  "notebooklm": [
+    {
+      "id": "notebooklm-datadog",
+      "file": "notebooklm-datadog-20.json",
+      "title": "NotebookLM — Datadog (20)"
+    }
+  ],
   "tests20": [
     {
       "id": "test-01",

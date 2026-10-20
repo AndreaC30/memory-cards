@@ -1,6 +1,6 @@
 {
   "title": "Cuestionario NotebookLM — Datadog (ejemplo)",
-  "description": "Copia este formato. En NotebookLM: «Exporta el cuestionario como JSON con title, questions[], cada una con question, options[], correctIndex (0-based), hint y explanation».",
+  "description": "Formato inglés (title/questions) o español NotebookLM (titulo/preguntas/opciones/respuesta_correcta). También: node scripts/import-notebooklm-json.mjs tu-archivo.json",
   "passPercent": 70,
   "questions": [
     {

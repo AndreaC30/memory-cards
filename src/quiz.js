@@ -147,7 +147,51 @@ export function scheduleAutoAdvance(quiz, onAdvance) {
   }, AUTO_ADVANCE_MS)
 }
 
+function stripOptionPrefix(text) {
+  return String(text).replace(/^[A-F]\)\s*/i, '').trim()
+}
+
+function resolveCorrectIndex(options, answer) {
+  const raw = String(answer ?? '').trim()
+  if (!raw) return -1
+  const exact = options.findIndex((o) => String(o).trim() === raw)
+  if (exact >= 0) return exact
+  const want = stripOptionPrefix(raw)
+  return options.findIndex((o) => stripOptionPrefix(o) === want)
+}
+
+/** Formato NotebookLM en español: titulo, preguntas[], opciones[], respuesta_correcta */
+export function notebookLmEsToStandard(data) {
+  const preguntas = data?.preguntas
+  if (!Array.isArray(preguntas) || !preguntas.length) return data
+  return {
+    title: data.titulo || data.title || 'Cuestionario NotebookLM',
+    description: data.descripcion || data.description || '',
+    passPercent: data.passPercent ?? DEFAULT_PASS_PERCENT,
+    questions: preguntas.map((q, i) => {
+      const rawOpts = q.opciones || q.options || []
+      const options = rawOpts.map((o) => stripOptionPrefix(o))
+      let correctIndex = resolveCorrectIndex(rawOpts, q.respuesta_correcta ?? q.respuesta)
+      if (correctIndex < 0) correctIndex = resolveCorrectIndex(options, q.respuesta_correcta)
+      const tema = q.fuente_tema || q.tema || ''
+      return {
+        id: `nb-${q.id ?? i + 1}`,
+        question: q.pregunta || q.question,
+        options,
+        correctIndex: correctIndex >= 0 ? correctIndex : 0,
+        explanation: q.explicacion || q.explanation || '',
+        whyCorrect: q.explicacion || q.explanation || '',
+        hint: q.pista || q.hint || (tema ? `Tema: ${tema}` : ''),
+        domainLabel: tema,
+        sourceTitle: tema || 'NotebookLM',
+        answerType: 'single',
+      }
+    }),
+  }
+}
+
 export function parseImportedPack(data) {
+  if (Array.isArray(data?.preguntas)) data = notebookLmEsToStandard(data)
   const raw = data?.questions || data?.items || []
   const questions = raw
     .map((q, i) => {
@@ -345,6 +389,12 @@ export async function loadFullBank(baseUrl) {
 function packOptions(manifest, selectedId) {
   if (!manifest) return ''
   const opts = []
+  for (const n of manifest.notebooklm || []) {
+    opts.push(
+      `<option value="${n.file}" data-pack-id="${n.id}" ${selectedId === n.id ? 'selected' : ''}>${n.title}</option>`,
+    )
+  }
+  if ((manifest.notebooklm || []).length) opts.push('<option disabled>──────────</option>')
   for (const t of manifest.tests20 || []) {
     opts.push(
       `<option value="${t.file}" data-pack-id="${t.id}" ${selectedId === t.id ? 'selected' : ''}>${t.title}</option>`,
