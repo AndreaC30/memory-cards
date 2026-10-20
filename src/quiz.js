@@ -115,8 +115,13 @@ export function isMultipleQuestion(q) {
 }
 
 export function getCorrectIndices(q) {
-  if (isMultipleQuestion(q)) return [...q.correctIndices].sort((a, b) => a - b)
+  if (isMultipleQuestion(q)) {
+    const ci = q?.correctIndices
+    if (Array.isArray(ci) && ci.length) return [...ci].sort((a, b) => a - b)
+  }
   if (Number.isFinite(q?.correctIndex)) return [q.correctIndex]
+  if (Array.isArray(q?.correctIndices) && q.correctIndices.length)
+    return [...q.correctIndices].sort((a, b) => a - b)
   return []
 }
 
@@ -134,8 +139,7 @@ export function isAnswerCorrect(q, selected) {
 }
 
 function canCheckSelection(q, selected) {
-  if (isMultipleQuestion(q)) return selected.length >= 2
-  return selected.length === 1
+  return selected.length >= 1
 }
 
 export function defaultQuizSession() {
@@ -507,9 +511,22 @@ export function renderQuiz(quiz, escapeHtml) {
         </label>`
 
   const checkDisabled = !canCheckSelection(q, selected)
+  const primaryBtn = quiz.checked
+    ? `<button type="button" class="primary" data-quiz="next">${quiz.index >= quiz.queue.length - 1 ? 'Ver resultado' : 'Siguiente →'}</button>`
+    : `<button type="button" class="primary" data-quiz="check" ${checkDisabled ? 'disabled' : ''}>Comprobar</button>`
+  const actionsBlock = `
+      <div class="quiz-actions row">
+        ${primaryBtn}
+        ${quiz.checked ? '<p class="quiz-continue-hint">No hace falta acertar: pulsa <strong>Siguiente</strong> o <strong>Enter</strong> para continuar.</p>' : ''}
+      </div>`
+  const hintsLine = quiz.checked
+    ? 'Enter o Espacio → siguiente pregunta (las teclas 1–4 no cambian la respuesta ya enviada)'
+    : multi
+      ? 'Marca todas las que apliquen · Enter comprueba'
+      : 'Teclas 1–4 eligen · Enter comprueba'
 
   return `
-    <section class="quiz quiz-panel domain-${domainKey} ${quiz.focusMode ? 'is-focus' : ''} ${multi ? 'is-multi' : ''}" data-domain="${domainKey}">
+    <section class="quiz quiz-panel domain-${domainKey} ${quiz.focusMode ? 'is-focus' : ''} ${multi ? 'is-multi' : ''} ${quiz.checked ? 'is-awaiting-next' : ''}" data-domain="${domainKey}">
       <div class="quiz-toolbar">
         ${extraTools}
         <button type="button" class="ghost" data-quiz="shuffle">Barajar orden</button>
@@ -530,14 +547,13 @@ export function renderQuiz(quiz, escapeHtml) {
       }
       <p class="meta quiz-meta-line"><strong>${escapeHtml(quiz.title)}</strong> · Pregunta ${quiz.index + 1} de ${quiz.queue.length} · Aciertos ${quiz.correct} / ${quiz.answered}</p>
       <span class="quiz-domain-pill">${escapeHtml(q.domainLabel || DOMAIN_THEMES[domainKey]?.label || '')}</span>
-      ${multi ? '<p class="quiz-multi-hint">Respuesta múltiple: marca <strong>todas</strong> las opciones correctas.</p>' : ''}
+      ${multi ? '<p class="quiz-multi-hint">Respuesta múltiple: marca <strong>todas</strong> las opciones correctas (puedes comprobar con al menos una marcada).</p>' : ''}
       <h2 class="quiz-question">${escapeHtml(q.question)}</h2>
       <div class="quiz-options" role="${multi ? 'group' : 'radiogroup'}" aria-label="Opciones de respuesta">${options}</div>
-      <div class="row">
-        ${quiz.checked ? `<button type="button" class="primary" data-quiz="next">${quiz.index >= quiz.queue.length - 1 ? 'Ver resultado' : 'Siguiente'}</button>` : `<button type="button" class="primary" data-quiz="check" ${checkDisabled ? 'disabled' : ''}>Comprobar</button>`}
-      </div>
+      ${quiz.checked ? '' : actionsBlock}
       ${feedback}
-      <p class="hints">${multi ? 'Marca varias · Enter comprueba o avanza' : 'Teclas 1–4 eligen · Enter comprueba o avanza'}</p>
+      ${quiz.checked ? actionsBlock : ''}
+      <p class="hints">${hintsLine}</p>
     </section>
   `
 }
@@ -606,6 +622,7 @@ export function handleQuizAction(quiz, action, detail) {
     return {}
   }
   if (action === 'next') {
+    if (!quiz.checked) return {}
     if (quiz.index >= quiz.queue.length - 1) {
       quiz.finished = true
       return { finished: true }

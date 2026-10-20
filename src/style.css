@@ -685,6 +685,35 @@ textarea {
   color: #fff;
 }
 
+.quiz-actions {
+  margin-top: 0.85rem;
+}
+
+.quiz-actions.row {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.quiz-panel.is-awaiting-next .quiz-actions {
+  position: sticky;
+  bottom: 0.35rem;
+  z-index: 3;
+  padding: 0.7rem 0.75rem;
+  margin-top: 1rem;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--card) 94%, transparent);
+  box-shadow: 0 -6px 24px color-mix(in srgb, var(--ink) 10%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.quiz-continue-hint {
+  margin: 0.55rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
 .quiz-feedback {
   margin-top: 1rem;
   padding: 0.9rem 1rem 1rem;

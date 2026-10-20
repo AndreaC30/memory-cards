@@ -102,6 +102,15 @@ function bumpWeight(delta) {
   if (label) label.textContent = String(sessionWeight(state, card.id))
 }
 
+function focusQuizContinueButton() {
+  requestAnimationFrame(() => {
+    const btn = app.querySelector('button[data-quiz="next"]')
+    if (!btn) return
+    btn.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+    btn.focus({ preventScroll: true })
+  })
+}
+
 function render() {
   ensureCard()
   saveQuizAttemptIfNeeded()
@@ -370,6 +379,14 @@ app.addEventListener('click', (event) => {
   const quizBtn = event.target.closest('[data-quiz]')
   if (quizBtn) {
     const action = quizBtn.dataset.quiz
+    if (
+      (action === 'shuffle' || action === 'pick-another') &&
+      quiz.loaded &&
+      !quiz.finished &&
+      quiz.answered > 0
+    ) {
+      if (!confirm('¿Abandonar este intento? Volverás al inicio del examen.')) return
+    }
     let detail
     if (action === 'pick') detail = Number(quizBtn.dataset.index)
     const result = handleQuizAction(quiz, action, detail)
@@ -378,6 +395,7 @@ app.addEventListener('click', (event) => {
       return
     }
     render()
+    if (action === 'check' || action === 'next') focusQuizContinueButton()
     return
   }
 
@@ -549,7 +567,10 @@ window.addEventListener('keydown', (event) => {
   if (tab === 'quiz') {
     const tag = event.target.tagName
     if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') {
-      if (quizKeydown(quiz, event)) render()
+      if (quizKeydown(quiz, event)) {
+        render()
+        if (quiz.checked) focusQuizContinueButton()
+      }
     }
     return
   }
