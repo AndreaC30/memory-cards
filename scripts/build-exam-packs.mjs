@@ -207,8 +207,8 @@ function notebookSliceForTest(notebookQs, testIndex) {
 /** Mezcla preguntas NotebookLM (repartidas entre tests) con el banco generado. */
 function composeTestPack(pool, notebookQs, total, multiCount, seed, testIndex) {
   const nbPick = notebookSliceForTest(notebookQs, testIndex)
-  const allNbIds = new Set(notebookQs.map((q) => q.id))
-  const restPool = pool.filter((q) => !allNbIds.has(q.id))
+  const pickedIds = new Set(nbPick.map((q) => q.id))
+  const restPool = pool.filter((q) => !pickedIds.has(q.id))
   const need = Math.max(0, total - nbPick.length)
   const rest = composePack(restPool, need, multiCount, seed, true)
   return shuffleWithSeed([...nbPick, ...rest], seed + 7).slice(0, total)
