@@ -66,6 +66,7 @@ a {
   align-items: end;
   gap: 1rem;
   flex-wrap: wrap;
+  min-width: 0;
 }
 
 .kicker {
@@ -94,6 +95,9 @@ h2 {
 
 .tabs {
   display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+  min-width: 0;
   background: color-mix(in srgb, var(--card) 80%, var(--line));
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -285,6 +289,11 @@ h2 {
 .admin {
   display: grid;
   gap: 1rem;
+  min-width: 0;
+}
+
+.panel {
+  min-width: 0;
 }
 
 @media (min-width: 840px) {
@@ -319,7 +328,10 @@ textarea {
 }
 
 .schema {
+  max-width: 100%;
   overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   background: var(--paper);
   border-radius: 12px;
   padding: 0.8rem;
@@ -1271,9 +1283,70 @@ textarea {
 }
 
 @media (max-width: 700px) {
+  #app {
+    padding: 0.75rem 0.7rem 2.5rem;
+  }
+
+  .top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  h1 {
+    font-size: 1.35rem;
+  }
+
+  .tabs {
+    width: 100%;
+    border-radius: 16px;
+  }
+
+  .tabs button {
+    flex: 1 1 calc(50% - 0.4rem);
+    padding: 0.5rem 0.4rem;
+    font-size: 0.88rem;
+  }
+
+  .empty {
+    padding: 1.25rem 0.85rem;
+  }
+
+  .quiz-start {
+    max-width: none;
+  }
+
+  .quiz-toolbar-daypo {
+    gap: 0.45rem;
+  }
+
+  .quiz-toolbar-daypo .ghost {
+    flex: 1 1 auto;
+  }
+
+  .quiz-daypo-score {
+    flex: 1 1 100%;
+    order: -1;
+  }
+
+  .quiz-question,
+  .quiz-panel.is-daypo .quiz-question {
+    font-size: 1.05rem;
+  }
+
+  .quiz-option,
+  .quiz-panel.is-daypo .quiz-option {
+    padding: 0.75rem 0.7rem;
+    font-size: 0.95rem;
+  }
+
+  .history-stats {
+    grid-template-columns: 1fr;
+  }
+
   .cards-list li {
     grid-template-columns: 1fr;
   }
+
   .card,
   .card-inner {
     min-height: 220px;
