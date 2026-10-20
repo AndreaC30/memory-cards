@@ -13,6 +13,7 @@ import { buildWhyCorrect, stripMarkdown } from "./rationale.mjs"
 import { buildMultiQuestions } from "./multi-questions.mjs"
 import { examOptionText, summarizeOptionText } from "./option-text.mjs"
 import { notebookLmEsToStandard } from "../src/notebooklm-format.js"
+import { filterUsableQuestions } from "./question-quality.mjs"
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..")
 const NOTEBOOK_DATA = join(root, "data", "notebooklm", "preguntas_datadog.json")
@@ -209,7 +210,7 @@ function composeTestPack(pool, notebookQs, total, multiCount, seed, testIndex) {
   const allNbIds = new Set(notebookQs.map((q) => q.id))
   const restPool = pool.filter((q) => !allNbIds.has(q.id))
   const need = Math.max(0, total - nbPick.length)
-  const rest = composePack(restPool, need, multiCount, seed, false)
+  const rest = composePack(restPool, need, multiCount, seed, true)
   return shuffleWithSeed([...nbPick, ...rest], seed + 7).slice(0, total)
 }
 
@@ -234,7 +235,9 @@ function pickN(pool, n, seed, allowRepeat = false) {
     out.push(q)
   }
   while (out.length < n) {
+    if (!pool.length) break
     const q = pool[Math.floor(rnd() * pool.length)]
+    if (!q) break
     out.push({ ...q, id: `${q.id}-r${out.length}` })
   }
   return out
@@ -268,13 +271,13 @@ function writePack(dir, name, meta, questions, scoring = null) {
 }
 
 async function main() {
-  console.log("Cargando emberize…")
+  console.log("Cargando emberize (sin trozos automáticos de documentación)…")
   const emberize = loadEmberizeCards()
-  console.log("Descargando docs (13 URLs)…")
-  const fromDocs = await fetchFacts()
-  const raw = [...emberize, ...fromDocs]
   const notebookQs = loadNotebookLmQuestions()
-  const generated = buildPool(raw)
+  const generated = filterUsableQuestions(buildPool(emberize))
+  console.log(
+    `  Emberize usable: ${generated.length} (NotebookLM: ${notebookQs.length} — prioridad en tests)`,
+  )
   const nbKeys = new Set(notebookQs.map((q) => q.question.toLowerCase().slice(0, 90)))
   const pool = [
     ...notebookQs,
@@ -321,8 +324,8 @@ async function main() {
 
   for (let i = 1; i <= 6; i++) {
     const questions = notebookQs.length
-      ? composeTestPack(pool, notebookQs, 20, 2, 1000 + i * 17, i)
-      : composePack(pool, 20, 2, 1000 + i * 17, false)
+      ? composeTestPack(pool, notebookQs, 20, 1, 1000 + i * 17, i)
+      : composePack(pool, 20, 1, 1000 + i * 17, false)
     const file = writePack(outDir, `test-${String(i).padStart(2, "0")}`, {
       id: `test-${String(i).padStart(2, "0")}`,
       title: `Test ${i} — 20 preguntas`,

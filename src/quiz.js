@@ -11,6 +11,24 @@ export const DOMAIN_THEMES = {
 
 const FOCUS_KEY = 'memory-cards-quiz-focus'
 const FLOW_KEY = 'memory-cards-quiz-flow'
+const DAYPO_KEY = 'memory-cards-quiz-daypo'
+
+/** Interfaz simple tipo Daypo: pregunta clara, opciones grandes, poco ruido. */
+export function loadDaypoMode() {
+  try {
+    return localStorage.getItem(DAYPO_KEY) !== '0'
+  } catch {
+    return true
+  }
+}
+
+export function saveDaypoMode(on) {
+  try {
+    localStorage.setItem(DAYPO_KEY, on ? '1' : '0')
+  } catch {
+    /* ignore */
+  }
+}
 
 /** Tras revelar en modo rápido, avanzar automáticamente. */
 export const AUTO_ADVANCE_MS = 1800
@@ -260,6 +278,7 @@ export function defaultQuizSession() {
     flow: loadFlowStyle(),
     importedPack: false,
     hintOpen: false,
+    daypoMode: loadDaypoMode(),
   }
 }
 
@@ -492,8 +511,8 @@ export function renderQuiz(quiz, escapeHtml) {
   if (!quiz.loaded && !quiz.loadError) {
     return `
       <section class="empty quiz-empty">
-        <h2>Modo test — Datadog Fundamentals</h2>
-        <p>Tests de <strong>20</strong> preguntas y <strong>3 simulacros de 90</strong>. Incluye preguntas de <strong>una</strong> y de <strong>varias</strong> respuestas correctas.</p>
+        <h2>Practicar — estilo Daypo</h2>
+        <p>Preguntas claras (prioridad <strong>NotebookLM</strong>), corrección al instante y sin depender del chat. Tests de <strong>20</strong> y simulacros de <strong>90</strong> para el examen.</p>
         <label class="quiz-pick-pack">Elige examen
           <select data-quiz="pack-select">${packOptions(quiz.manifest, quiz.packId)}</select>
         </label>
@@ -604,6 +623,7 @@ export function renderQuiz(quiz, escapeHtml) {
   const correct = getCorrectIndices(q)
 
   const isInstant = quiz.flow === 'instant'
+  const daypo = quiz.daypoMode
 
   const options = q.options
     .map((text, i) => {
@@ -712,8 +732,13 @@ export function renderQuiz(quiz, escapeHtml) {
         ? 'Marca todas las que apliquen · Enter comprueba'
         : 'Teclas 1–4 eligen · Enter comprueba'
 
-  return `
-    <section class="quiz quiz-panel domain-${domainKey} ${quiz.focusMode ? 'is-focus' : ''} ${multi ? 'is-multi' : ''} ${isInstant ? 'is-instant-flow' : ''} ${quiz.checked ? 'is-awaiting-next' : ''}" data-domain="${domainKey}">
+  const toolbarDaypo = `
+      <div class="quiz-toolbar quiz-toolbar-daypo">
+        <button type="button" class="ghost" data-quiz="pick-another">← Tests</button>
+        <span class="quiz-daypo-score">${quiz.correct} aciertos</span>
+        <button type="button" class="ghost quiz-daypo-toggle ${daypo ? 'is-on' : ''}" data-quiz="daypo-toggle" aria-pressed="${daypo}" title="Vista simple tipo Daypo">Vista simple</button>
+      </div>`
+  const toolbarFull = `
       <div class="quiz-toolbar">
         ${extraTools}
         <button type="button" class="ghost" data-quiz="shuffle">Barajar orden</button>
@@ -721,19 +746,33 @@ export function renderQuiz(quiz, escapeHtml) {
         <button type="button" class="ghost quiz-focus-toggle ${quiz.focusMode ? 'is-on' : ''}" data-quiz="focus-toggle" aria-pressed="${quiz.focusMode}">
           ${quiz.focusMode ? 'Modo color' : 'Modo enfoque'}
         </button>
-      </div>
+        <button type="button" class="ghost quiz-daypo-toggle ${daypo ? 'is-on' : ''}" data-quiz="daypo-toggle" aria-pressed="${daypo}">Vista simple</button>
+      </div>`
+
+  return `
+    <section class="quiz quiz-panel domain-${domainKey} ${quiz.focusMode ? 'is-focus' : ''} ${multi ? 'is-multi' : ''} ${isInstant ? 'is-instant-flow' : ''} ${daypo ? 'is-daypo' : ''} ${quiz.checked ? 'is-awaiting-next' : ''}" data-domain="${domainKey}">
+      ${daypo ? toolbarDaypo : toolbarFull}
       <div class="quiz-progress" role="progressbar" aria-valuenow="${progressPct}" aria-valuemin="0" aria-valuemax="100" aria-label="Progreso del test">
         <div class="quiz-progress-fill" style="width:${progressPct}%"></div>
       </div>
       ${
-        quiz.examType === 'simulacro90' && quiz.scoring
-          ? renderSimulacroGoalTrack(quiz, escapeHtml)
-          : quiz.fixedPack && quiz.queue.length <= 25
-            ? renderTestGoalTrack(quiz, escapeHtml)
-            : ''
+        daypo
+          ? ''
+          : quiz.examType === 'simulacro90' && quiz.scoring
+            ? renderSimulacroGoalTrack(quiz, escapeHtml)
+            : quiz.fixedPack && quiz.queue.length <= 25
+              ? renderTestGoalTrack(quiz, escapeHtml)
+              : ''
       }
-      <p class="meta quiz-meta-line"><strong>${escapeHtml(quiz.title)}</strong> · Pregunta ${quiz.index + 1} de ${quiz.queue.length} · Aciertos ${quiz.correct} / ${quiz.answered}</p>
-      <span class="quiz-domain-pill">${escapeHtml(q.domainLabel || DOMAIN_THEMES[domainKey]?.label || '')}</span>
+      ${
+        daypo
+          ? `<header class="quiz-daypo-head">
+              <p class="quiz-daypo-counter">Pregunta ${quiz.index + 1} de ${quiz.queue.length}</p>
+              <p class="quiz-daypo-test-name">${escapeHtml(quiz.title)}</p>
+            </header>`
+          : `<p class="meta quiz-meta-line"><strong>${escapeHtml(quiz.title)}</strong> · Pregunta ${quiz.index + 1} de ${quiz.queue.length} · Aciertos ${quiz.correct} / ${quiz.answered}</p>`
+      }
+      ${daypo ? '' : `<span class="quiz-domain-pill">${escapeHtml(q.domainLabel || DOMAIN_THEMES[domainKey]?.label || '')}</span>`}
       ${multi ? '<p class="quiz-multi-hint">Respuesta múltiple: marca <strong>todas</strong> las opciones correctas (puedes comprobar con al menos una marcada).</p>' : ''}
       <h2 class="quiz-question">${escapeHtml(q.question)}</h2>
       ${hintBlock}
@@ -741,7 +780,7 @@ export function renderQuiz(quiz, escapeHtml) {
       ${quiz.checked ? '' : actionsBlock}
       ${feedback}
       ${quiz.checked ? actionsBlock : ''}
-      <p class="hints">${hintsLine}</p>
+      ${daypo && isInstant ? '' : `<p class="hints">${hintsLine}</p>`}
     </section>
   `
 }
@@ -766,6 +805,11 @@ export function handleQuizAction(quiz, action, detail) {
   if (action === 'focus-toggle') {
     quiz.focusMode = !quiz.focusMode
     saveFocusMode(quiz.focusMode)
+    return {}
+  }
+  if (action === 'daypo-toggle') {
+    quiz.daypoMode = !quiz.daypoMode
+    saveDaypoMode(quiz.daypoMode)
     return {}
   }
   if (action === 'pack-select') {

@@ -522,6 +522,70 @@ textarea {
   border: 1px solid color-mix(in srgb, var(--domain-line) 60%, transparent);
 }
 
+.quiz-panel.is-daypo {
+  border-left-width: 1px;
+  border-left-color: var(--line);
+  max-width: 42rem;
+  margin-inline: auto;
+}
+
+.quiz-panel.is-daypo::before {
+  display: none;
+}
+
+.quiz-daypo-head {
+  margin: 0.5rem 0 1rem;
+  text-align: center;
+}
+
+.quiz-daypo-counter {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.quiz-daypo-test-name {
+  margin: 0.25rem 0 0;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.quiz-toolbar-daypo {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quiz-daypo-score {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.quiz-panel.is-daypo .quiz-question {
+  font-size: 1.2rem;
+  line-height: 1.45;
+  text-align: left;
+  margin-bottom: 1.1rem;
+}
+
+.quiz-panel.is-daypo .quiz-option {
+  padding: 0.85rem 1rem;
+  font-size: 0.98rem;
+  line-height: 1.4;
+  border-radius: 12px;
+}
+
+.quiz-panel.is-daypo .quiz-options {
+  gap: 0.55rem;
+}
+
+.quiz-daypo-toggle.is-on {
+  font-weight: 700;
+}
+
 .quiz-panel.is-focus .quiz-domain-pill {
   background: var(--paper);
   color: var(--muted);
