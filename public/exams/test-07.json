@@ -1,0 +1,418 @@
+{
+  "id": "test-07",
+  "title": "Test 7 — 20 preguntas",
+  "type": "test20",
+  "description": "Preguntas basadas en la documentación oficial de Datadog. Aprobado práctica: ≥70%.",
+  "passPercent": 70,
+  "count": 20,
+  "domains": {
+    "essential": "Conceptos esenciales",
+    "infra": "Infraestructura y Agent",
+    "network": "Red y configuración",
+    "collection": "Recolección de datos",
+    "troubleshoot": "Troubleshooting",
+    "viz": "Visualización y uso"
+  },
+  "questions": [
+    {
+      "id": "doc-gs-5",
+      "domain": "essential",
+      "domainLabel": "Conceptos esenciales",
+      "question": "Según la guía de inicio, ¿de cuántos servicios de AWS recopila datos la integración de AWS?",
+      "options": [
+        "Solo EC2 y S3",
+        "Exactamente 25 servicios",
+        "Más de 90 servicios",
+        "Ninguno: AWS requiere el Agent en cada recurso"
+      ],
+      "correctIndex": 2,
+      "explanation": "La integración de AWS recopila registros, eventos y métricas de más de 90 servicios de AWS.",
+      "whyCorrect": "La integración de AWS recopila registros, eventos y métricas de más de 90 servicios de AWS.",
+      "hint": "Tema: Guía de inicio rápido",
+      "sourceTitle": "Guía de inicio rápido",
+      "sourceUrl": "https://docs.datadoghq.com/es/getting_started/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ai-3",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Qué método debe implementar obligatoriamente cada verificación del Agent?",
+      "options": [
+        "main()",
+        "run(self)",
+        "check(self, instance)",
+        "collect(self, config)"
+      ],
+      "correctIndex": 2,
+      "explanation": "El punto de entrada de cada verificación es el método check(self, instance).",
+      "whyCorrect": "El punto de entrada de cada verificación es el método check(self, instance).",
+      "hint": "Tema: Integraciones basadas en Agent",
+      "sourceTitle": "Integraciones basadas en Agent",
+      "sourceUrl": "https://docs.datadoghq.com/es/extend/integrations/agent_integration/?tab=integraciónootb",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-me-1",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Cómo ingiere y almacena Datadog los datos de métricas?",
+      "options": [
+        "Como puntos con un valor y una marca de tiempo; una secuencia de puntos forma una serie temporal",
+        "Como líneas de texto libre, igual que los logs",
+        "Como archivos CSV diarios por host",
+        "Como trazas con spans anidados"
+      ],
+      "correctIndex": 0,
+      "explanation": "Cada punto es [valor, timestamp] y una secuencia de puntos forma una serie temporal.",
+      "whyCorrect": "Cada punto es [valor, timestamp] y una secuencia de puntos forma una serie temporal.",
+      "hint": "Tema: Métricas",
+      "sourceTitle": "Métricas",
+      "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "nb-20",
+      "domain": "viz",
+      "domainLabel": "Visualización y uso",
+      "question": "¿Cuáles son los cuatro agregadores temporales/espaciales principales disponibles al consultar métricas en los gráficos de Datadog?",
+      "options": [
+        "count, distinct, filter, limit",
+        "mean, dev, variance, std",
+        "top, bottom, median, mode",
+        "avg, sum, min, max"
+      ],
+      "correctIndex": 3,
+      "explanation": "Los métodos básicos de agregación en la sintaxis de consultas de gráficos de Datadog son 'avg' (promedio), 'sum' (suma), 'min' (mínimo) y 'max' (máximo).",
+      "whyCorrect": "Los métodos básicos de agregación en la sintaxis de consultas de gráficos de Datadog son 'avg' (promedio), 'sum' (suma), 'min' (mínimo) y 'max' (máximo).",
+      "hint": "Tema: Consulta al Gráfico - Agregadores",
+      "sourceTitle": "Consulta al Gráfico - Agregadores",
+      "sourceUrl": "",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ag-10",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Cuál es el valor por defecto del parámetro site en datadog.yaml?",
+      "options": [
+        "datadoghq.eu",
+        "app.datadog.io",
+        "us3.datadoghq.com",
+        "datadoghq.com"
+      ],
+      "correctIndex": 3,
+      "explanation": "El parámetro site se define en datadog.yaml y por defecto vale datadoghq.com (sitio US1).",
+      "whyCorrect": "El parámetro site se define en datadog.yaml y por defecto vale datadoghq.com (sitio US1).",
+      "hint": "Tema: Datadog Agent — configuración",
+      "sourceTitle": "Datadog Agent — configuración",
+      "sourceUrl": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-mo-2",
+      "domain": "troubleshoot",
+      "domainLabel": "Troubleshooting",
+      "question": "¿Qué tipo de monitor compara los valores de una métrica con un umbral definido por el usuario?",
+      "options": [
+        "Outlier",
+        "Métrica",
+        "Watchdog",
+        "Anomalía"
+      ],
+      "correctIndex": 1,
+      "explanation": "El monitor de métrica compara valores con un umbral fijo definido por ti.",
+      "whyCorrect": "El monitor de métrica compara valores con un umbral fijo definido por ti.",
+      "hint": "Tema: Tipos de monitores",
+      "sourceTitle": "Tipos de monitores",
+      "sourceUrl": "https://docs.datadoghq.com/es/monitors/types/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ma-7",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Qué endpoint de la v2 permite consultar datos como series temporales en varias fuentes?",
+      "options": [
+        "GET /api/v2/metrics",
+        "POST /api/v2/series",
+        "POST /api/v2/query/timeseries",
+        "POST /api/v2/query/scalar"
+      ],
+      "correctIndex": 2,
+      "explanation": "Query timeseries data across multiple products usa POST /api/v2/query/timeseries; la variante escalar usa /query/scalar.",
+      "whyCorrect": "Query timeseries data across multiple products usa POST /api/v2/query/timeseries; la variante escalar usa /query/scalar.",
+      "hint": "Tema: API de métricas",
+      "sourceTitle": "API de métricas",
+      "sourceUrl": "https://docs.datadoghq.com/es/api/latest/metrics/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ai-1",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Cómo se distribuye una integración basada en Agent?",
+      "options": [
+        "Como un dashboard importable en JSON",
+        "Como una imagen de Docker obligatoria",
+        "Como un binario de Go independiente",
+        "Como un paquete de Python construido sobre el Agent, que el cliente instala con el propio Agent"
+      ],
+      "correctIndex": 3,
+      "explanation": "Cada integración basada en Agent es un paquete de Python (wheel) que se instala a través del Agent.",
+      "whyCorrect": "Cada integración basada en Agent es un paquete de Python (wheel) que se instala a través del Agent.",
+      "hint": "Tema: Integraciones basadas en Agent",
+      "sourceTitle": "Integraciones basadas en Agent",
+      "sourceUrl": "https://docs.datadoghq.com/es/extend/integrations/agent_integration/?tab=integraciónootb",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ky-16",
+      "domain": "network",
+      "domainLabel": "Red y configuración",
+      "question": "Una clave de API se ha publicado por error en GitHub. ¿Basta con borrar el archivo del repositorio?",
+      "options": [
+        "Sí, borrar el archivo elimina el riesgo",
+        "No hace falta hacer nada: las claves de API son públicas",
+        "No: hay que revocar la clave, limpiar el historial, crear una nueva y revisar accesos no aprobados",
+        "Sí, si el repositorio pasa a privado"
+      ],
+      "correctIndex": 2,
+      "explanation": "Eliminar el archivo no garantiza que nadie la haya copiado. Hay que revocar, sanear el historial, crear otra clave, actualizar servicios y auditar la cuenta.",
+      "whyCorrect": "Eliminar el archivo no garantiza que nadie la haya copiado. Hay que revocar, sanear el historial, crear otra clave, actualizar servicios y auditar la cuenta.",
+      "hint": "Tema: Claves de API y de aplicación",
+      "sourceTitle": "Claves de API y de aplicación",
+      "sourceUrl": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ag-3",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Con qué frecuencia recomienda Datadog actualizar el Agent?",
+      "options": [
+        "Una vez al año",
+        "Solo cuando sale una versión principal",
+        "Con cada versión menor y de parche o, como mínimo, una vez al mes",
+        "Nunca: se actualiza solo sin intervención"
+      ],
+      "correctIndex": 2,
+      "explanation": "Datadog recomienda actualizar con cada versión menor y de parche, o al menos mensualmente.",
+      "whyCorrect": "Datadog recomienda actualizar con cada versión menor y de parche, o al menos mensualmente.",
+      "hint": "Tema: Datadog Agent",
+      "sourceTitle": "Datadog Agent",
+      "sourceUrl": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-me-5",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Qué hace un tipo de métrica count con los valores enviados durante un intervalo?",
+      "options": [
+        "Calcula la mediana",
+        "Se queda con el último valor",
+        "Los suma todos",
+        "Divide el total entre el número de hosts"
+      ],
+      "correctIndex": 2,
+      "explanation": "Un count suma todos los valores enviados en el intervalo, por ejemplo para contar visitas a un sitio web.",
+      "whyCorrect": "Un count suma todos los valores enviados en el intervalo, por ejemplo para contar visitas a un sitio web.",
+      "hint": "Tema: Métricas — tipos",
+      "sourceTitle": "Métricas — tipos",
+      "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-da-10",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "Otros contenedores envían trazas al Agent. ¿Qué variable permite ese tráfico no local de APM?",
+      "options": [
+        "DD_PROXY_HTTP",
+        "DD_DOGSTATSD_NON_LOCAL_TRAFFIC",
+        "DD_APM_NON_LOCAL_TRAFFIC",
+        "DD_APM_ENABLED"
+      ],
+      "correctIndex": 2,
+      "explanation": "DD_APM_NON_LOCAL_TRAFFIC permite recibir trazas de otros contenedores. Para métricas DogStatsD se usa DD_DOGSTATSD_NON_LOCAL_TRAFFIC.",
+      "whyCorrect": "DD_APM_NON_LOCAL_TRAFFIC permite recibir trazas de otros contenedores. Para métricas DogStatsD se usa DD_DOGSTATSD_NON_LOCAL_TRAFFIC.",
+      "hint": "Tema: Agent en Docker",
+      "sourceTitle": "Agent en Docker",
+      "sourceUrl": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "nb-14",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Qué método HTTP y endpoint de la API REST se utiliza para enviar métricas de series temporales directamente a Datadog sin usar el Agent?",
+      "options": [
+        "GET /api/v1/metrics",
+        "POST /api/v2/series",
+        "PUT /api/v2/metrics/upload",
+        "POST /api/v1/ingest/metrics"
+      ],
+      "correctIndex": 1,
+      "explanation": "El endpoint 'POST /api/v2/series' (Submit metrics) acepta un objeto JSON con puntos de datos de series temporales para ingestar métricas directamente en Datadog.",
+      "whyCorrect": "El endpoint 'POST /api/v2/series' (Submit metrics) acepta un objeto JSON con puntos de datos de series temporales para ingestar métricas directamente en Datadog.",
+      "hint": "Tema: API de Métricas",
+      "sourceTitle": "API de Métricas",
+      "sourceUrl": "",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-da-8",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Cuántos ejecutores de checks (DD_CHECK_RUNNERS) usa el Agent por defecto?",
+      "options": [
+        "1, todos en secuencia",
+        "4, y con 1 los checks se ejecutan en secuencia",
+        "Uno por CPU del host",
+        "8"
+      ],
+      "correctIndex": 1,
+      "explanation": "Por defecto ejecuta los checks en paralelo con 4 ejecutores. Con valor 1 son secuenciales.",
+      "whyCorrect": "Por defecto ejecuta los checks en paralelo con 4 ejecutores. Con valor 1 son secuenciales.",
+      "hint": "Tema: Agent en Docker",
+      "sourceTitle": "Agent en Docker",
+      "sourceUrl": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-da-5",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Qué formato tiene el valor de DD_TAGS?",
+      "options": [
+        "Etiquetas separadas por punto y coma",
+        "Un objeto JSON",
+        "Etiquetas separadas por espacios, por ejemplo key1:value1 key2:value2",
+        "Una sola etiqueta por variable"
+      ],
+      "correctIndex": 2,
+      "explanation": "DD_TAGS recibe etiquetas de host separadas por espacios.",
+      "whyCorrect": "DD_TAGS recibe etiquetas de host separadas por espacios.",
+      "hint": "Tema: Agent en Docker",
+      "sourceTitle": "Agent en Docker",
+      "sourceUrl": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-mo-6",
+      "domain": "troubleshoot",
+      "domainLabel": "Troubleshooting",
+      "question": "¿Qué monitor comprueba el estado de endpoints TCP/HTTP?",
+      "options": [
+        "Red",
+        "NetFlow",
+        "Synthetic Monitoring",
+        "Monitorización de la red en la nube"
+      ],
+      "correctIndex": 0,
+      "explanation": "El monitor de Red hace check del estado de endpoints TCP/HTTP.",
+      "whyCorrect": "El monitor de Red hace check del estado de endpoints TCP/HTTP.",
+      "hint": "Tema: Tipos de monitores",
+      "sourceTitle": "Tipos de monitores",
+      "sourceUrl": "https://docs.datadoghq.com/es/monitors/types/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-qg-1",
+      "domain": "viz",
+      "domainLabel": "Visualización y uso",
+      "question": "Antes de cualquier consulta, ¿cómo almacena Datadog los datos de una métrica?",
+      "options": [
+        "Agrupados por usuario que los consulta",
+        "Por separado para cada combinación de etiquetas (cada fuente es una serie temporal)",
+        "Solo el promedio diario",
+        "En una única serie por métrica, sin etiquetas"
+      ],
+      "correctIndex": 1,
+      "explanation": "Cada fuente (host + conjunto de etiquetas) se guarda como una serie temporal propia.",
+      "whyCorrect": "Cada fuente (host + conjunto de etiquetas) se guarda como una serie temporal propia.",
+      "hint": "Tema: De la consulta al gráfico",
+      "sourceTitle": "De la consulta al gráfico",
+      "sourceUrl": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "nb-15",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Qué tipo de métrica en Datadog mide la tasa de eventos por segundo e incrementa progresivamente con cada muestra enviada?",
+      "options": [
+        "Gauge",
+        "Distribution",
+        "Set",
+        "Count / RATE"
+      ],
+      "correctIndex": 3,
+      "explanation": "Las métricas de tipo 'Count' o 'Rate' rastrean la frecuencia o total de ocurrencias de un evento en un intervalo de tiempo dado.",
+      "whyCorrect": "Las métricas de tipo 'Count' o 'Rate' rastrean la frecuencia o total de ocurrencias de un evento en un intervalo de tiempo dado.",
+      "hint": "Tema: Métricas - Tipos de datos",
+      "sourceTitle": "Métricas - Tipos de datos",
+      "sourceUrl": "",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-di-3",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Qué requisito deben cumplir los hosts para que el check de Docker funcione?",
+      "options": [
+        "Tener habilitada la gestión de memoria cgroup",
+        "Usar Docker Swarm",
+        "Tener instalado Kubernetes",
+        "Tener al menos 8 GB de RAM"
+      ],
+      "correctIndex": 0,
+      "explanation": "Los hosts necesitan la gestión de memoria cgroup habilitada para que el check de Docker tenga éxito.",
+      "whyCorrect": "Los hosts necesitan la gestión de memoria cgroup habilitada para que el check de Docker tenga éxito.",
+      "hint": "Tema: Integración Docker",
+      "sourceTitle": "Integración Docker",
+      "sourceUrl": "https://docs.datadoghq.com/es/integrations/docker/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-gs-7",
+      "domain": "essential",
+      "domainLabel": "Conceptos esenciales",
+      "question": "¿Qué servicio de plataforma automatiza procesos de extremo a extremo en respuesta a alertas y señales de seguridad?",
+      "options": [
+        "Workflow Automation",
+        "Fleet Automation",
+        "Metrics Summary",
+        "Synthetic Monitoring"
+      ],
+      "correctIndex": 0,
+      "explanation": "Workflow Automation ejecuta flujos automáticos ante alertas o señales. Fleet Automation, en cambio, gestiona los Agents.",
+      "whyCorrect": "Workflow Automation ejecuta flujos automáticos ante alertas o señales. Fleet Automation, en cambio, gestiona los Agents.",
+      "hint": "Tema: Guía de inicio rápido",
+      "sourceTitle": "Guía de inicio rápido",
+      "sourceUrl": "https://docs.datadoghq.com/es/getting_started/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    }
+  ]
+}

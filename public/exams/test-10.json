@@ -1,0 +1,418 @@
+{
+  "id": "test-10",
+  "title": "Test 10 — 20 preguntas",
+  "type": "test20",
+  "description": "Preguntas basadas en la documentación oficial de Datadog. Aprobado práctica: ≥70%.",
+  "passPercent": 70,
+  "count": 20,
+  "domains": {
+    "essential": "Conceptos esenciales",
+    "infra": "Infraestructura y Agent",
+    "network": "Red y configuración",
+    "collection": "Recolección de datos",
+    "troubleshoot": "Troubleshooting",
+    "viz": "Visualización y uso"
+  },
+  "questions": [
+    {
+      "id": "nb-9",
+      "domain": "troubleshoot",
+      "domainLabel": "Troubleshooting",
+      "question": "¿Qué tipo de monitor analiza la tendencia de una métrica y alerta si calcula que cruzará un umbral en el futuro?",
+      "options": [
+        "Composite Monitor",
+        "Audit Monitor",
+        "Forecast Monitor",
+        "Anomaly Monitor"
+      ],
+      "correctIndex": 2,
+      "explanation": "El Forecast Monitor ajusta modelos predictivos para determinar si una métrica sobrepasará un límite predefinido dentro de un horizonte temporal futuro.",
+      "whyCorrect": "El Forecast Monitor ajusta modelos predictivos para determinar si una métrica sobrepasará un límite predefinido dentro de un horizonte temporal futuro.",
+      "hint": "Tema: Tipos de Monitores - Forecast",
+      "sourceTitle": "Tipos de Monitores - Forecast",
+      "sourceUrl": "",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-tr-2",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Cuántos spans o contextos pueden estar activos a la vez en una misma ejecución (hilo, tarea)?",
+      "options": [
+        "Uno por cada integración",
+        "Hasta cuatro",
+        "Ilimitados",
+        "Solo uno"
+      ],
+      "correctIndex": 3,
+      "explanation": "Solo puede haber un span o contexto activo por ejecución. Los nuevos spans toman como padre al activo.",
+      "whyCorrect": "Solo puede haber un span o contexto activo por ejecución. Los nuevos spans toman como padre al activo.",
+      "hint": "Tema: ddtrace (APM en Python)",
+      "sourceTitle": "ddtrace (APM en Python)",
+      "sourceUrl": "https://ddtrace.readthedocs.io/en/stable/advanced_usage.html",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ag-5",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Qué permite Fleet Automation respecto a las claves de API?",
+      "options": [
+        "Identificar qué Agents usan una clave de API concreta y rotarla de forma segura",
+        "Convertir una clave de API en una clave de aplicación",
+        "Crear claves de API sin necesidad de permisos",
+        "Ver el valor de las claves de API revocadas"
+      ],
+      "correctIndex": 0,
+      "explanation": "Entre sus funciones está auditar el uso de claves de API: saber qué Agents usan cada clave para rotarlas sin cortar servicio.",
+      "whyCorrect": "Entre sus funciones está auditar el uso de claves de API: saber qué Agents usan cada clave para rotarlas sin cortar servicio.",
+      "hint": "Tema: Datadog Agent — Fleet Automation",
+      "sourceTitle": "Datadog Agent — Fleet Automation",
+      "sourceUrl": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ky-7",
+      "domain": "network",
+      "domainLabel": "Red y configuración",
+      "question": "Has revocado una clave de API por error. ¿Puedes recuperarla?",
+      "options": [
+        "Solo contactando con soporte en las primeras 24 horas",
+        "Sí, durante 7 días con Unrevoke desde la interfaz",
+        "Sí, en cualquier momento mediante la API",
+        "No, la revocación es inmediata y permanente"
+      ],
+      "correctIndex": 1,
+      "explanation": "Una clave de API revocada sigue 7 días en estado Revoked y se puede restaurar solo desde la UI.",
+      "whyCorrect": "Una clave de API revocada sigue 7 días en estado Revoked y se puede restaurar solo desde la UI.",
+      "hint": "Tema: Claves de API y de aplicación",
+      "sourceTitle": "Claves de API y de aplicación",
+      "sourceUrl": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ag-12",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "En la prueba de consumo del Agent 7.34 sobre una EC2 c5.xlarge, ¿cuánta memoria RAM usó aproximadamente?",
+      "options": [
+        "~13 MB",
+        "~1,3 GB",
+        "~130 MB (RSS)",
+        "~4 GB"
+      ],
+      "correctIndex": 2,
+      "explanation": "La documentación indica ~0,08 % de CPU y ~130 MB de RAM (RSS) en esa prueba.",
+      "whyCorrect": "La documentación indica ~0,08 % de CPU y ~130 MB de RAM (RSS) en esa prueba.",
+      "hint": "Tema: Datadog Agent — consumo de recursos",
+      "sourceTitle": "Datadog Agent — consumo de recursos",
+      "sourceUrl": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ds-8",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Está habilitada por defecto la detección de origen en el Datadog Agent?",
+      "options": [
+        "No existe esa función",
+        "No; se habilita poniendo DD_DOGSTATSD_ORIGIN_DETECTION_CLIENT a true",
+        "Sí, siempre",
+        "Solo en Windows"
+      ],
+      "correctIndex": 1,
+      "explanation": "La detección de origen no está habilitada por defecto en el Agent; se activa con esa variable.",
+      "whyCorrect": "La detección de origen no está habilitada por defecto en el Agent; se activa con esa variable.",
+      "hint": "Tema: DogStatsD",
+      "sourceTitle": "DogStatsD",
+      "sourceUrl": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-il-6",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Qué muestra la columna combinada «Integrations»?",
+      "options": [
+        "Las claves de API usadas por el host",
+        "Los monitores asociados al host",
+        "Las integraciones del Datadog Agent habilitadas en el servidor",
+        "Las integraciones disponibles en el marketplace"
+      ],
+      "correctIndex": 2,
+      "explanation": "Integrations lista las integraciones del Agent activas en cada servidor.",
+      "whyCorrect": "Integrations lista las integraciones del Agent activas en cada servidor.",
+      "hint": "Tema: Lista de servidores",
+      "sourceTitle": "Lista de servidores",
+      "sourceUrl": "https://docs.datadoghq.com/es/infrastructure/list/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ma-4",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Qué método y endpoint editan los metadatos de una métrica (descripción, unidad, tipo)?",
+      "options": [
+        "POST /api/v1/query",
+        "PUT /api/v1/metrics/{metric_name}",
+        "PATCH /api/v1/validate",
+        "GET /api/v1/metrics/{metric_name}"
+      ],
+      "correctIndex": 1,
+      "explanation": "Edit metric metadata usa PUT /api/v1/metrics/{metric_name}. Con GET se leen esos metadatos.",
+      "whyCorrect": "Edit metric metadata usa PUT /api/v1/metrics/{metric_name}. Con GET se leen esos metadatos.",
+      "hint": "Tema: API de métricas",
+      "sourceTitle": "API de métricas",
+      "sourceUrl": "https://docs.datadoghq.com/es/api/latest/metrics/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "nb-11",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Qué información proporciona la sección 'Host List' / Lista de Servidores en la plataforma Datadog?",
+      "options": [
+        "Un inventario en tiempo real de todos los servidores/máquinas que envían métricas a Datadog, indicando su estado, infraestructura y etiquetas asignadas.",
+        "La lista de usuarios con rol de administrador en la cuenta.",
+        "Una lista con los precios actualizados de las licencias de Datadog.",
+        "El catálogo de imágenes públicas de Docker."
+      ],
+      "correctIndex": 0,
+      "explanation": "La Host List proporciona una vista centralizada de todos los hosts monitoreados, mostrando si el agente está activo, las etiquetas (tags) aplicadas y los recursos del sistema.",
+      "whyCorrect": "La Host List proporciona una vista centralizada de todos los hosts monitoreados, mostrando si el agente está activo, las etiquetas (tags) aplicadas y los recursos del sistema.",
+      "hint": "Tema: Lista de Servidores / Infrastructure",
+      "sourceTitle": "Lista de Servidores / Infrastructure",
+      "sourceUrl": "",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-qg-6",
+      "domain": "viz",
+      "domainLabel": "Visualización y uso",
+      "question": "¿Por qué los gráficos se ven más «suaves» al alejar el marco temporal?",
+      "options": [
+        "Porque el rollup por defecto promedia los valores reales de cada intervalo",
+        "Porque el navegador aplica un filtro visual",
+        "Porque las métricas antiguas se guardan como count",
+        "Porque Datadog borra los picos antiguos"
+      ],
+      "correctIndex": 0,
+      "explanation": "Por defecto el rollup calcula el promedio, lo que suaviza los gráficos cuanto mayor es la ventana.",
+      "whyCorrect": "Por defecto el rollup calcula el promedio, lo que suaviza los gráficos cuanto mayor es la ventana.",
+      "hint": "Tema: De la consulta al gráfico",
+      "sourceTitle": "De la consulta al gráfico",
+      "sourceUrl": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-mo-7",
+      "domain": "troubleshoot",
+      "domainLabel": "Troubleshooting",
+      "question": "¿Qué monitor mira el estado producido por el service check process.up?",
+      "options": [
+        "Check de proceso",
+        "Host",
+        "Check de servicio",
+        "Proceso en tiempo real"
+      ],
+      "correctIndex": 0,
+      "explanation": "El monitor Check de proceso se basa en el service check process.up.",
+      "whyCorrect": "El monitor Check de proceso se basa en el service check process.up.",
+      "hint": "Tema: Tipos de monitores",
+      "sourceTitle": "Tipos de monitores",
+      "sourceUrl": "https://docs.datadoghq.com/es/monitors/types/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-il-3",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Debe usarse la lista de servidores para estimar la facturación de hosts?",
+      "options": [
+        "Sí, si se filtra por los últimos 30 días",
+        "No; para eso está la página de facturación",
+        "Solo en cuentas con AWS",
+        "Sí, es la fuente oficial de facturación"
+      ],
+      "correctIndex": 1,
+      "explanation": "La documentación advierte que esta lista no sirve para estimar la facturación de servidores.",
+      "whyCorrect": "La documentación advierte que esta lista no sirve para estimar la facturación de servidores.",
+      "hint": "Tema: Lista de servidores",
+      "sourceTitle": "Lista de servidores",
+      "sourceUrl": "https://docs.datadoghq.com/es/infrastructure/list/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ma-1",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Qué endpoint permite consultar puntos de una serie temporal en un rango de tiempo?",
+      "options": [
+        "PUT /api/v1/metrics/{metric_name}",
+        "POST /api/v2/series",
+        "GET /api/v1/metrics",
+        "GET /api/v1/query"
+      ],
+      "correctIndex": 3,
+      "explanation": "Query timeseries points se hace con GET /api/v1/query. POST /api/v2/series sirve para enviar datos.",
+      "whyCorrect": "Query timeseries points se hace con GET /api/v1/query. POST /api/v2/series sirve para enviar datos.",
+      "hint": "Tema: API de métricas",
+      "sourceTitle": "API de métricas",
+      "sourceUrl": "https://docs.datadoghq.com/es/api/latest/metrics/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-il-10",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Dónde se encuentra la lista de servidores en la aplicación?",
+      "options": [
+        "Logs > Explorer",
+        "Monitors > Gestionar",
+        "Infraestructura > Servidores",
+        "APM > Servicios"
+      ],
+      "correctIndex": 2,
+      "explanation": "La lista de servidores se abre desde Infraestructura > Servidores.",
+      "whyCorrect": "La lista de servidores se abre desde Infraestructura > Servidores.",
+      "hint": "Tema: Lista de servidores",
+      "sourceTitle": "Lista de servidores",
+      "sourceUrl": "https://docs.datadoghq.com/es/infrastructure/list/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ky-6",
+      "domain": "network",
+      "domainLabel": "Red y configuración",
+      "question": "Por defecto, ¿cuántas claves de API puede tener una organización?",
+      "options": [
+        "Hasta 500",
+        "Ilimitadas",
+        "Hasta 5",
+        "Hasta 50"
+      ],
+      "correctIndex": 3,
+      "explanation": "El límite predeterminado es 50 (las claves gestionadas no cuentan). Para más, hay que contactar con soporte.",
+      "whyCorrect": "El límite predeterminado es 50 (las claves gestionadas no cuentan). Para más, hay que contactar con soporte.",
+      "hint": "Tema: Claves de API y de aplicación",
+      "sourceTitle": "Claves de API y de aplicación",
+      "sourceUrl": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-gs-10",
+      "domain": "essential",
+      "domainLabel": "Conceptos esenciales",
+      "question": "¿Qué producto permite ver cómo interactúan los usuarios con tu producto reproduciendo sus sesiones?",
+      "options": [
+        "Session Replay",
+        "Continuous Profiler",
+        "CI Visibility",
+        "Database Monitoring"
+      ],
+      "correctIndex": 0,
+      "explanation": "Session Replay reproduce la sesión del usuario para entender su comportamiento real.",
+      "whyCorrect": "Session Replay reproduce la sesión del usuario para entender su comportamiento real.",
+      "hint": "Tema: Guía de inicio rápido",
+      "sourceTitle": "Guía de inicio rápido",
+      "sourceUrl": "https://docs.datadoghq.com/es/getting_started/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ds-7",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "Además de UDP, ¿qué transporte puede usar DogStatsD?",
+      "options": [
+        "SMTP",
+        "Un socket de dominio UNIX",
+        "gRPC sobre TLS obligatorio",
+        "FTP"
+      ],
+      "correctIndex": 1,
+      "explanation": "DogStatsD puede escuchar en un socket de dominio UNIX (statsd_socket_path), solo con Agent v6+.",
+      "whyCorrect": "DogStatsD puede escuchar en un socket de dominio UNIX (statsd_socket_path), solo con Agent v6+.",
+      "hint": "Tema: DogStatsD",
+      "sourceTitle": "DogStatsD",
+      "sourceUrl": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ai-7",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Qué versión de Python deben soportar las integraciones nuevas para Agent v7+?",
+      "options": [
+        "Python 3",
+        "Solo Python 3.6",
+        "Python 2.7",
+        "Cualquier versión, el Agent la traduce"
+      ],
+      "correctIndex": 0,
+      "explanation": "Las integraciones para Agent v7+ deben soportar Python 3. Python 2.7 era para v5–v6.",
+      "whyCorrect": "Las integraciones para Agent v7+ deben soportar Python 3. Python 2.7 era para v5–v6.",
+      "hint": "Tema: Integraciones basadas en Agent",
+      "sourceTitle": "Integraciones basadas en Agent",
+      "sourceUrl": "https://docs.datadoghq.com/es/extend/integrations/agent_integration/?tab=integraciónootb",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-il-2",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "Por defecto, ¿qué servidores muestra la lista de servidores?",
+      "options": [
+        "Solo los que tienen el Agent 7",
+        "Todos los que alguna vez reportaron",
+        "Los que han reportado en los últimos 7 días",
+        "Los que han tenido actividad en los últimos 15 minutos"
+      ],
+      "correctIndex": 3,
+      "explanation": "De forma predeterminada se muestran los servidores con actividad en los últimos 15 minutos.",
+      "whyCorrect": "De forma predeterminada se muestran los servidores con actividad en los últimos 15 minutos.",
+      "hint": "Tema: Lista de servidores",
+      "sourceTitle": "Lista de servidores",
+      "sourceUrl": "https://docs.datadoghq.com/es/infrastructure/list/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-me-9",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿En qué se diferencia una distribución de un histograma?",
+      "options": [
+        "La distribución no admite etiquetas",
+        "La distribución solo guarda el último valor",
+        "No hay diferencia: son sinónimos",
+        "La distribución resume los valores de todos los hosts del entorno y permite elegir percentiles (p50, p75, p90, p95, p99)"
+      ],
+      "correctIndex": 3,
+      "explanation": "El histograma se agrega por host. La distribución se agrega globalmente y da percentiles precisos para todo el entorno.",
+      "whyCorrect": "El histograma se agrega por host. La distribución se agrega globalmente y da percentiles precisos para todo el entorno.",
+      "hint": "Tema: Métricas — tipos",
+      "sourceTitle": "Métricas — tipos",
+      "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    }
+  ]
+}

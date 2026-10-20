@@ -1,0 +1,426 @@
+{
+  "id": "test-09",
+  "title": "Test 9 — 20 preguntas",
+  "type": "test20",
+  "description": "Preguntas basadas en la documentación oficial de Datadog. Aprobado práctica: ≥70%.",
+  "passPercent": 70,
+  "count": 20,
+  "domains": {
+    "essential": "Conceptos esenciales",
+    "infra": "Infraestructura y Agent",
+    "network": "Red y configuración",
+    "collection": "Recolección de datos",
+    "troubleshoot": "Troubleshooting",
+    "viz": "Visualización y uso"
+  },
+  "questions": [
+    {
+      "id": "doc-ag-2",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Es el Datadog Agent de código abierto?",
+      "options": [
+        "Solo la versión para Windows",
+        "Solo para clientes con plan Enterprise",
+        "No, es software propietario y cerrado",
+        "Sí, su código está publicado en GitHub (DataDog/datadog-agent)"
+      ],
+      "correctIndex": 3,
+      "explanation": "La documentación indica que el Agent es open source y su código está en el repositorio DataDog/datadog-agent.",
+      "whyCorrect": "La documentación indica que el Agent es open source y su código está en el repositorio DataDog/datadog-agent.",
+      "hint": "Tema: Datadog Agent",
+      "sourceTitle": "Datadog Agent",
+      "sourceUrl": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ky-13",
+      "domain": "network",
+      "domainLabel": "Red y configuración",
+      "question": "¿Dónde recomienda Datadog guardar las claves de API y de aplicación?",
+      "options": [
+        "En la descripción del dashboard",
+        "En el código fuente, dentro de un archivo de constantes",
+        "En un archivo .env versionado en Git",
+        "En un gestor de secretos (AWS Secrets Manager, HashiCorp Vault, Azure Key Vault)"
+      ],
+      "correctIndex": 3,
+      "explanation": "Las claves no caducan solas, así que deben guardarse en un gestor de secretos y no en el código ni en archivos de entorno.",
+      "whyCorrect": "Las claves no caducan solas, así que deben guardarse en un gestor de secretos y no en el código ni en archivos de entorno.",
+      "hint": "Tema: Claves de API y de aplicación",
+      "sourceTitle": "Claves de API y de aplicación",
+      "sourceUrl": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "nb-16",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Cómo se aplican las plantillas de configuración de Autodiscovery a los contenedores cuando se utiliza Docker?",
+      "options": [
+        "Mediante etiquetas (labels) de Docker aplicadas en el contenedor o en el archivo docker-compose.",
+        "Enviando un correo electrónico al soporte de Datadog.",
+        "Editando manualmente la tabla de enrutamiento del sistema operativo.",
+        "Modificando directamente el código fuente de la aplicación."
+      ],
+      "correctIndex": 0,
+      "explanation": "Autodiscovery inspecciona las etiquetas de los contenedores (p. ej. 'com.datadoghq.ad.check_names') para activar integraciones automáticamente.",
+      "whyCorrect": "Autodiscovery inspecciona las etiquetas de los contenedores (p. ej. 'com.datadoghq.ad.check_names') para activar integraciones automáticamente.",
+      "hint": "Tema: Autodiscovery en Contenedores",
+      "sourceTitle": "Autodiscovery en Contenedores",
+      "sourceUrl": "",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ds-11",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Cómo se instala el cliente DogStatsD para Python?",
+      "options": [
+        "pip install datadog",
+        "npm install datadog",
+        "apt install dogstatsd",
+        "pip install dogstatsd-agent"
+      ],
+      "correctIndex": 0,
+      "explanation": "El cliente Python se instala con pip install datadog.",
+      "whyCorrect": "El cliente Python se instala con pip install datadog.",
+      "hint": "Tema: DogStatsD",
+      "sourceTitle": "DogStatsD",
+      "sourceUrl": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-qg-7",
+      "domain": "viz",
+      "domainLabel": "Visualización y uso",
+      "question": "Aplicas rollup(avg,60) a una ventana de 2 meses. ¿Obtendrás puntos de 1 minuto?",
+      "options": [
+        "No, el backend intenta mantener menos de ~300 intervalos por gráfico",
+        "No, rollup solo admite valores de 5 minutos",
+        "Sí, siempre se respeta el rollup indicado",
+        "Sí, pero solo para métricas gauge"
+      ],
+      "correctIndex": 0,
+      "explanation": "Datadog limita el número de intervalos a unos ~300, así que no puede dar granularidad de un minuto en 2 meses.",
+      "whyCorrect": "Datadog limita el número de intervalos a unos ~300, así que no puede dar granularidad de un minuto en 2 meses.",
+      "hint": "Tema: De la consulta al gráfico",
+      "sourceTitle": "De la consulta al gráfico",
+      "sourceUrl": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-il-4",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "Entre los filtros rápidos de la lista de servidores, ¿por qué fuente de telemetría se puede filtrar?",
+      "options": [
+        "Datadog Agent u OpenTelemetry",
+        "Prometheus o Graphite",
+        "Solo SNMP",
+        "Syslog o journald"
+      ],
+      "correctIndex": 0,
+      "explanation": "Los filtros rápidos incluyen proveedor de nube, fuente de telemetría (Agent u OpenTelemetry), sistema operativo y hardware (GPU).",
+      "whyCorrect": "Los filtros rápidos incluyen proveedor de nube, fuente de telemetría (Agent u OpenTelemetry), sistema operativo y hardware (GPU).",
+      "hint": "Tema: Lista de servidores",
+      "sourceTitle": "Lista de servidores",
+      "sourceUrl": "https://docs.datadoghq.com/es/infrastructure/list/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "nb-6",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Qué protocolo de transporte y puerto utiliza por defecto el servicio DogStatsD para recibir métricas personalizadas?",
+      "options": [
+        "gRPC en el puerto 50051",
+        "HTTP en el puerto 8080",
+        "UDP en el puerto 8125",
+        "TCP en el puerto 443"
+      ],
+      "correctIndex": 2,
+      "explanation": "DogStatsD es una implementación sobre el protocolo StatsD que escucha de forma predeterminada en el puerto UDP 8125.",
+      "whyCorrect": "DogStatsD es una implementación sobre el protocolo StatsD que escucha de forma predeterminada en el puerto UDP 8125.",
+      "hint": "Tema: DogStatsD - Protocolo",
+      "sourceTitle": "DogStatsD - Protocolo",
+      "sourceUrl": "",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-di-9",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "En el Agent dockerizado heredado (v5), ¿qué hace la opción NON_LOCAL_TRAFFIC=yes?",
+      "options": [
+        "Bloquea todo el tráfico saliente",
+        "Desactiva la GUI del Agent",
+        "Permite recibir métricas StatsD desde cualquier IP externa, por ejemplo desde otros contenedores",
+        "Activa la recogida de logs"
+      ],
+      "correctIndex": 2,
+      "explanation": "Sirve para informar métricas desde otros contenedores o sistemas. En el Agent v6+ el equivalente es DD_DOGSTATSD_NON_LOCAL_TRAFFIC.",
+      "whyCorrect": "Sirve para informar métricas desde otros contenedores o sistemas. En el Agent v6+ el equivalente es DD_DOGSTATSD_NON_LOCAL_TRAFFIC.",
+      "hint": "Tema: Integración Docker",
+      "sourceTitle": "Integración Docker",
+      "sourceUrl": "https://docs.datadoghq.com/es/integrations/docker/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-mo-10",
+      "domain": "troubleshoot",
+      "domainLabel": "Troubleshooting",
+      "question": "¿Qué monitor te notifica cuando el motor de Datadog detecta automáticamente un comportamiento anómalo, sin definir tú la métrica?",
+      "options": [
+        "Alerta de cambio",
+        "Anomalía",
+        "Outlier",
+        "Watchdog"
+      ],
+      "correctIndex": 3,
+      "explanation": "El monitor Watchdog notifica cuando Watchdog detecta un comportamiento anómalo.",
+      "whyCorrect": "El monitor Watchdog notifica cuando Watchdog detecta un comportamiento anómalo.",
+      "hint": "Tema: Tipos de monitores",
+      "sourceTitle": "Tipos de monitores",
+      "sourceUrl": "https://docs.datadoghq.com/es/monitors/types/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-il-5",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Qué muestra la columna combinada «Software» de la lista de servidores?",
+      "options": [
+        "Las versiones de todos los paquetes instalados",
+        "Los procesos con más consumo de CPU",
+        "El servidor web, la base de datos, la caché y el orquestador de contenedores detectados",
+        "Las licencias de software contratadas"
+      ],
+      "correctIndex": 2,
+      "explanation": "Software muestra servidor web, base de datos, caché y orquestador (Docker, Kubernetes) si se detectan.",
+      "whyCorrect": "Software muestra servidor web, base de datos, caché y orquestador (Docker, Kubernetes) si se detectan.",
+      "hint": "Tema: Lista de servidores",
+      "sourceTitle": "Lista de servidores",
+      "sourceUrl": "https://docs.datadoghq.com/es/infrastructure/list/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-me-11",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Cuál es la agregación temporal por defecto en una consulta de métricas?",
+      "options": [
+        "max",
+        "avg",
+        "count",
+        "sum"
+      ],
+      "correctIndex": 1,
+      "explanation": "Por defecto se aplica avg. También están disponibles sum, min, max y count.",
+      "whyCorrect": "Por defecto se aplica avg. También están disponibles sum, min, max y count.",
+      "hint": "Tema: Métricas — consulta",
+      "sourceTitle": "Métricas — consulta",
+      "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ky-9",
+      "domain": "network",
+      "domainLabel": "Red y configuración",
+      "question": "¿Qué endpoint permite comprobar si una clave de API está activa y se puede usar?",
+      "options": [
+        "/api/v2/series",
+        "/api/v1/query",
+        "/api/v1/validate",
+        "/api/v1/metrics"
+      ],
+      "correctIndex": 2,
+      "explanation": "Para validar una clave de API se llama a /api/v1/validate. Para claves de aplicación se usa /api/v2/validate_keys.",
+      "whyCorrect": "Para validar una clave de API se llama a /api/v1/validate. Para claves de aplicación se usa /api/v2/validate_keys.",
+      "hint": "Tema: Claves de API y de aplicación",
+      "sourceTitle": "Claves de API y de aplicación",
+      "sourceUrl": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-da-13",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "Excluyes contenedores con DD_CONTAINER_EXCLUDE. ¿Cambia el valor de docker.containers.running?",
+      "options": [
+        "Solo si también se usa DD_AC_EXCLUDE",
+        "Sí, y además baja la factura",
+        "Sí, los excluidos dejan de contarse",
+        "No, todos los contenedores se siguen contabilizando"
+      ],
+      "correctIndex": 3,
+      "explanation": "Las métricas docker.containers.running/.stopped (y sus .total) no se ven afectadas por las exclusiones.",
+      "whyCorrect": "Las métricas docker.containers.running/.stopped (y sus .total) no se ven afectadas por las exclusiones.",
+      "hint": "Tema: Agent en Docker",
+      "sourceTitle": "Agent en Docker",
+      "sourceUrl": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ds-2",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Qué extensiones específicas de Datadog añade DogStatsD al protocolo StatsD? (elige 4)",
+      "options": [
+        "Eventos",
+        "Session Replay",
+        "Verificaciones de servicio",
+        "Trazas distribuidas",
+        "Tipo de métrica histograma",
+        "Etiquetado"
+      ],
+      "correctIndex": 4,
+      "correctIndices": [
+        0,
+        2,
+        4,
+        5
+      ],
+      "explanation": "Las extensiones son histogramas, service checks, eventos y etiquetado.",
+      "whyCorrect": "Las extensiones son histogramas, service checks, eventos y etiquetado.",
+      "hint": "Tema: DogStatsD",
+      "sourceTitle": "DogStatsD",
+      "sourceUrl": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "sourceTag": "study-pack",
+      "answerType": "multiple"
+    },
+    {
+      "id": "doc-ai-6",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Bajo qué espacio de nombres de Python se organizan las verificaciones del Agent?",
+      "options": [
+        "datadog_agent",
+        "checks_d",
+        "dd_integrations",
+        "datadog_checks"
+      ],
+      "correctIndex": 3,
+      "explanation": "Una integración llamada X se encuentra en x/datadog_checks/x/.",
+      "whyCorrect": "Una integración llamada X se encuentra en x/datadog_checks/x/.",
+      "hint": "Tema: Integraciones basadas en Agent",
+      "sourceTitle": "Integraciones basadas en Agent",
+      "sourceUrl": "https://docs.datadoghq.com/es/extend/integrations/agent_integration/?tab=integraciónootb",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-gs-3",
+      "domain": "essential",
+      "domainLabel": "Conceptos esenciales",
+      "question": "¿Qué producto mide la experiencia de los usuarios reales y ayuda a detectar su frustración?",
+      "options": [
+        "PR Gates",
+        "Real User Monitoring (RUM)",
+        "Synthetic Monitoring",
+        "Cloud SIEM"
+      ],
+      "correctIndex": 1,
+      "explanation": "La guía indica que Real User Monitoring mide la rotación de usuarios y detecta la frustración del usuario.",
+      "whyCorrect": "La guía indica que Real User Monitoring mide la rotación de usuarios y detecta la frustración del usuario.",
+      "hint": "Tema: Guía de inicio rápido",
+      "sourceTitle": "Guía de inicio rápido",
+      "sourceUrl": "https://docs.datadoghq.com/es/getting_started/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "nb-7",
+      "domain": "viz",
+      "domainLabel": "Visualización y uso",
+      "question": "En una consulta de métricas en Datadog (por ejemplo: 'avg:system.cpu.user{environment:prod} by {host}'), ¿qué representa la parte 'by {host}'?",
+      "options": [
+        "La agregación temporal del valor.",
+        "El umbral crítico de alerta.",
+        "El agrupamiento (Group By) por la etiqueta u opción 'host'.",
+        "El filtro de exclusión de hosts."
+      ],
+      "correctIndex": 2,
+      "explanation": "La cláusula 'by {tag_key}' divide y agrupa la serie temporal resultante según los valores individuales de esa etiqueta.",
+      "whyCorrect": "La cláusula 'by {tag_key}' divide y agrupa la serie temporal resultante según los valores individuales de esa etiqueta.",
+      "hint": "Tema: Consulta al Gráfico - Sintaxis",
+      "sourceTitle": "Consulta al Gráfico - Sintaxis",
+      "sourceUrl": "",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-di-2",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "A partir del Agent v6, ¿cómo se llama el check de Docker y en qué lenguaje está escrito?",
+      "options": [
+        "docker, escrito en Go",
+        "docker_daemon, escrito en Python",
+        "dockerd, escrito en Java",
+        "container, escrito en Rust"
+      ],
+      "correctIndex": 0,
+      "explanation": "El check docker está escrito en Go para aprovechar la nueva arquitectura interna del Agent v6+.",
+      "whyCorrect": "El check docker está escrito en Go para aprovechar la nueva arquitectura interna del Agent v6+.",
+      "hint": "Tema: Integración Docker",
+      "sourceTitle": "Integración Docker",
+      "sourceUrl": "https://docs.datadoghq.com/es/integrations/docker/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-tr-8",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Qué pasa con los valores sensibles (token, password) del query string cuando se trazan URLs?",
+      "options": [
+        "Se ofuscan por defecto",
+        "Se guardan en claro",
+        "Se eliminan todas las URLs",
+        "Se envían cifrados a un vault"
+      ],
+      "correctIndex": 0,
+      "explanation": "Los query strings sensibles se ofuscan por defecto; la expresión regular se ajusta con DD_TRACE_OBFUSCATION_QUERY_STRING_REGEXP.",
+      "whyCorrect": "Los query strings sensibles se ofuscan por defecto; la expresión regular se ajusta con DD_TRACE_OBFUSCATION_QUERY_STRING_REGEXP.",
+      "hint": "Tema: ddtrace (APM en Python)",
+      "sourceTitle": "ddtrace (APM en Python)",
+      "sourceUrl": "https://ddtrace.readthedocs.io/en/stable/advanced_usage.html",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ag-16",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿En qué plataforma NO es compatible la interfaz gráfica del Agent?",
+      "options": [
+        "Windows de 32 bits",
+        "macOS",
+        "Windows de 64 bits",
+        "Ninguna: es compatible en todas"
+      ],
+      "correctIndex": 0,
+      "explanation": "La documentación indica que la GUI del Agent no es compatible con Windows de 32 bits.",
+      "whyCorrect": "La documentación indica que la GUI del Agent no es compatible con Windows de 32 bits.",
+      "hint": "Tema: Datadog Agent — GUI",
+      "sourceTitle": "Datadog Agent — GUI",
+      "sourceUrl": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "id": "test-02",
   "title": "Test 2 — 20 preguntas",
   "type": "test20",
-  "description": "Mezcla preguntas de tu JSON de estudio (docs Datadog) con material extra. Aprobado práctica: ≥70%.",
+  "description": "Preguntas basadas en la documentación oficial de Datadog. Aprobado práctica: ≥70%.",
   "passPercent": 70,
   "count": 20,
   "domains": {
@@ -15,97 +15,391 @@
   },
   "questions": [
     {
-      "id": "nb-7",
-      "domain": "viz",
-      "domainLabel": "Visualización y uso",
-      "question": "En una consulta de métricas en Datadog (por ejemplo: 'avg:system.cpu.user{environment:prod} by {host}'), ¿qué representa la parte 'by {host}'?",
-      "options": [
-        "La agregación temporal del valor.",
-        "El agrupamiento (Group By) por la etiqueta u opción 'host'.",
-        "El filtro de exclusión de hosts.",
-        "El umbral crítico de alerta."
-      ],
-      "correctIndex": 1,
-      "explanation": "La cláusula 'by {tag_key}' divide y agrupa la serie temporal resultante según los valores individuales de esa etiqueta.",
-      "whyCorrect": "La cláusula 'by {tag_key}' divide y agrupa la serie temporal resultante según los valores individuales de esa etiqueta.",
-      "hint": "Tema: Consulta al Gráfico - Sintaxis",
-      "sourceTitle": "Consulta al Gráfico - Sintaxis",
-      "sourceTag": "study-pack",
-      "answerType": "single"
-    },
-    {
-      "id": "nb-4",
+      "id": "doc-ai-11",
       "domain": "infra",
       "domainLabel": "Infraestructura y Agent",
-      "question": "¿Qué variable de entorno habilita en el contenedor del Agente la recepción de métricas DogStatsD provenientes de otros contenedores en el mismo host?",
+      "question": "¿A qué repositorio se envía una integración OOTB desarrollada por un socio tecnológico?",
       "options": [
-        "DD_DOGSTATSD_PORT=8125",
-        "DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true",
-        "DD_STATSD_EXTERNAL=true",
-        "DD_ALLOW_CONTAINER_METRICS=true"
-      ],
-      "correctIndex": 1,
-      "explanation": "Establecer DD_DOGSTATSD_NON_LOCAL_TRAFFIC en 'true' le permite a DogStatsD escuchar tráfico UDP de contenedores no locales al contenedor del Agente.",
-      "whyCorrect": "Establecer DD_DOGSTATSD_NON_LOCAL_TRAFFIC en 'true' le permite a DogStatsD escuchar tráfico UDP de contenedores no locales al contenedor del Agente.",
-      "hint": "Tema: Agente de Docker - Variables de Entorno",
-      "sourceTitle": "Agente de Docker - Variables de Entorno",
-      "sourceTag": "study-pack",
-      "answerType": "single"
-    },
-    {
-      "id": "nb-15",
-      "domain": "collection",
-      "domainLabel": "Recolección de datos",
-      "question": "¿Qué tipo de métrica en Datadog mide la tasa de eventos por segundo e incrementa progresivamente con cada muestra enviada?",
-      "options": [
-        "Gauge",
-        "Count / RATE",
-        "Set",
-        "Distribution"
-      ],
-      "correctIndex": 1,
-      "explanation": "Las métricas de tipo 'Count' o 'Rate' rastrean la frecuencia o total de ocurrencias de un evento en un intervalo de tiempo dado.",
-      "whyCorrect": "Las métricas de tipo 'Count' o 'Rate' rastrean la frecuencia o total de ocurrencias de un evento en un intervalo de tiempo dado.",
-      "hint": "Tema: Métricas - Tipos de datos",
-      "sourceTitle": "Métricas - Tipos de datos",
-      "sourceTag": "study-pack",
-      "answerType": "single"
-    },
-    {
-      "id": "nb-19",
-      "domain": "troubleshoot",
-      "domainLabel": "Troubleshooting",
-      "question": "¿Qué mecanismo se debe utilizar en Datadog para silenciar temporalmente las alertas de un monitor durante una ventana de mantenimiento programado?",
-      "options": [
-        "Eliminar el monitor y volver a crearlo al finalizar el mantenimiento.",
-        "Programar un 'Downtime' (Tiempo de inactividad) para los monitores o tags específicos.",
-        "Apagar la red del servidor Datadog.",
-        "Desinstalar el Agente de Datadog del host."
-      ],
-      "correctIndex": 1,
-      "explanation": "Los 'Downtimes' permiten silenciar notificaciones automáticas en horarios específicos sin necesidad de pausar o modificar la lógica de los monitores.",
-      "whyCorrect": "Los 'Downtimes' permiten silenciar notificaciones automáticas en horarios específicos sin necesidad de pausar o modificar la lógica de los monitores.",
-      "hint": "Tema: Gestión de Mantenimiento - Downtimes",
-      "sourceTitle": "Gestión de Mantenimiento - Downtimes",
-      "sourceTag": "study-pack",
-      "answerType": "single"
-    },
-    {
-      "id": "nb-12",
-      "domain": "infra",
-      "domainLabel": "Infraestructura y Agent",
-      "question": "¿Cuál de las siguientes métricas es recopilada nativamente por la integración de Docker para indicar la cantidad de contenedores ejecutándose en el host?",
-      "options": [
-        "docker.containers.running",
-        "docker.status.active",
-        "container.count.total",
-        "sys.docker.active_containers"
+        "Datadog/integrations-extras",
+        "Datadog/datadog-agent",
+        "Datadog/dd-trace-py",
+        "Datadog/docker-dd-agent"
       ],
       "correctIndex": 0,
-      "explanation": "La métrica 'docker.containers.running' mide la cantidad de contenedores en estado de ejecución en la instancia donde opera el Agente.",
-      "whyCorrect": "La métrica 'docker.containers.running' mide la cantidad de contenedores en estado de ejecución en la instancia donde opera el Agente.",
-      "hint": "Tema: Docker Daemon Integration",
-      "sourceTitle": "Docker Daemon Integration",
+      "explanation": "Las integraciones OOTB de socios van a integrations-extras; las de pago, a Datadog/marketplace.",
+      "whyCorrect": "Las integraciones OOTB de socios van a integrations-extras; las de pago, a Datadog/marketplace.",
+      "hint": "Tema: Integraciones basadas en Agent",
+      "sourceTitle": "Integraciones basadas en Agent",
+      "sourceUrl": "https://docs.datadoghq.com/es/extend/integrations/agent_integration/?tab=integraciónootb",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-me-8",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Qué valores reporta una métrica de tipo histograma? (elige todas las correctas)",
+      "options": [
+        "Percentil 99,9",
+        "Percentil 95",
+        "Máximo",
+        "Mediana",
+        "Promedio (avg)",
+        "Conteo (count)"
+      ],
+      "correctIndex": 4,
+      "correctIndices": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "explanation": "Un histograma genera cinco series: promedio, conteo, mediana, percentil 95 y máximo.",
+      "whyCorrect": "Un histograma genera cinco series: promedio, conteo, mediana, percentil 95 y máximo.",
+      "hint": "Tema: Métricas — tipos",
+      "sourceTitle": "Métricas — tipos",
+      "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
+      "sourceTag": "study-pack",
+      "answerType": "multiple"
+    },
+    {
+      "id": "doc-da-9",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Qué variable habilita la recogida de logs en el Agent de Docker?",
+      "options": [
+        "DD_COLLECT_LOGS",
+        "DD_LOG_LEVEL",
+        "DD_APM_ENABLED",
+        "DD_LOGS_ENABLED"
+      ],
+      "correctIndex": 3,
+      "explanation": "DD_LOGS_ENABLED activa el Agent de logs. Está deshabilitado por defecto por seguridad y rendimiento.",
+      "whyCorrect": "DD_LOGS_ENABLED activa el Agent de logs. Está deshabilitado por defecto por seguridad y rendimiento.",
+      "hint": "Tema: Agent en Docker",
+      "sourceTitle": "Agent en Docker",
+      "sourceUrl": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ma-3",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Qué endpoint devuelve la lista de métricas activas?",
+      "options": [
+        "POST /api/v2/series",
+        "GET /api/v1/validate",
+        "GET /api/v1/metrics",
+        "DELETE /api/v2/metrics/{metric_name}/tags"
+      ],
+      "correctIndex": 2,
+      "explanation": "Get active metrics list corresponde a GET /api/v1/metrics.",
+      "whyCorrect": "Get active metrics list corresponde a GET /api/v1/metrics.",
+      "hint": "Tema: API de métricas",
+      "sourceTitle": "API de métricas",
+      "sourceUrl": "https://docs.datadoghq.com/es/api/latest/metrics/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-da-18",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Qué envía a Datadog el Agent de Docker al iniciarse o reiniciarse?",
+      "options": [
+        "Un log de error",
+        "Un evento",
+        "Un correo al administrador",
+        "Una traza"
+      ],
+      "correctIndex": 1,
+      "explanation": "El Agent de Docker envía eventos a Datadog al iniciarse o reiniciarse.",
+      "whyCorrect": "El Agent de Docker envía eventos a Datadog al iniciarse o reiniciarse.",
+      "hint": "Tema: Agent en Docker",
+      "sourceTitle": "Agent en Docker",
+      "sourceUrl": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-gs-2",
+      "domain": "essential",
+      "domainLabel": "Conceptos esenciales",
+      "question": "¿Qué producto simula usuarios de todo el mundo para probar una aplicación web, una API o una app móvil?",
+      "options": [
+        "Continuous Profiler",
+        "Synthetic Monitoring",
+        "Real User Monitoring",
+        "Code Security"
+      ],
+      "correctIndex": 1,
+      "explanation": "Synthetic Monitoring ejecuta pruebas simuladas desde distintas ubicaciones. RUM, en cambio, mide a usuarios reales.",
+      "whyCorrect": "Synthetic Monitoring ejecuta pruebas simuladas desde distintas ubicaciones. RUM, en cambio, mide a usuarios reales.",
+      "hint": "Tema: Guía de inicio rápido",
+      "sourceTitle": "Guía de inicio rápido",
+      "sourceUrl": "https://docs.datadoghq.com/es/getting_started/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "nb-2",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿En qué puerto se inicia localmente la interfaz gráfica (Agent Manager GUI) del Datadog Agent en Windows y macOS?",
+      "options": [
+        "Puerto 5002",
+        "Puerto 9090",
+        "Puerto 5000",
+        "Puerto 8125"
+      ],
+      "correctIndex": 0,
+      "explanation": "El Agent Manager GUI se ejecuta por defecto en el puerto local 5002.",
+      "whyCorrect": "El Agent Manager GUI se ejecuta por defecto en el puerto local 5002.",
+      "hint": "Tema: Datadog Agent - GUI",
+      "sourceTitle": "Datadog Agent - GUI",
+      "sourceUrl": "",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-mo-13",
+      "domain": "troubleshoot",
+      "domainLabel": "Troubleshooting",
+      "question": "¿Qué monitor elegirías para seguir la latencia de un servicio a partir de métricas de trazas?",
+      "options": [
+        "Red",
+        "Host",
+        "APM",
+        "Rastreo de errores"
+      ],
+      "correctIndex": 2,
+      "explanation": "El monitor APM monitoriza métricas de APM o consultas de trazas.",
+      "whyCorrect": "El monitor APM monitoriza métricas de APM o consultas de trazas.",
+      "hint": "Tema: Tipos de monitores",
+      "sourceTitle": "Tipos de monitores",
+      "sourceUrl": "https://docs.datadoghq.com/es/monitors/types/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ds-12",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Funciona cualquier cliente StatsD estándar con DogStatsD?",
+      "options": [
+        "Solo si usa TCP",
+        "Sí, e incluye todas las extensiones",
+        "No, solo los clientes oficiales de Datadog",
+        "Sí, pero sin las extensiones específicas de Datadog"
+      ],
+      "correctIndex": 3,
+      "explanation": "Cualquier cliente StatsD compatible funciona, pero no aprovecha histogramas, service checks, eventos ni etiquetas.",
+      "whyCorrect": "Cualquier cliente StatsD compatible funciona, pero no aprovecha histogramas, service checks, eventos ni etiquetas.",
+      "hint": "Tema: DogStatsD",
+      "sourceTitle": "DogStatsD",
+      "sourceUrl": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ag-8",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Cómo se deshabilita la GUI del Agent?",
+      "options": [
+        "Desinstalando el Agent y reinstalándolo sin GUI",
+        "Borrando el archivo datadog.yaml",
+        "Poniendo el puerto de la GUI a -1 en datadog.yaml",
+        "Poniendo el puerto de la GUI a 0"
+      ],
+      "correctIndex": 2,
+      "explanation": "El puerto se puede cambiar en datadog.yaml. Para deshabilitar la GUI, el valor del puerto debe ser -1.",
+      "whyCorrect": "El puerto se puede cambiar en datadog.yaml. Para deshabilitar la GUI, el valor del puerto debe ser -1.",
+      "hint": "Tema: Datadog Agent — GUI",
+      "sourceTitle": "Datadog Agent — GUI",
+      "sourceUrl": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ky-3",
+      "domain": "network",
+      "domainLabel": "Red y configuración",
+      "question": "¿Qué implica el modo de lectura única (OTR) en las claves de aplicación?",
+      "options": [
+        "La clave caduca a las 24 horas",
+        "La clave solo se puede usar una vez",
+        "El secreto de la clave solo se muestra una vez, al crearla, y no se puede recuperar después",
+        "La clave solo permite peticiones GET"
+      ],
+      "correctIndex": 2,
+      "explanation": "Con OTR habilitado, el secreto solo es visible en la creación y no se recupera ni por la interfaz ni por la API.",
+      "whyCorrect": "Con OTR habilitado, el secreto solo es visible en la creación y no se recupera ni por la interfaz ni por la API.",
+      "hint": "Tema: Claves de API y de aplicación",
+      "sourceTitle": "Claves de API y de aplicación",
+      "sourceUrl": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-qg-8",
+      "domain": "viz",
+      "domainLabel": "Visualización y uso",
+      "question": "¿Qué define rollup(avg,60) en una consulta?",
+      "options": [
+        "Un límite de 60 hosts en la consulta",
+        "Un monitor que se evalúa cada 60 segundos",
+        "Intervalos de 60 segundos donde los puntos se agregan con un promedio",
+        "Un promedio de las últimas 60 series"
+      ],
+      "correctIndex": 2,
+      "explanation": "rollup(avg,60) divide la ventana en intervalos de un minuto y agrega con la media los datos de cada uno.",
+      "whyCorrect": "rollup(avg,60) divide la ventana en intervalos de un minuto y agrega con la media los datos de cada uno.",
+      "hint": "Tema: De la consulta al gráfico",
+      "sourceTitle": "De la consulta al gráfico",
+      "sourceUrl": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ds-3",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Implementa DogStatsD los temporizadores (timers) de StatsD como tipo nativo?",
+      "options": [
+        "No, pero los soporta a través de histogramas",
+        "No, y no hay forma de enviarlos",
+        "Solo en Windows",
+        "Sí, como tipo nativo"
+      ],
+      "correctIndex": 0,
+      "explanation": "DogStatsD no tiene timers como tipo nativo; los gestiona mediante histogramas.",
+      "whyCorrect": "DogStatsD no tiene timers como tipo nativo; los gestiona mediante histogramas.",
+      "hint": "Tema: DogStatsD",
+      "sourceTitle": "DogStatsD",
+      "sourceUrl": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ag-13",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Qué tipo de comprobaciones aumenta el uso de memoria del Agent según el número de beans que exponen las JVM?",
+      "options": [
+        "Las comprobaciones de red",
+        "Las comprobaciones de disco",
+        "Las comprobaciones NTP",
+        "Las comprobaciones JMX"
+      ],
+      "correctIndex": 3,
+      "explanation": "Habilitar JMX obliga al Agent a usar más memoria en función del número de beans de las JVM monitorizadas.",
+      "whyCorrect": "Habilitar JMX obliga al Agent a usar más memoria en función del número de beans de las JVM monitorizadas.",
+      "hint": "Tema: Datadog Agent — consumo de recursos",
+      "sourceTitle": "Datadog Agent — consumo de recursos",
+      "sourceUrl": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ag-11",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Para qué existe un paquete independiente de DogStatsD, sin el Agent completo?",
+      "options": [
+        "Para enviar logs desde el navegador",
+        "Para sustituir a la API HTTP de métricas",
+        "Para ejecutar checks de Python sin instalar el Agent",
+        "Para entornos con contenedores donde DogStatsD corre como sidecar o servidores que solo necesitan DogStatsD"
+      ],
+      "correctIndex": 3,
+      "explanation": "Se recomienda el Agent completo, pero el paquete DogStatsD sirve como sidecar o para servidores DogStatsD sin el resto de funciones.",
+      "whyCorrect": "Se recomienda el Agent completo, pero el paquete DogStatsD sirve como sidecar o para servidores DogStatsD sin el resto de funciones.",
+      "hint": "Tema: Datadog Agent",
+      "sourceTitle": "Datadog Agent",
+      "sourceUrl": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-me-3",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "Llegan dos puntos de la misma métrica con la misma marca de tiempo. ¿Qué hace Datadog?",
+      "options": [
+        "El punto más reciente sobrescribe al anterior",
+        "Suma ambos valores",
+        "Calcula el promedio",
+        "Rechaza los dos"
+      ],
+      "correctIndex": 0,
+      "explanation": "Si hay puntos con la misma marca de tiempo, el más reciente sobrescribe a los anteriores.",
+      "whyCorrect": "Si hay puntos con la misma marca de tiempo, el más reciente sobrescribe a los anteriores.",
+      "hint": "Tema: Métricas",
+      "sourceTitle": "Métricas",
+      "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-da-11",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Valor por defecto de DD_APM_ENABLED en el Agent de Docker?",
+      "options": [
+        "Depende del sitio",
+        "false",
+        "true",
+        "No existe esa variable"
+      ],
+      "correctIndex": 2,
+      "explanation": "La recolección de trazas está habilitada por defecto (DD_APM_ENABLED=true).",
+      "whyCorrect": "La recolección de trazas está habilitada por defecto (DD_APM_ENABLED=true).",
+      "hint": "Tema: Agent en Docker",
+      "sourceTitle": "Agent en Docker",
+      "sourceUrl": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-mo-5",
+      "domain": "troubleshoot",
+      "domainLabel": "Troubleshooting",
+      "question": "¿Qué monitor comprueba si uno o más procesos se están ejecutando en un host?",
+      "options": [
+        "Host",
+        "Proceso en tiempo real",
+        "Red",
+        "Evento"
+      ],
+      "correctIndex": 1,
+      "explanation": "El monitor de proceso en tiempo real verifica que los procesos indicados estén corriendo.",
+      "whyCorrect": "El monitor de proceso en tiempo real verifica que los procesos indicados estén corriendo.",
+      "hint": "Tema: Tipos de monitores",
+      "sourceTitle": "Tipos de monitores",
+      "sourceUrl": "https://docs.datadoghq.com/es/monitors/types/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-me-2",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Qué ocurre con una métrica enviada con una marca de tiempo con fracciones de segundo?",
+      "options": [
+        "Se guarda con precisión de milisegundos",
+        "Se descarta",
+        "Se redondea al segundo más cercano",
+        "Se convierte en un evento"
+      ],
+      "correctIndex": 2,
+      "explanation": "Las marcas de tiempo con fracciones de segundo se redondean al segundo más cercano.",
+      "whyCorrect": "Las marcas de tiempo con fracciones de segundo se redondean al segundo más cercano.",
+      "hint": "Tema: Métricas",
+      "sourceTitle": "Métricas",
+      "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
       "sourceTag": "study-pack",
       "answerType": "single"
     },
@@ -116,281 +410,16 @@
       "question": "¿En qué lenguaje de programación se desarrollan las comprobaciones personalizadas (Custom Agent Checks) del Datadog Agent?",
       "options": [
         "Go",
-        "Python",
+        "C++",
         "JavaScript / Node.js",
-        "C++"
+        "Python"
       ],
-      "correctIndex": 1,
+      "correctIndex": 3,
       "explanation": "Las verificaciones personalizadas (Agent Checks) que se integran directamente con la arquitectura del Agente se escriben en Python.",
       "whyCorrect": "Las verificaciones personalizadas (Agent Checks) que se integran directamente con la arquitectura del Agente se escriben en Python.",
       "hint": "Tema: Integraciones basadas en Agent",
       "sourceTitle": "Integraciones basadas en Agent",
-      "sourceTag": "study-pack",
-      "answerType": "single"
-    },
-    {
-      "id": "nb-2",
-      "domain": "infra",
-      "domainLabel": "Infraestructura y Agent",
-      "question": "¿En qué puerto se inicia localmente la interfaz gráfica (Agent Manager GUI) del Datadog Agent en Windows y macOS?",
-      "options": [
-        "Puerto 8125",
-        "Puerto 5000",
-        "Puerto 5002",
-        "Puerto 9090"
-      ],
-      "correctIndex": 2,
-      "explanation": "El Agent Manager GUI se ejecuta por defecto en el puerto local 5002.",
-      "whyCorrect": "El Agent Manager GUI se ejecuta por defecto en el puerto local 5002.",
-      "hint": "Tema: Datadog Agent - GUI",
-      "sourceTitle": "Datadog Agent - GUI",
-      "sourceTag": "study-pack",
-      "answerType": "single"
-    },
-    {
-      "id": "nb-8",
-      "domain": "troubleshoot",
-      "domainLabel": "Troubleshooting",
-      "question": "¿Para qué sirve específicamente un 'Outlier Monitor' (Monitor de Valores Atípicos)?",
-      "options": [
-        "Para predecir cuándo se agotará el espacio en disco en los próximos 30 días.",
-        "Para alertar cuando un miembro de un grupo (ej. un servidor en un clúster) se comporta de forma significativamente diferente al resto del grupo.",
-        "Para monitorear únicamente la disponibilidad de la red mediante pings ICMP.",
-        "Para evaluar patrones estacionales comparados con la misma hora de la semana anterior."
-      ],
-      "correctIndex": 1,
-      "explanation": "Outlier Detection utiliza algoritmos para identificar elementos de un grupo cuyo comportamiento se desvía estadísticamente del promedio de sus pares.",
-      "whyCorrect": "Outlier Detection utiliza algoritmos para identificar elementos de un grupo cuyo comportamiento se desvía estadísticamente del promedio de sus pares.",
-      "hint": "Tema: Tipos de Monitores - Outlier",
-      "sourceTitle": "Tipos de Monitores - Outlier",
-      "sourceTag": "study-pack",
-      "answerType": "single"
-    },
-    {
-      "id": "nb-3",
-      "domain": "infra",
-      "domainLabel": "Infraestructura y Agent",
-      "question": "¿Qué montaje de volumen es imprescindible para que el contenedor del Datadog Agent interactúe con el demonio de Docker y descubra contenedores?",
-      "options": [
-        "-v /var/run/docker.sock:/var/run/docker.sock:ro",
-        "-v /etc/docker/daemon.json:/etc/docker/daemon.json:ro",
-        "-v /var/log/docker:/var/log/docker:ro",
-        "-v /usr/bin/docker:/usr/bin/docker:ro"
-      ],
-      "correctIndex": 0,
-      "explanation": "Montar el socket de Docker (/var/run/docker.sock) en modo lectura permite al Agente comunicarse con la API de Docker Daemon.",
-      "whyCorrect": "Montar el socket de Docker (/var/run/docker.sock) en modo lectura permite al Agente comunicarse con la API de Docker Daemon.",
-      "hint": "Tema: Agente de Docker - Volúmenes",
-      "sourceTitle": "Agente de Docker - Volúmenes",
-      "sourceTag": "study-pack",
-      "answerType": "single"
-    },
-    {
-      "id": "nb-20",
-      "domain": "viz",
-      "domainLabel": "Visualización y uso",
-      "question": "¿Cuáles son los cuatro agregadores temporales/espaciales principales disponibles al consultar métricas en los gráficos de Datadog?",
-      "options": [
-        "avg, sum, min, max",
-        "top, bottom, median, mode",
-        "count, distinct, filter, limit",
-        "mean, dev, variance, std"
-      ],
-      "correctIndex": 0,
-      "explanation": "Los métodos básicos de agregación en la sintaxis de consultas de gráficos de Datadog son 'avg' (promedio), 'sum' (suma), 'min' (mínimo) y 'max' (máximo).",
-      "whyCorrect": "Los métodos básicos de agregación en la sintaxis de consultas de gráficos de Datadog son 'avg' (promedio), 'sum' (suma), 'min' (mínimo) y 'max' (máximo).",
-      "hint": "Tema: Consulta al Gráfico - Agregadores",
-      "sourceTitle": "Consulta al Gráfico - Agregadores",
-      "sourceTag": "study-pack",
-      "answerType": "single"
-    },
-    {
-      "id": "nb-11",
-      "domain": "infra",
-      "domainLabel": "Infraestructura y Agent",
-      "question": "¿Qué información proporciona la sección 'Host List' / Lista de Servidores en la plataforma Datadog?",
-      "options": [
-        "El catálogo de imágenes públicas de Docker.",
-        "Un inventario en tiempo real de todos los servidores/máquinas que envían métricas a Datadog, indicando su estado, infraestructura y etiquetas asignadas.",
-        "Una lista con los precios actualizados de las licencias de Datadog.",
-        "La lista de usuarios con rol de administrador en la cuenta."
-      ],
-      "correctIndex": 1,
-      "explanation": "La Host List proporciona una vista centralizada de todos los hosts monitoreados, mostrando si el agente está activo, las etiquetas (tags) aplicadas y los recursos del sistema.",
-      "whyCorrect": "La Host List proporciona una vista centralizada de todos los hosts monitoreados, mostrando si el agente está activo, las etiquetas (tags) aplicadas y los recursos del sistema.",
-      "hint": "Tema: Lista de Servidores / Infrastructure",
-      "sourceTitle": "Lista de Servidores / Infrastructure",
-      "sourceTag": "study-pack",
-      "answerType": "single"
-    },
-    {
-      "id": "nb-17",
-      "domain": "collection",
-      "domainLabel": "Recolección de datos",
-      "question": "En el contexto de APM (Application Performance Monitoring) con 'ddtrace', ¿qué representa un 'Span'?",
-      "options": [
-        "El tiempo de uptime de la máquina host.",
-        "Una unidad individual de trabajo ejecutada dentro de una transacción o petición (por ejemplo, una consulta SQL o una llamada HTTP).",
-        "El espacio en disco utilizado por los logs de la aplicación.",
-        "La cantidad máxima de conexiones simultáneas en la base de datos."
-      ],
-      "correctIndex": 1,
-      "explanation": "Un 'Span' mide la duración y metadatos de un bloque específico de ejecución dentro de una traza distribuida.",
-      "whyCorrect": "Un 'Span' mide la duración y metadatos de un bloque específico de ejecución dentro de una traza distribuida.",
-      "hint": "Tema: APM y Tracing (ddtrace)",
-      "sourceTitle": "APM y Tracing (ddtrace)",
-      "sourceTag": "study-pack",
-      "answerType": "single"
-    },
-    {
-      "id": "nb-16",
-      "domain": "infra",
-      "domainLabel": "Infraestructura y Agent",
-      "question": "¿Cómo se aplican las plantillas de configuración de Autodiscovery a los contenedores cuando se utiliza Docker?",
-      "options": [
-        "Modificando directamente el código fuente de la aplicación.",
-        "Mediante etiquetas (labels) de Docker aplicadas en el contenedor o en el archivo docker-compose.",
-        "Editando manualmente la tabla de enrutamiento del sistema operativo.",
-        "Enviando un correo electrónico al soporte de Datadog."
-      ],
-      "correctIndex": 1,
-      "explanation": "Autodiscovery inspecciona las etiquetas de los contenedores (p. ej. 'com.datadoghq.ad.check_names') para activar integraciones automáticamente.",
-      "whyCorrect": "Autodiscovery inspecciona las etiquetas de los contenedores (p. ej. 'com.datadoghq.ad.check_names') para activar integraciones automáticamente.",
-      "hint": "Tema: Autodiscovery en Contenedores",
-      "sourceTitle": "Autodiscovery en Contenedores",
-      "sourceTag": "study-pack",
-      "answerType": "single"
-    },
-    {
-      "id": "nb-6",
-      "domain": "collection",
-      "domainLabel": "Recolección de datos",
-      "question": "¿Qué protocolo de transporte y puerto utiliza por defecto el servicio DogStatsD para recibir métricas personalizadas?",
-      "options": [
-        "TCP en el puerto 443",
-        "UDP en el puerto 8125",
-        "HTTP en el puerto 8080",
-        "gRPC en el puerto 50051"
-      ],
-      "correctIndex": 1,
-      "explanation": "DogStatsD es una implementación sobre el protocolo StatsD que escucha de forma predeterminada en el puerto UDP 8125.",
-      "whyCorrect": "DogStatsD es una implementación sobre el protocolo StatsD que escucha de forma predeterminada en el puerto UDP 8125.",
-      "hint": "Tema: DogStatsD - Protocolo",
-      "sourceTitle": "DogStatsD - Protocolo",
-      "sourceTag": "study-pack",
-      "answerType": "single"
-    },
-    {
-      "id": "nb-10",
-      "domain": "troubleshoot",
-      "domainLabel": "Troubleshooting",
-      "question": "¿Cómo combina las alertas un 'Composite Monitor' (Monitor Compuesto)?",
-      "options": [
-        "Promediando los valores numéricos de dos métricas distintas.",
-        "Utilizando expresiones lógicas booleanas (como AND, OR, NOT) sobre el estado de varios monitores individuales.",
-        "Creando un dashboard automático que consolida varios widgets.",
-        "Fusionando múltiples logs en una sola traza de APM."
-      ],
-      "correctIndex": 1,
-      "explanation": "Un Composite Monitor permite definir reglas complejas como 'A && B' para gatillar una notificación solo cuando ambos monitores estén en estado crítico.",
-      "whyCorrect": "Un Composite Monitor permite definir reglas complejas como 'A && B' para gatillar una notificación solo cuando ambos monitores estén en estado crítico.",
-      "hint": "Tema: Tipos de Monitores - Composite",
-      "sourceTitle": "Tipos de Monitores - Composite",
-      "sourceTag": "study-pack",
-      "answerType": "single"
-    },
-    {
-      "id": "nb-14",
-      "domain": "collection",
-      "domainLabel": "Recolección de datos",
-      "question": "¿Qué método HTTP y endpoint de la API REST se utiliza para enviar métricas de series temporales directamente a Datadog sin usar el Agent?",
-      "options": [
-        "GET /api/v1/metrics",
-        "POST /api/v1/series",
-        "PUT /api/v2/metrics/upload",
-        "POST /api/v1/ingest/metrics"
-      ],
-      "correctIndex": 1,
-      "explanation": "El endpoint 'POST /api/v1/series' acepta un objeto JSON con puntos de datos de series temporales para ingestar métricas directamente en Datadog.",
-      "whyCorrect": "El endpoint 'POST /api/v1/series' acepta un objeto JSON con puntos de datos de series temporales para ingestar métricas directamente en Datadog.",
-      "hint": "Tema: API de Métricas",
-      "sourceTitle": "API de Métricas",
-      "sourceTag": "study-pack",
-      "answerType": "single"
-    },
-    {
-      "id": "nb-1",
-      "domain": "infra",
-      "domainLabel": "Infraestructura y Agent",
-      "question": "¿Cuál es el archivo principal de configuración para el Datadog Agent v7 en instalaciones basadas en host?",
-      "options": [
-        "datadog.conf",
-        "datadog.yaml",
-        "agent.json",
-        "datadog.env"
-      ],
-      "correctIndex": 1,
-      "explanation": "En las versiones v6 y v7 del Datadog Agent en instalaciones de host, la configuración principal se gestiona en el archivo 'datadog.yaml'.",
-      "whyCorrect": "En las versiones v6 y v7 del Datadog Agent en instalaciones de host, la configuración principal se gestiona en el archivo 'datadog.yaml'.",
-      "hint": "Tema: Datadog Agent - Basado en Host",
-      "sourceTitle": "Datadog Agent - Basado en Host",
-      "sourceTag": "study-pack",
-      "answerType": "single"
-    },
-    {
-      "id": "nb-18",
-      "domain": "infra",
-      "domainLabel": "Infraestructura y Agent",
-      "question": "¿Qué funcionalidad permite auditar, actualizar y gestionar la configuración de múltiples Datadog Agents de forma centralizada desde la UI?",
-      "options": [
-        "Fleet Automation",
-        "Cluster Agent",
-        "Agent Remote Control",
-        "Central Dashboard"
-      ],
-      "correctIndex": 0,
-      "explanation": "Fleet Automation ofrece visibilidad y control sobre el estado de la flota de agentes desplegados en toda la infraestructura de la empresa.",
-      "whyCorrect": "Fleet Automation ofrece visibilidad y control sobre el estado de la flota de agentes desplegados en toda la infraestructura de la empresa.",
-      "hint": "Tema: Fleet Automation",
-      "sourceTitle": "Fleet Automation",
-      "sourceTag": "study-pack",
-      "answerType": "single"
-    },
-    {
-      "id": "nb-5",
-      "domain": "network",
-      "domainLabel": "Red y configuración",
-      "question": "¿Cuál es la diferencia fundamental entre una clave de API (API Key) y una clave de aplicación (Application Key)?",
-      "options": [
-        "La API Key se usa para consultar datos y la App Key para enviar métricas.",
-        "La API Key es enviada por el Agent para remitir telemetría, mientras que la App Key se combina con la API Key para realizar llamadas administrativas a la REST API de Datadog.",
-        "La App Key es pública y la API Key debe mantenerse en secreto absoluto.",
-        "No hay diferencia; ambas claves cumplen exactamente las mismas funciones."
-      ],
-      "correctIndex": 1,
-      "explanation": "Las API Keys identifican a la organización e ingieren datos/métricas desde los Agentes; las App Keys otorgan permisos de usuario para administrar recursos vía la API de Datadog.",
-      "whyCorrect": "Las API Keys identifican a la organización e ingieren datos/métricas desde los Agentes; las App Keys otorgan permisos de usuario para administrar recursos vía la API de Datadog.",
-      "hint": "Tema: Claves de API y de Aplicación",
-      "sourceTitle": "Claves de API y de Aplicación",
-      "sourceTag": "study-pack",
-      "answerType": "single"
-    },
-    {
-      "id": "nb-9",
-      "domain": "troubleshoot",
-      "domainLabel": "Troubleshooting",
-      "question": "¿Qué tipo de monitor analiza la tendencia de una métrica y alerta si calcula que cruzará un umbral en el futuro?",
-      "options": [
-        "Anomaly Monitor",
-        "Forecast Monitor",
-        "Composite Monitor",
-        "Audit Monitor"
-      ],
-      "correctIndex": 1,
-      "explanation": "El Forecast Monitor ajusta modelos predictivos para determinar si una métrica sobrepasará un límite predefinido dentro de un horizonte temporal futuro.",
-      "whyCorrect": "El Forecast Monitor ajusta modelos predictivos para determinar si una métrica sobrepasará un límite predefinido dentro de un horizonte temporal futuro.",
-      "hint": "Tema: Tipos de Monitores - Forecast",
-      "sourceTitle": "Tipos de Monitores - Forecast",
+      "sourceUrl": "",
       "sourceTag": "study-pack",
       "answerType": "single"
     }

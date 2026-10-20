@@ -1,0 +1,1001 @@
+{
+  "titulo": "Datadog Fundamentals — documentación oficial (parte 2)",
+  "descripcion": "Preguntas redactadas a partir de las páginas oficiales: integración Docker, de la consulta al gráfico, Agent en Docker, API de métricas, tipos de monitores, DogStatsD y ddtrace.",
+  "preguntas": [
+    {
+      "id": "di-1",
+      "fuente_tema": "Integración Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/integrations/docker/",
+      "pregunta": "¿Con qué versión del Agent funciona el check heredado docker_daemon?",
+      "opciones": ["Solo con el Agent v5", "Con el Agent v6 y v7", "Solo con el Agent v7.50+", "Con cualquier versión"],
+      "respuesta_correcta": "Solo con el Agent v5",
+      "explicacion": "El check docker_daemon se mantiene, pero solo funciona con el Agent v5. A partir de v6 se usa el check docker."
+    },
+    {
+      "id": "di-2",
+      "fuente_tema": "Integración Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/integrations/docker/",
+      "pregunta": "A partir del Agent v6, ¿cómo se llama el check de Docker y en qué lenguaje está escrito?",
+      "opciones": ["docker, escrito en Go", "docker_daemon, escrito en Python", "container, escrito en Rust", "dockerd, escrito en Java"],
+      "respuesta_correcta": "docker, escrito en Go",
+      "explicacion": "El check docker está escrito en Go para aprovechar la nueva arquitectura interna del Agent v6+."
+    },
+    {
+      "id": "di-3",
+      "fuente_tema": "Integración Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/integrations/docker/",
+      "pregunta": "¿Qué requisito deben cumplir los hosts para que el check de Docker funcione?",
+      "opciones": [
+        "Tener habilitada la gestión de memoria cgroup",
+        "Tener instalado Kubernetes",
+        "Usar Docker Swarm",
+        "Tener al menos 8 GB de RAM"
+      ],
+      "respuesta_correcta": "Tener habilitada la gestión de memoria cgroup",
+      "explicacion": "Los hosts necesitan la gestión de memoria cgroup habilitada para que el check de Docker tenga éxito."
+    },
+    {
+      "id": "di-4",
+      "fuente_tema": "Integración Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/integrations/docker/",
+      "pregunta": "El Agent está instalado directamente en el host y debe leer Docker. ¿Qué permiso necesita su usuario?",
+      "opciones": [
+        "Pertenecer al grupo docker (usermod -a -G docker dd-agent)",
+        "Ser root en todo momento",
+        "Pertenecer al grupo sudo",
+        "Ninguno: Docker es accesible para todos"
+      ],
+      "respuesta_correcta": "Pertenecer al grupo docker (usermod -a -G docker dd-agent)",
+      "explicacion": "Hay que añadir el usuario dd-agent al grupo docker para que pueda acceder al socket de Docker."
+    },
+    {
+      "id": "di-5",
+      "fuente_tema": "Integración Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/integrations/docker/",
+      "pregunta": "La métrica docker.container.count ya no es compatible en el Agent v6+. ¿Qué se usa en su lugar?",
+      "opciones": [
+        "docker.containers.running y docker.containers.stopped",
+        "docker.cpu.usage",
+        "container.count.total",
+        "docker.images.available"
+      ],
+      "respuesta_correcta": "docker.containers.running y docker.containers.stopped",
+      "explicacion": "La opción collect_container_count no es compatible; hay que usar docker.containers.running y .stopped."
+    },
+    {
+      "id": "di-6",
+      "fuente_tema": "Integración Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/integrations/docker/",
+      "pregunta": "Al migrar al Agent v6, ¿cómo se llama ahora la variable de entorno TAGS?",
+      "opciones": ["DD_TAGS", "DATADOG_TAGS", "AGENT_TAGS", "DOCKER_TAGS"],
+      "respuesta_correcta": "DD_TAGS",
+      "explicacion": "La variable TAGS pasó a llamarse DD_TAGS."
+    },
+    {
+      "id": "di-7",
+      "fuente_tema": "Integración Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/integrations/docker/",
+      "pregunta": "¿A qué repositorio de Docker Hub se movió la imagen del Agent?",
+      "opciones": [
+        "De datadog/docker-dd-agent a datadog/agent",
+        "De datadog/agent a datadog/docker-dd-agent",
+        "De datadog/agent a datadog/dogstatsd",
+        "No ha cambiado nunca"
+      ],
+      "respuesta_correcta": "De datadog/docker-dd-agent a datadog/agent",
+      "explicacion": "El repositorio de Docker Hub cambió de datadog/docker-dd-agent a datadog/agent."
+    },
+    {
+      "id": "di-8",
+      "fuente_tema": "Integración Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/integrations/docker/",
+      "pregunta": "¿Qué ventaja tiene la imagen del Agent basada en Alpine Linux frente a la estándar basada en Debian?",
+      "opciones": [
+        "Es considerablemente más pequeña y hereda el diseño orientado a la seguridad de Alpine",
+        "Incluye más integraciones",
+        "Es la única compatible con Kubernetes",
+        "No necesita clave de API"
+      ],
+      "respuesta_correcta": "Es considerablemente más pequeña y hereda el diseño orientado a la seguridad de Alpine",
+      "explicacion": "Desde el Agent v5.7 existe una imagen Alpine (etiqueta -alpine), más pequeña que la de Debian."
+    },
+    {
+      "id": "di-9",
+      "fuente_tema": "Integración Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/integrations/docker/",
+      "pregunta": "En el Agent dockerizado heredado (v5), ¿qué hace la opción NON_LOCAL_TRAFFIC=yes?",
+      "opciones": [
+        "Permite recibir métricas StatsD desde cualquier IP externa, por ejemplo desde otros contenedores",
+        "Bloquea todo el tráfico saliente",
+        "Activa la recogida de logs",
+        "Desactiva la GUI del Agent"
+      ],
+      "respuesta_correcta": "Permite recibir métricas StatsD desde cualquier IP externa, por ejemplo desde otros contenedores",
+      "explicacion": "Sirve para informar métricas desde otros contenedores o sistemas. En el Agent v6+ el equivalente es DD_DOGSTATSD_NON_LOCAL_TRAFFIC."
+    },
+    {
+      "id": "di-10",
+      "fuente_tema": "Integración Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/integrations/docker/",
+      "pregunta": "¿Qué opción conviene añadir a docker run para que el contenedor del Agent sobreviva a los reinicios?",
+      "opciones": ["--restart=unless-stopped", "--rm", "--detach-keys", "--read-only"],
+      "respuesta_correcta": "--restart=unless-stopped",
+      "explicacion": "La documentación recomienda --restart=unless-stopped para que el Agent sea resistente a reinicios."
+    },
+    {
+      "id": "di-11",
+      "fuente_tema": "Integración Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/integrations/docker/",
+      "pregunta": "¿Cómo compruebas que el check de Docker se está ejecutando correctamente?",
+      "opciones": [
+        "Con el subcomando status del Agent, buscando docker en la sección Checks",
+        "Mirando la lista de usuarios de Datadog",
+        "Con docker ps -a",
+        "Reiniciando el host"
+      ],
+      "respuesta_correcta": "Con el subcomando status del Agent, buscando docker en la sección Checks",
+      "explicacion": "Para validar, ejecuta el status del Agent y busca docker en la sección Checks."
+    },
+
+    {
+      "id": "qg-1",
+      "fuente_tema": "De la consulta al gráfico",
+      "url_fuente": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+      "pregunta": "Antes de cualquier consulta, ¿cómo almacena Datadog los datos de una métrica?",
+      "opciones": [
+        "Por separado para cada combinación de etiquetas (cada fuente es una serie temporal)",
+        "En una única serie por métrica, sin etiquetas",
+        "Agrupados por usuario que los consulta",
+        "Solo el promedio diario"
+      ],
+      "respuesta_correcta": "Por separado para cada combinación de etiquetas (cada fuente es una serie temporal)",
+      "explicacion": "Cada fuente (host + conjunto de etiquetas) se guarda como una serie temporal propia."
+    },
+    {
+      "id": "qg-2",
+      "fuente_tema": "De la consulta al gráfico",
+      "url_fuente": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+      "pregunta": "El host bubs reporta system.disk.total para 5 dispositivos. ¿Cuántas series temporales guarda Datadog para ese host?",
+      "opciones": ["5", "1", "10", "Depende del número de dashboards"],
+      "respuesta_correcta": "5",
+      "explicacion": "Hay una serie por combinación {host, device}: 5 dispositivos, 5 series temporales."
+    },
+    {
+      "id": "qg-3",
+      "fuente_tema": "De la consulta al gráfico",
+      "url_fuente": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+      "pregunta": "¿En qué orden procesa el backend de Datadog una consulta para dibujar un gráfico?",
+      "opciones": [
+        "Encontrar las series → agregación temporal → agregación espacial → funciones",
+        "Agregación espacial → encontrar las series → funciones → agregación temporal",
+        "Funciones → agregación temporal → encontrar las series → agregación espacial",
+        "Agregación temporal → funciones → agregación espacial → encontrar las series"
+      ],
+      "respuesta_correcta": "Encontrar las series → agregación temporal → agregación espacial → funciones",
+      "explicacion": "Primero filtra las fuentes por contexto, luego agrega en el tiempo (rollup), después combina fuentes (espacio) y por último aplica funciones."
+    },
+    {
+      "id": "qg-4",
+      "fuente_tema": "De la consulta al gráfico",
+      "url_fuente": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+      "pregunta": "En un gráfico de líneas de un día, ¿cuántos intervalos (buckets) usa Datadog y de cuánto tiempo cada uno?",
+      "opciones": ["288 intervalos de 5 minutos", "24 intervalos de 1 hora", "1.440 intervalos de 1 minuto", "86.400 intervalos de 1 segundo"],
+      "respuesta_correcta": "288 intervalos de 5 minutos",
+      "explicacion": "Un día se divide en 288 buckets de 5 minutos; cada punto del gráfico agrega los datos de su bucket."
+    },
+    {
+      "id": "qg-5",
+      "fuente_tema": "De la consulta al gráfico",
+      "url_fuente": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+      "pregunta": "¿Con qué granularidad almacena Datadog los datos de métricas?",
+      "opciones": ["1 segundo", "10 segundos", "1 minuto", "5 minutos"],
+      "respuesta_correcta": "1 segundo",
+      "explicacion": "Los datos se guardan con granularidad de 1 segundo; por eso los gráficos siempre necesitan agregación temporal."
+    },
+    {
+      "id": "qg-6",
+      "fuente_tema": "De la consulta al gráfico",
+      "url_fuente": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+      "pregunta": "¿Por qué los gráficos se ven más «suaves» al alejar el marco temporal?",
+      "opciones": [
+        "Porque el rollup por defecto promedia los valores reales de cada intervalo",
+        "Porque Datadog borra los picos antiguos",
+        "Porque el navegador aplica un filtro visual",
+        "Porque las métricas antiguas se guardan como count"
+      ],
+      "respuesta_correcta": "Porque el rollup por defecto promedia los valores reales de cada intervalo",
+      "explicacion": "Por defecto el rollup calcula el promedio, lo que suaviza los gráficos cuanto mayor es la ventana."
+    },
+    {
+      "id": "qg-7",
+      "fuente_tema": "De la consulta al gráfico",
+      "url_fuente": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+      "pregunta": "Aplicas rollup(avg,60) a una ventana de 2 meses. ¿Obtendrás puntos de 1 minuto?",
+      "opciones": [
+        "No, el backend intenta mantener menos de ~300 intervalos por gráfico",
+        "Sí, siempre se respeta el rollup indicado",
+        "Sí, pero solo para métricas gauge",
+        "No, rollup solo admite valores de 5 minutos"
+      ],
+      "respuesta_correcta": "No, el backend intenta mantener menos de ~300 intervalos por gráfico",
+      "explicacion": "Datadog limita el número de intervalos a unos ~300, así que no puede dar granularidad de un minuto en 2 meses."
+    },
+    {
+      "id": "qg-8",
+      "fuente_tema": "De la consulta al gráfico",
+      "url_fuente": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+      "pregunta": "¿Qué define rollup(avg,60) en una consulta?",
+      "opciones": [
+        "Intervalos de 60 segundos donde los puntos se agregan con un promedio",
+        "Un promedio de las últimas 60 series",
+        "Un monitor que se evalúa cada 60 segundos",
+        "Un límite de 60 hosts en la consulta"
+      ],
+      "respuesta_correcta": "Intervalos de 60 segundos donde los puntos se agregan con un promedio",
+      "explicacion": "rollup(avg,60) divide la ventana en intervalos de un minuto y agrega con la media los datos de cada uno."
+    },
+    {
+      "id": "qg-9",
+      "fuente_tema": "De la consulta al gráfico",
+      "url_fuente": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+      "pregunta": "¿Dónde deben colocarse los modificadores rollup o as_count en una consulta agrupada?",
+      "opciones": [
+        "Después de la agrupación by {device}",
+        "Antes del nombre de la métrica",
+        "Dentro de las llaves del contexto",
+        "En una consulta separada"
+      ],
+      "respuesta_correcta": "Después de la agrupación by {device}",
+      "explicacion": "La guía indica que rollup o as_count van después de la mención by {dispositivo}."
+    },
+    {
+      "id": "qg-10",
+      "fuente_tema": "De la consulta al gráfico",
+      "url_fuente": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+      "pregunta": "¿Para qué métricas están pensados los modificadores as_count() y as_rate()?",
+      "opciones": [
+        "Para tasas y contadores enviados con StatsD o DogStatsD",
+        "Para métricas de tipo gauge del Agent",
+        "Para logs indexados",
+        "Para trazas de APM"
+      ],
+      "respuesta_correcta": "Para tasas y contadores enviados con StatsD o DogStatsD",
+      "explicacion": "as_count y as_rate son agregadores de tiempo específicos para rates y counts de StatsD/DogStatsD."
+    },
+    {
+      "id": "qg-11",
+      "fuente_tema": "De la consulta al gráfico",
+      "url_fuente": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+      "pregunta": "¿En qué momento se aplican la mayoría de las funciones y la aritmética de una consulta?",
+      "opciones": [
+        "Al final, sobre los ~300 puntos resultantes de las agregaciones temporal y espacial",
+        "Antes de buscar las series",
+        "Al almacenar cada punto",
+        "Antes de la agregación temporal"
+      ],
+      "respuesta_correcta": "Al final, sobre los ~300 puntos resultantes de las agregaciones temporal y espacial",
+      "explicacion": "La mayoría de funciones se aplican en el último paso, sobre los puntos ya agregados."
+    },
+    {
+      "id": "qg-12",
+      "fuente_tema": "De la consulta al gráfico",
+      "url_fuente": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+      "pregunta": "Consultas system.disk.total{*}. ¿Necesitas saber cuántos hosts o dispositivos lo reportan?",
+      "opciones": [
+        "No, Datadog agrega automáticamente todas las fuentes que coinciden con el contexto",
+        "Sí, hay que listarlos uno a uno",
+        "Sí, si son más de 100",
+        "No, porque {*} solo muestra un host aleatorio"
+      ],
+      "respuesta_correcta": "No, Datadog agrega automáticamente todas las fuentes que coinciden con el contexto",
+      "explicacion": "Con el sistema de etiquetas basta con indicar el contexto: Datadog combina todas las fuentes que coinciden."
+    },
+
+    {
+      "id": "da-1",
+      "fuente_tema": "Agent en Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "pregunta": "¿Qué variable de entorno es obligatoria para arrancar el contenedor del Datadog Agent?",
+      "opciones": ["DD_API_KEY", "DD_APP_KEY", "DD_HOSTNAME", "DD_ENV"],
+      "respuesta_correcta": "DD_API_KEY",
+      "explicacion": "DD_API_KEY es la única opción global marcada como requerida."
+    },
+    {
+      "id": "da-2",
+      "fuente_tema": "Agent en Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "pregunta": "En el Agent de Docker, ¿cómo se configuran las opciones que en un host irían en datadog.yaml?",
+      "opciones": [
+        "Con variables de entorno",
+        "Solo editando datadog.yaml dentro de la imagen",
+        "Desde la GUI del Agent",
+        "No se pueden configurar"
+      ],
+      "respuesta_correcta": "Con variables de entorno",
+      "explicacion": "Para el Agent de Docker, las opciones de datadog.yaml se definen mediante variables de entorno DD_*."
+    },
+    {
+      "id": "da-3",
+      "fuente_tema": "Agent en Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "pregunta": "¿Qué volúmenes se montan en el contenedor del Agent en la instalación estándar? (elige 3)",
+      "opciones": ["/var/run/docker.sock", "/proc/", "/sys/fs/cgroup/", "/etc/passwd", "/home/"],
+      "respuestas_correctas": ["/var/run/docker.sock", "/proc/", "/sys/fs/cgroup/"],
+      "explicacion": "El comando estándar monta docker.sock, /proc y /sys/fs/cgroup en modo solo lectura."
+    },
+    {
+      "id": "da-4",
+      "fuente_tema": "Agent en Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "pregunta": "¿Cuál es la imagen del Agent que usan por defecto las instrucciones de instalación en Docker?",
+      "opciones": ["registry.datadoghq.com/agent:7", "datadog/docker-dd-agent:latest", "docker.io/datadog/dogstatsd", "gcr.io/datadog/agent:5"],
+      "respuesta_correcta": "registry.datadoghq.com/agent:7",
+      "explicacion": "Por defecto la imagen se descarga del Registro de Contenedores de Datadog (registry.datadoghq.com)."
+    },
+    {
+      "id": "da-5",
+      "fuente_tema": "Agent en Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "pregunta": "¿Qué formato tiene el valor de DD_TAGS?",
+      "opciones": [
+        "Etiquetas separadas por espacios, por ejemplo key1:value1 key2:value2",
+        "Etiquetas separadas por punto y coma",
+        "Un objeto JSON",
+        "Una sola etiqueta por variable"
+      ],
+      "respuesta_correcta": "Etiquetas separadas por espacios, por ejemplo key1:value1 key2:value2",
+      "explicacion": "DD_TAGS recibe etiquetas de host separadas por espacios."
+    },
+    {
+      "id": "da-6",
+      "fuente_tema": "Agent en Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "pregunta": "¿Qué hace la variable DD_ENV?",
+      "opciones": [
+        "Establece la etiqueta global env para todos los datos emitidos",
+        "Define el entorno de Python del Agent",
+        "Indica la clave de API por entorno",
+        "Activa el modo debug"
+      ],
+      "respuesta_correcta": "Establece la etiqueta global env para todos los datos emitidos",
+      "explicacion": "DD_ENV fija la etiqueta env para todos los datos que envía el Agent."
+    },
+    {
+      "id": "da-7",
+      "fuente_tema": "Agent en Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "pregunta": "¿Cuándo se usa DD_HOSTNAME?",
+      "opciones": [
+        "Cuando falla la autodetección del nombre del servidor",
+        "Siempre, es obligatoria",
+        "Solo para enviar logs",
+        "Para cambiar el sitio de Datadog"
+      ],
+      "respuesta_correcta": "Cuando falla la autodetección del nombre del servidor",
+      "explicacion": "DD_HOSTNAME fija el nombre del servidor para las métricas si la autodetección falla."
+    },
+    {
+      "id": "da-8",
+      "fuente_tema": "Agent en Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "pregunta": "¿Cuántos ejecutores de checks (DD_CHECK_RUNNERS) usa el Agent por defecto?",
+      "opciones": ["4, y con 1 los checks se ejecutan en secuencia", "1, todos en secuencia", "8", "Uno por CPU del host"],
+      "respuesta_correcta": "4, y con 1 los checks se ejecutan en secuencia",
+      "explicacion": "Por defecto ejecuta los checks en paralelo con 4 ejecutores. Con valor 1 son secuenciales."
+    },
+    {
+      "id": "da-9",
+      "fuente_tema": "Agent en Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "pregunta": "¿Qué variable habilita la recogida de logs en el Agent de Docker?",
+      "opciones": ["DD_LOGS_ENABLED", "DD_APM_ENABLED", "DD_LOG_LEVEL", "DD_COLLECT_LOGS"],
+      "respuesta_correcta": "DD_LOGS_ENABLED",
+      "explicacion": "DD_LOGS_ENABLED activa el Agent de logs. Está deshabilitado por defecto por seguridad y rendimiento."
+    },
+    {
+      "id": "da-10",
+      "fuente_tema": "Agent en Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "pregunta": "Otros contenedores envían trazas al Agent. ¿Qué variable permite ese tráfico no local de APM?",
+      "opciones": ["DD_APM_NON_LOCAL_TRAFFIC", "DD_DOGSTATSD_NON_LOCAL_TRAFFIC", "DD_APM_ENABLED", "DD_PROXY_HTTP"],
+      "respuesta_correcta": "DD_APM_NON_LOCAL_TRAFFIC",
+      "explicacion": "DD_APM_NON_LOCAL_TRAFFIC permite recibir trazas de otros contenedores. Para métricas DogStatsD se usa DD_DOGSTATSD_NON_LOCAL_TRAFFIC."
+    },
+    {
+      "id": "da-11",
+      "fuente_tema": "Agent en Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "pregunta": "¿Valor por defecto de DD_APM_ENABLED en el Agent de Docker?",
+      "opciones": ["true", "false", "No existe esa variable", "Depende del sitio"],
+      "respuesta_correcta": "true",
+      "explicacion": "La recolección de trazas está habilitada por defecto (DD_APM_ENABLED=true)."
+    },
+    {
+      "id": "da-12",
+      "fuente_tema": "Agent en Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "pregunta": "¿A qué afecta DD_CONTAINER_EXCLUDE?",
+      "opciones": [
+        "Solo a Autodiscovery; las trazas y DogStatsD no se ven afectados",
+        "A todas las métricas, trazas y logs del host",
+        "Solo a la facturación de contenedores",
+        "Solo a los logs"
+      ],
+      "respuesta_correcta": "Solo a Autodiscovery; las trazas y DogStatsD no se ven afectados",
+      "explicacion": "Las listas de permitidos/bloqueados se aplican solo a Autodiscovery."
+    },
+    {
+      "id": "da-13",
+      "fuente_tema": "Agent en Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "pregunta": "Excluyes contenedores con DD_CONTAINER_EXCLUDE. ¿Cambia el valor de docker.containers.running?",
+      "opciones": [
+        "No, todos los contenedores se siguen contabilizando",
+        "Sí, los excluidos dejan de contarse",
+        "Sí, y además baja la factura",
+        "Solo si también se usa DD_AC_EXCLUDE"
+      ],
+      "respuesta_correcta": "No, todos los contenedores se siguen contabilizando",
+      "explicacion": "Las métricas docker.containers.running/.stopped (y sus .total) no se ven afectadas por las exclusiones."
+    },
+    {
+      "id": "da-14",
+      "fuente_tema": "Agent en Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "pregunta": "¿Cuál es el proveedor de configuración de Autodiscovery por defecto (DD_CONFIG_PROVIDERS)?",
+      "opciones": [
+        "docker, que lee plantillas incrustadas en las etiquetas (labels) de los contenedores",
+        "kubernetes, que lee anotaciones de pods",
+        "file, que lee archivos en conf.d",
+        "consul"
+      ],
+      "respuesta_correcta": "docker, que lee plantillas incrustadas en las etiquetas (labels) de los contenedores",
+      "explicacion": "El proveedor predeterminado es docker y gestiona plantillas en las etiquetas de los contenedores."
+    },
+    {
+      "id": "da-15",
+      "fuente_tema": "Agent en Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "pregunta": "¿Cuándo devuelve CRITICAL el service check datadog.agent.up?",
+      "opciones": [
+        "Cuando el Agent no puede conectarse a Datadog",
+        "Cuando un contenedor se reinicia",
+        "Cuando la CPU supera el 90 %",
+        "Cuando falta DD_ENV"
+      ],
+      "respuesta_correcta": "Cuando el Agent no puede conectarse a Datadog",
+      "explicacion": "datadog.agent.up devuelve CRITICAL si el Agent no conecta con Datadog y OK en caso contrario."
+    },
+    {
+      "id": "da-16",
+      "fuente_tema": "Agent en Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "pregunta": "¿Cuándo devuelve CRITICAL el service check datadog.agent.check_status?",
+      "opciones": [
+        "Cuando una verificación del Agent no puede enviar métricas a Datadog",
+        "Cuando el Agent se actualiza",
+        "Cuando no hay logs",
+        "Cuando el host tiene más de 4 checks"
+      ],
+      "respuesta_correcta": "Cuando una verificación del Agent no puede enviar métricas a Datadog",
+      "explicacion": "check_status vigila que cada check pueda enviar métricas; si no puede, devuelve CRITICAL."
+    },
+    {
+      "id": "da-17",
+      "fuente_tema": "Agent en Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "pregunta": "¿Qué variable extrae las etiquetas (labels) de los contenedores como tags de Datadog?",
+      "opciones": ["DD_CONTAINER_LABELS_AS_TAGS", "DD_TAGS", "DD_COLLECT_EC2_TAGS", "DD_DOGSTATSD_TAGS"],
+      "respuesta_correcta": "DD_CONTAINER_LABELS_AS_TAGS",
+      "explicacion": "DD_CONTAINER_LABELS_AS_TAGS (equivalente a DD_DOCKER_LABELS_AS_TAGS) convierte labels en tags."
+    },
+    {
+      "id": "da-18",
+      "fuente_tema": "Agent en Docker",
+      "url_fuente": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "pregunta": "¿Qué envía a Datadog el Agent de Docker al iniciarse o reiniciarse?",
+      "opciones": ["Un evento", "Un log de error", "Una traza", "Un correo al administrador"],
+      "respuesta_correcta": "Un evento",
+      "explicacion": "El Agent de Docker envía eventos a Datadog al iniciarse o reiniciarse."
+    },
+
+    {
+      "id": "ma-1",
+      "fuente_tema": "API de métricas",
+      "url_fuente": "https://docs.datadoghq.com/es/api/latest/metrics/",
+      "pregunta": "¿Qué endpoint permite consultar puntos de una serie temporal en un rango de tiempo?",
+      "opciones": ["GET /api/v1/query", "POST /api/v2/series", "GET /api/v1/metrics", "PUT /api/v1/metrics/{metric_name}"],
+      "respuesta_correcta": "GET /api/v1/query",
+      "explicacion": "Query timeseries points se hace con GET /api/v1/query. POST /api/v2/series sirve para enviar datos."
+    },
+    {
+      "id": "ma-2",
+      "fuente_tema": "API de métricas",
+      "url_fuente": "https://docs.datadoghq.com/es/api/latest/metrics/",
+      "pregunta": "¿Qué endpoint se usa para enviar puntos de una métrica de tipo distribución?",
+      "opciones": ["POST /api/v1/distribution_points", "POST /api/v2/series", "POST /api/v1/events", "GET /api/v1/query"],
+      "respuesta_correcta": "POST /api/v1/distribution_points",
+      "explicacion": "Submit distribution points usa POST /api/v1/distribution_points."
+    },
+    {
+      "id": "ma-3",
+      "fuente_tema": "API de métricas",
+      "url_fuente": "https://docs.datadoghq.com/es/api/latest/metrics/",
+      "pregunta": "¿Qué endpoint devuelve la lista de métricas activas?",
+      "opciones": ["GET /api/v1/metrics", "GET /api/v1/validate", "POST /api/v2/series", "DELETE /api/v2/metrics/{metric_name}/tags"],
+      "respuesta_correcta": "GET /api/v1/metrics",
+      "explicacion": "Get active metrics list corresponde a GET /api/v1/metrics."
+    },
+    {
+      "id": "ma-4",
+      "fuente_tema": "API de métricas",
+      "url_fuente": "https://docs.datadoghq.com/es/api/latest/metrics/",
+      "pregunta": "¿Qué método y endpoint editan los metadatos de una métrica (descripción, unidad, tipo)?",
+      "opciones": ["PUT /api/v1/metrics/{metric_name}", "GET /api/v1/metrics/{metric_name}", "POST /api/v1/query", "PATCH /api/v1/validate"],
+      "respuesta_correcta": "PUT /api/v1/metrics/{metric_name}",
+      "explicacion": "Edit metric metadata usa PUT /api/v1/metrics/{metric_name}. Con GET se leen esos metadatos."
+    },
+    {
+      "id": "ma-5",
+      "fuente_tema": "API de métricas",
+      "url_fuente": "https://docs.datadoghq.com/es/api/latest/metrics/",
+      "pregunta": "¿Qué permiso necesita un usuario para crear, editar o borrar configuraciones de etiquetas de métricas por API?",
+      "opciones": ["Manage Tags for Metrics", "Admin de la organización", "Metrics Read", "Dashboards Write"],
+      "respuesta_correcta": "Manage Tags for Metrics",
+      "explicacion": "Los métodos Post, Patch y Delete de manage_tags requieren el permiso Manage Tags for Metrics."
+    },
+    {
+      "id": "ma-6",
+      "fuente_tema": "API de métricas",
+      "url_fuente": "https://docs.datadoghq.com/es/api/latest/metrics/",
+      "pregunta": "¿Qué permite hacer el endpoint de métricas de la API? (elige 3)",
+      "opciones": [
+        "Publicar datos de métricas para graficarlos en dashboards",
+        "Consultar métricas de cualquier período de tiempo",
+        "Modificar configuraciones de etiquetas de las métricas",
+        "Crear usuarios de la organización",
+        "Instalar el Agent en un host remoto"
+      ],
+      "respuestas_correctas": [
+        "Publicar datos de métricas para graficarlos en dashboards",
+        "Consultar métricas de cualquier período de tiempo",
+        "Modificar configuraciones de etiquetas de las métricas"
+      ],
+      "explicacion": "El endpoint permite publicar, consultar (series y escalares), configurar etiquetas y ver etiquetas y volúmenes."
+    },
+    {
+      "id": "ma-7",
+      "fuente_tema": "API de métricas",
+      "url_fuente": "https://docs.datadoghq.com/es/api/latest/metrics/",
+      "pregunta": "¿Qué endpoint de la v2 permite consultar datos como series temporales en varias fuentes?",
+      "opciones": ["POST /api/v2/query/timeseries", "POST /api/v2/query/scalar", "GET /api/v2/metrics", "POST /api/v2/series"],
+      "respuesta_correcta": "POST /api/v2/query/timeseries",
+      "explicacion": "Query timeseries data across multiple products usa POST /api/v2/query/timeseries; la variante escalar usa /query/scalar."
+    },
+
+    {
+      "id": "mo-1",
+      "fuente_tema": "Tipos de monitores",
+      "url_fuente": "https://docs.datadoghq.com/es/monitors/types/",
+      "pregunta": "¿Qué tipo de monitor comprueba si uno o más hosts están enviando informes a Datadog?",
+      "opciones": ["Host", "Métrica", "Proceso en tiempo real", "Red"],
+      "respuesta_correcta": "Host",
+      "explicacion": "El monitor de Host verifica que los hosts sigan reportando."
+    },
+    {
+      "id": "mo-2",
+      "fuente_tema": "Tipos de monitores",
+      "url_fuente": "https://docs.datadoghq.com/es/monitors/types/",
+      "pregunta": "¿Qué tipo de monitor compara los valores de una métrica con un umbral definido por el usuario?",
+      "opciones": ["Métrica", "Anomalía", "Outlier", "Watchdog"],
+      "respuesta_correcta": "Métrica",
+      "explicacion": "El monitor de métrica compara valores con un umbral fijo definido por ti."
+    },
+    {
+      "id": "mo-3",
+      "fuente_tema": "Tipos de monitores",
+      "url_fuente": "https://docs.datadoghq.com/es/monitors/types/",
+      "pregunta": "Quieres detectar comportamiento anómalo de una métrica según su histórico (por ejemplo, tráfico raro para un lunes). ¿Qué monitor usas?",
+      "opciones": ["Anomalía", "Métrica con umbral fijo", "Host", "Check de proceso"],
+      "respuesta_correcta": "Anomalía",
+      "explicacion": "El monitor de anomalía detecta comportamientos anómalos basándose en datos históricos."
+    },
+    {
+      "id": "mo-4",
+      "fuente_tema": "Tipos de monitores",
+      "url_fuente": "https://docs.datadoghq.com/es/monitors/types/",
+      "pregunta": "¿Qué monitor alerta cuando el valor absoluto o relativo de una métrica cambia más de un umbral en un período?",
+      "opciones": ["Alerta de cambio", "Predicción", "Composite", "Integración"],
+      "respuesta_correcta": "Alerta de cambio",
+      "explicacion": "La alerta de cambio compara el cambio (absoluto o relativo) durante un período con un umbral."
+    },
+    {
+      "id": "mo-5",
+      "fuente_tema": "Tipos de monitores",
+      "url_fuente": "https://docs.datadoghq.com/es/monitors/types/",
+      "pregunta": "¿Qué monitor comprueba si uno o más procesos se están ejecutando en un host?",
+      "opciones": ["Proceso en tiempo real", "Host", "Red", "Evento"],
+      "respuesta_correcta": "Proceso en tiempo real",
+      "explicacion": "El monitor de proceso en tiempo real verifica que los procesos indicados estén corriendo."
+    },
+    {
+      "id": "mo-6",
+      "fuente_tema": "Tipos de monitores",
+      "url_fuente": "https://docs.datadoghq.com/es/monitors/types/",
+      "pregunta": "¿Qué monitor comprueba el estado de endpoints TCP/HTTP?",
+      "opciones": ["Red", "Monitorización de la red en la nube", "NetFlow", "Synthetic Monitoring"],
+      "respuesta_correcta": "Red",
+      "explicacion": "El monitor de Red hace check del estado de endpoints TCP/HTTP."
+    },
+    {
+      "id": "mo-7",
+      "fuente_tema": "Tipos de monitores",
+      "url_fuente": "https://docs.datadoghq.com/es/monitors/types/",
+      "pregunta": "¿Qué monitor mira el estado producido por el service check process.up?",
+      "opciones": ["Check de proceso", "Proceso en tiempo real", "Check de servicio", "Host"],
+      "respuesta_correcta": "Check de proceso",
+      "explicacion": "El monitor Check de proceso se basa en el service check process.up."
+    },
+    {
+      "id": "mo-8",
+      "fuente_tema": "Tipos de monitores",
+      "url_fuente": "https://docs.datadoghq.com/es/monitors/types/",
+      "pregunta": "Has creado un check personalizado que envía service checks. ¿Qué monitor vigila su estado?",
+      "opciones": ["Check de servicio", "Métrica", "Evento", "Logs"],
+      "respuesta_correcta": "Check de servicio",
+      "explicacion": "El monitor de Check de servicio monitoriza el estado de checks personalizados arbitrarios."
+    },
+    {
+      "id": "mo-9",
+      "fuente_tema": "Tipos de monitores",
+      "url_fuente": "https://docs.datadoghq.com/es/monitors/types/",
+      "pregunta": "¿Qué vigilan las alertas de SLOs?",
+      "opciones": [
+        "El presupuesto de errores (error budget) y la tasa de consumo (burn rate) del SLO",
+        "El número de usuarios conectados",
+        "Los costes de la nube",
+        "La versión del Agent"
+      ],
+      "respuesta_correcta": "El presupuesto de errores (error budget) y la tasa de consumo (burn rate) del SLO",
+      "explicacion": "Las alertas de SLO monitorizan el budget de errores y la tasa de consumo."
+    },
+    {
+      "id": "mo-10",
+      "fuente_tema": "Tipos de monitores",
+      "url_fuente": "https://docs.datadoghq.com/es/monitors/types/",
+      "pregunta": "¿Qué monitor te notifica cuando el motor de Datadog detecta automáticamente un comportamiento anómalo, sin definir tú la métrica?",
+      "opciones": ["Watchdog", "Anomalía", "Outlier", "Alerta de cambio"],
+      "respuesta_correcta": "Watchdog",
+      "explicacion": "El monitor Watchdog notifica cuando Watchdog detecta un comportamiento anómalo."
+    },
+    {
+      "id": "mo-11",
+      "fuente_tema": "Tipos de monitores",
+      "url_fuente": "https://docs.datadoghq.com/es/monitors/types/",
+      "pregunta": "Quieres alertar cuando aparezcan más de 100 logs de error en 5 minutos. ¿Qué tipo de monitor usas?",
+      "opciones": ["Logs", "Evento", "Rastro de auditoría", "APM"],
+      "respuesta_correcta": "Logs",
+      "explicacion": "El monitor de Logs alerta cuando un tipo de log supera un umbral durante un período."
+    },
+    {
+      "id": "mo-12",
+      "fuente_tema": "Tipos de monitores",
+      "url_fuente": "https://docs.datadoghq.com/es/monitors/types/",
+      "pregunta": "¿Qué monitor vigila valores de métricas o el estado de mantenimiento de una integración concreta?",
+      "opciones": ["Integración", "Host", "Costos en la nube", "CI"],
+      "respuesta_correcta": "Integración",
+      "explicacion": "El monitor de Integración monitoriza métricas o el estado de una integración específica."
+    },
+    {
+      "id": "mo-13",
+      "fuente_tema": "Tipos de monitores",
+      "url_fuente": "https://docs.datadoghq.com/es/monitors/types/",
+      "pregunta": "¿Qué monitor elegirías para seguir la latencia de un servicio a partir de métricas de trazas?",
+      "opciones": ["APM", "Red", "Host", "Rastreo de errores"],
+      "respuesta_correcta": "APM",
+      "explicacion": "El monitor APM monitoriza métricas de APM o consultas de trazas."
+    },
+
+    {
+      "id": "ds-1",
+      "fuente_tema": "DogStatsD",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "pregunta": "¿Qué es DogStatsD?",
+      "opciones": [
+        "Un servicio de agregación de métricas incluido con el Agent que implementa el protocolo StatsD con extensiones de Datadog",
+        "Una base de datos de series temporales",
+        "Un sustituto de la API HTTP de Datadog",
+        "Un monitor de tipo métrica"
+      ],
+      "respuesta_correcta": "Un servicio de agregación de métricas incluido con el Agent que implementa el protocolo StatsD con extensiones de Datadog",
+      "explicacion": "Es la forma más fácil de enviar métricas personalizadas: viene con el Agent e implementa StatsD con extensiones."
+    },
+    {
+      "id": "ds-2",
+      "fuente_tema": "DogStatsD",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "pregunta": "¿Qué extensiones específicas de Datadog añade DogStatsD al protocolo StatsD? (elige 4)",
+      "opciones": ["Tipo de métrica histograma", "Verificaciones de servicio", "Eventos", "Etiquetado", "Trazas distribuidas", "Session Replay"],
+      "respuestas_correctas": ["Tipo de métrica histograma", "Verificaciones de servicio", "Eventos", "Etiquetado"],
+      "explicacion": "Las extensiones son histogramas, service checks, eventos y etiquetado."
+    },
+    {
+      "id": "ds-3",
+      "fuente_tema": "DogStatsD",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "pregunta": "¿Implementa DogStatsD los temporizadores (timers) de StatsD como tipo nativo?",
+      "opciones": [
+        "No, pero los soporta a través de histogramas",
+        "Sí, como tipo nativo",
+        "No, y no hay forma de enviarlos",
+        "Solo en Windows"
+      ],
+      "respuesta_correcta": "No, pero los soporta a través de histogramas",
+      "explicacion": "DogStatsD no tiene timers como tipo nativo; los gestiona mediante histogramas."
+    },
+    {
+      "id": "ds-4",
+      "fuente_tema": "DogStatsD",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "pregunta": "¿Qué ventaja da que DogStatsD use UDP?",
+      "opciones": [
+        "La aplicación envía y continúa sin esperar respuesta; si DogStatsD no responde, la app no se interrumpe",
+        "Garantiza la entrega de cada paquete",
+        "Cifra las métricas de extremo a extremo",
+        "Permite enviar trazas completas"
+      ],
+      "respuesta_correcta": "La aplicación envía y continúa sin esperar respuesta; si DogStatsD no responde, la app no se interrumpe",
+      "explicacion": "Con UDP la aplicación no espera confirmación, así que una caída de DogStatsD no afecta a la app."
+    },
+    {
+      "id": "ds-5",
+      "fuente_tema": "DogStatsD",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "pregunta": "¿Cada cuánto vacía (flush) DogStatsD los datos agregados hacia Datadog?",
+      "opciones": ["Cada 10 segundos", "Cada segundo", "Cada 60 segundos", "Cada 5 minutos"],
+      "respuesta_correcta": "Cada 10 segundos",
+      "explicacion": "DogStatsD agrega los puntos de cada métrica y usa un intervalo de vaciado de 10 segundos."
+    },
+    {
+      "id": "ds-6",
+      "fuente_tema": "DogStatsD",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "pregunta": "Necesitas cambiar el puerto de DogStatsD en un Agent de host. ¿Qué haces?",
+      "opciones": [
+        "Configurar dogstatsd_port en el archivo principal del Agent y reiniciar el Agent",
+        "Cambiarlo desde la lista de servidores",
+        "Crear una nueva clave de API",
+        "No se puede cambiar"
+      ],
+      "respuesta_correcta": "Configurar dogstatsd_port en el archivo principal del Agent y reiniciar el Agent",
+      "explicacion": "Se ajusta dogstatsd_port (por defecto 8125) en datadog.yaml y se reinicia el Agent."
+    },
+    {
+      "id": "ds-7",
+      "fuente_tema": "DogStatsD",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "pregunta": "Además de UDP, ¿qué transporte puede usar DogStatsD?",
+      "opciones": ["Un socket de dominio UNIX", "SMTP", "gRPC sobre TLS obligatorio", "FTP"],
+      "respuesta_correcta": "Un socket de dominio UNIX",
+      "explicacion": "DogStatsD puede escuchar en un socket de dominio UNIX (statsd_socket_path), solo con Agent v6+."
+    },
+    {
+      "id": "ds-8",
+      "fuente_tema": "DogStatsD",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "pregunta": "¿Está habilitada por defecto la detección de origen en el Datadog Agent?",
+      "opciones": [
+        "No; se habilita poniendo DD_DOGSTATSD_ORIGIN_DETECTION_CLIENT a true",
+        "Sí, siempre",
+        "Solo en Windows",
+        "No existe esa función"
+      ],
+      "respuesta_correcta": "No; se habilita poniendo DD_DOGSTATSD_ORIGIN_DETECTION_CLIENT a true",
+      "explicacion": "La detección de origen no está habilitada por defecto en el Agent; se activa con esa variable."
+    },
+    {
+      "id": "ds-9",
+      "fuente_tema": "DogStatsD",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "pregunta": "¿Qué valores admite el parámetro de cardinalidad de etiquetas en los clientes DogStatsD?",
+      "opciones": ["none, low, orchestrator o high", "min, avg o max", "1, 2 o 3", "public o private"],
+      "respuesta_correcta": "none, low, orchestrator o high",
+      "explicacion": "La cardinalidad se define globalmente con DD_CARDINALITY o por métrica con none, low, orchestrator o high."
+    },
+    {
+      "id": "ds-10",
+      "fuente_tema": "DogStatsD",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "pregunta": "¿Qué tres etiquetas estándar usa el unified service tagging?",
+      "opciones": ["env, service y version", "host, device y region", "team, owner y cost", "app, tier y zone"],
+      "respuesta_correcta": "env, service y version",
+      "explicacion": "Unified service tagging vincula la telemetría con env, service y version."
+    },
+    {
+      "id": "ds-11",
+      "fuente_tema": "DogStatsD",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "pregunta": "¿Cómo se instala el cliente DogStatsD para Python?",
+      "opciones": ["pip install datadog", "pip install dogstatsd-agent", "npm install datadog", "apt install dogstatsd"],
+      "respuesta_correcta": "pip install datadog",
+      "explicacion": "El cliente Python se instala con pip install datadog."
+    },
+    {
+      "id": "ds-12",
+      "fuente_tema": "DogStatsD",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "pregunta": "¿Funciona cualquier cliente StatsD estándar con DogStatsD?",
+      "opciones": [
+        "Sí, pero sin las extensiones específicas de Datadog",
+        "No, solo los clientes oficiales de Datadog",
+        "Sí, e incluye todas las extensiones",
+        "Solo si usa TCP"
+      ],
+      "respuesta_correcta": "Sí, pero sin las extensiones específicas de Datadog",
+      "explicacion": "Cualquier cliente StatsD compatible funciona, pero no aprovecha histogramas, service checks, eventos ni etiquetas."
+    },
+    {
+      "id": "ds-13",
+      "fuente_tema": "DogStatsD",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "pregunta": "¿Por qué recomienda Datadog no descargar la imagen de DogStatsD desde Docker Hub si no eres cliente de Docker Hub?",
+      "opciones": [
+        "Porque Docker Hub tiene límites de tasa de descarga de imágenes",
+        "Porque la imagen de Docker Hub está obsoleta",
+        "Porque Docker Hub no permite imágenes de Datadog",
+        "Porque cobra por cada métrica"
+      ],
+      "respuesta_correcta": "Porque Docker Hub tiene límites de tasa de descarga de imágenes",
+      "explicacion": "Recomienda usar el Registro de Contenedores de Datadog o el registro de un proveedor cloud."
+    },
+
+    {
+      "id": "tr-1",
+      "fuente_tema": "ddtrace (APM en Python)",
+      "url_fuente": "https://ddtrace.readthedocs.io/en/stable/advanced_usage.html",
+      "pregunta": "¿Qué hace ddtrace-run?",
+      "opciones": [
+        "Traza frameworks web y módulos de base de datos compatibles sin cambiar el código",
+        "Instala el Datadog Agent en el host",
+        "Ejecuta los checks de Python del Agent",
+        "Convierte logs en métricas"
+      ],
+      "respuesta_correcta": "Traza frameworks web y módulos de base de datos compatibles sin cambiar el código",
+      "explicacion": "ddtrace-run instrumenta automáticamente la aplicación, por ejemplo: ddtrace-run python my_app.py."
+    },
+    {
+      "id": "tr-2",
+      "fuente_tema": "ddtrace (APM en Python)",
+      "url_fuente": "https://ddtrace.readthedocs.io/en/stable/advanced_usage.html",
+      "pregunta": "¿Cuántos spans o contextos pueden estar activos a la vez en una misma ejecución (hilo, tarea)?",
+      "opciones": ["Solo uno", "Hasta cuatro", "Ilimitados", "Uno por cada integración"],
+      "respuesta_correcta": "Solo uno",
+      "explicacion": "Solo puede haber un span o contexto activo por ejecución. Los nuevos spans toman como padre al activo."
+    },
+    {
+      "id": "tr-3",
+      "fuente_tema": "ddtrace (APM en Python)",
+      "url_fuente": "https://ddtrace.readthedocs.io/en/stable/advanced_usage.html",
+      "pregunta": "Para trazar peticiones entre distintos hosts (trazado distribuido), ¿qué usa ddtrace?",
+      "opciones": [
+        "HTTPPropagator, que transmite el contexto de la traza en cabeceras HTTP",
+        "Una base de datos compartida entre hosts",
+        "DogStatsD por UDP",
+        "Los logs del Agent"
+      ],
+      "respuesta_correcta": "HTTPPropagator, que transmite el contexto de la traza en cabeceras HTTP",
+      "explicacion": "El cliente inyecta el contexto en cabeceras y el servidor lo extrae para continuar la traza."
+    },
+    {
+      "id": "tr-4",
+      "fuente_tema": "ddtrace (APM en Python)",
+      "url_fuente": "https://ddtrace.readthedocs.io/en/stable/advanced_usage.html",
+      "pregunta": "¿Qué atributos debe incluir el formato de log para correlacionar logs y trazas? (elige 3)",
+      "opciones": ["dd.trace_id", "dd.span_id", "dd.service", "dd.api_key", "dd.hostname_file"],
+      "respuestas_correctas": ["dd.trace_id", "dd.span_id", "dd.service"],
+      "explicacion": "El formato debe soportar dd.trace_id, dd.span_id, dd.service, dd.env y dd.version, que ddtrace añade al registro."
+    },
+    {
+      "id": "tr-5",
+      "fuente_tema": "ddtrace (APM en Python)",
+      "url_fuente": "https://ddtrace.readthedocs.io/en/stable/advanced_usage.html",
+      "pregunta": "Por defecto, ¿qué códigos de estado HTTP considera ddtrace como errores?",
+      "opciones": ["500-599", "400-599", "400-499", "Cualquier código distinto de 200"],
+      "respuesta_correcta": "500-599",
+      "explicacion": "Por defecto son errores los 500-599. Se cambia con DD_TRACE_HTTP_SERVER_ERROR_STATUSES."
+    },
+    {
+      "id": "tr-6",
+      "fuente_tema": "ddtrace (APM en Python)",
+      "url_fuente": "https://ddtrace.readthedocs.io/en/stable/advanced_usage.html",
+      "pregunta": "¿Qué variable configura qué cabeceras HTTP se guardan como tags en las trazas?",
+      "opciones": ["DD_TRACE_HEADER_TAGS", "DD_TAGS", "DD_TRACE_HTTP_HEADERS_ALL", "DD_CONTAINER_LABELS_AS_TAGS"],
+      "respuesta_correcta": "DD_TRACE_HEADER_TAGS",
+      "explicacion": "DD_TRACE_HEADER_TAGS funciona como lista de permitidos; sin configuración no se traza ninguna cabecera."
+    },
+    {
+      "id": "tr-7",
+      "fuente_tema": "ddtrace (APM en Python)",
+      "url_fuente": "https://ddtrace.readthedocs.io/en/stable/advanced_usage.html",
+      "pregunta": "En un filtro de trazas (TraceFilter), ¿qué ocurre si process_trace devuelve None?",
+      "opciones": [
+        "La traza se descarta y no se envía al Agent",
+        "La traza se envía sin spans",
+        "Se reintenta el envío",
+        "Se marca la traza como error"
+      ],
+      "respuesta_correcta": "La traza se descarta y no se envía al Agent",
+      "explicacion": "process_trace debe devolver la traza para el siguiente paso o None para descartarla."
+    },
+    {
+      "id": "tr-8",
+      "fuente_tema": "ddtrace (APM en Python)",
+      "url_fuente": "https://ddtrace.readthedocs.io/en/stable/advanced_usage.html",
+      "pregunta": "¿Qué pasa con los valores sensibles (token, password) del query string cuando se trazan URLs?",
+      "opciones": [
+        "Se ofuscan por defecto",
+        "Se guardan en claro",
+        "Se eliminan todas las URLs",
+        "Se envían cifrados a un vault"
+      ],
+      "respuesta_correcta": "Se ofuscan por defecto",
+      "explicacion": "Los query strings sensibles se ofuscan por defecto; la expresión regular se ajusta con DD_TRACE_OBFUSCATION_QUERY_STRING_REGEXP."
+    },
+    {
+      "id": "tr-9",
+      "fuente_tema": "ddtrace (APM en Python)",
+      "url_fuente": "https://ddtrace.readthedocs.io/en/stable/advanced_usage.html",
+      "pregunta": "¿Es compatible ddtrace-run con uWSGI?",
+      "opciones": [
+        "No; con uWSGI se usa la opción import=ddtrace.auto y requisitos como enable-threads",
+        "Sí, sin ninguna configuración",
+        "Sí, pero solo en Windows",
+        "No, ddtrace no funciona con uWSGI de ninguna forma"
+      ],
+      "respuesta_correcta": "No; con uWSGI se usa la opción import=ddtrace.auto y requisitos como enable-threads",
+      "explicacion": "ddtrace-run no se soporta con uWSGI; hay que habilitar threads y lazy-apps (o fork hooks) e importar ddtrace.auto."
+    },
+    {
+      "id": "tr-10",
+      "fuente_tema": "ddtrace (APM en Python)",
+      "url_fuente": "https://ddtrace.readthedocs.io/en/stable/advanced_usage.html",
+      "pregunta": "¿Cómo reduces la verbosidad de los logs de ddtrace sin tocar el resto de loggers?",
+      "opciones": [
+        "Ajustando el logger llamado \"ddtrace\" o la variable DD_TRACE_LOG_LEVEL",
+        "Desinstalando ddtrace",
+        "Poniendo el logger raíz en DEBUG",
+        "Desactivando el Agent"
+      ],
+      "respuesta_correcta": "Ajustando el logger llamado \"ddtrace\" o la variable DD_TRACE_LOG_LEVEL",
+      "explicacion": "ddtrace usa un logger propio llamado ddtrace que se puede configurar de forma independiente."
+    },
+    {
+      "id": "tr-11",
+      "fuente_tema": "ddtrace (APM en Python)",
+      "url_fuente": "https://ddtrace.readthedocs.io/en/stable/advanced_usage.html",
+      "pregunta": "¿Qué recomienda la documentación respecto al tracer de OpenTracing de Datadog?",
+      "opciones": [
+        "Está obsoleto; usar el Datadog Tracer o la API de OpenTelemetry",
+        "Es el método recomendado para nuevos proyectos",
+        "Solo funciona con ddtrace-run",
+        "Es obligatorio para el trazado distribuido"
+      ],
+      "respuesta_correcta": "Está obsoleto; usar el Datadog Tracer o la API de OpenTelemetry",
+      "explicacion": "El tracer OpenTracing está deprecado y se eliminará en una versión futura."
+    },
+    {
+      "id": "tr-12",
+      "fuente_tema": "ddtrace (APM en Python)",
+      "url_fuente": "https://ddtrace.readthedocs.io/en/stable/advanced_usage.html",
+      "pregunta": "Tu app en Kubernetes no muestra trazas. ¿Qué sugiere comprobar la documentación de ddtrace?",
+      "opciones": [
+        "Que la aplicación tenga ruta de red hasta el Agent de trazas",
+        "Que el clúster tenga más de 3 nodos",
+        "Que la clave de aplicación sea de administrador",
+        "Que DogStatsD use TCP"
+      ],
+      "respuesta_correcta": "Que la aplicación tenga ruta de red hasta el Agent de trazas",
+      "explicacion": "Recomienda asegurarse de que la app llega al Agent; se puede probar con DD_TRACE_DEBUG=true ddtrace-run ipython."
+    }
+  ]
+}

@@ -526,7 +526,7 @@ export function renderQuiz(quiz, escapeHtml) {
           <button type="button" class="primary" data-quiz="load">Empezar</button>
           <button type="button" class="ghost" data-quiz="import-json">Importar JSON</button>
         </div>
-        <p class="help">Para añadir preguntas nuevas: en tu cuaderno (con las URLs de docs Datadog) genera un JSON con <code>titulo</code> y <code>preguntas[]</code> — ver <code>notebook-import.example.json</code>. Importar o copiar a <code>data/notebooklm/preguntas_datadog.json</code> y <code>node scripts/build-exam-packs.mjs</code>.</p>
+        <p class="help">Para añadir preguntas nuevas: en tu cuaderno (con las URLs de docs Datadog) genera un JSON con <code>titulo</code> y <code>preguntas[]</code> — ver <code>notebook-import.example.json</code>. Importar o copiar a <code>data/notebooklm/</code> y <code>node scripts/build-exam-packs.mjs</code>.</p>
         <input type="file" id="quiz-import-file" accept="application/json,.json" hidden />
       </section>
     `

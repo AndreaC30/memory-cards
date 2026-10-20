@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-20T11:27:57.271Z",
-  "poolSize": 20,
+  "generatedAt": "2026-10-20T11:47:20.370Z",
+  "poolSize": 186,
   "notebookSources": [
     "https://docs.datadoghq.com/es/getting_started/",
     "https://docs.datadoghq.com/es/agent/?tab=Host-based",
@@ -16,8 +16,6 @@
     "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
     "https://ddtrace.readthedocs.io/en/stable/advanced_usage.html"
   ],
-  "notebooklmFile": "data/notebooklm/preguntas_datadog.json",
-  "notebooklmQuestions": 20,
   "tests20": [
     {
       "id": "test-01",
@@ -48,6 +46,26 @@
       "id": "test-06",
       "file": "test-06.json",
       "title": "Test 6 (20)"
+    },
+    {
+      "id": "test-07",
+      "file": "test-07.json",
+      "title": "Test 7 (20)"
+    },
+    {
+      "id": "test-08",
+      "file": "test-08.json",
+      "title": "Test 8 (20)"
+    },
+    {
+      "id": "test-09",
+      "file": "test-09.json",
+      "title": "Test 9 (20)"
+    },
+    {
+      "id": "test-10",
+      "file": "test-10.json",
+      "title": "Test 10 (20)"
     }
   ],
   "simulacros90": [
@@ -65,13 +83,6 @@
       "id": "simulacro-c",
       "file": "simulacro-c.json",
       "title": "Simulacro C — 90 preguntas"
-    }
-  ],
-  "notebooklm": [
-    {
-      "id": "notebooklm-datadog",
-      "file": "notebooklm-datadog-20.json",
-      "title": "Estudio Datadog (20)"
     }
   ]
 }

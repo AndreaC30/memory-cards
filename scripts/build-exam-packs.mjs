@@ -1,23 +1,20 @@
 /**
- * Genera tests de 20 preguntas y simulacros de 90 (certificación).
- * Combina banco emberize + hechos extraídos de las 13 URLs del notebook.
+ * Genera tests de 20 preguntas y simulacros de 90 (certificación) a partir del
+ * banco de estudio: todos los JSON de data/notebooklm/ (formato NotebookLM en español).
  *
- * node scripts/build-quiz.mjs      (emberize → public/datadog-quiz.json)
  * node scripts/build-exam-packs.mjs
  */
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs"
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync, existsSync } from "node:fs"
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { NOTEBOOK_SOURCES, DOMAIN_LABELS } from "./sources.mjs"
-import { buildWhyCorrect, stripMarkdown } from "./rationale.mjs"
-import { buildMultiQuestions } from "./multi-questions.mjs"
-import { examOptionText, summarizeOptionText } from "./option-text.mjs"
-import { notebookLmEsToStandard } from "../src/notebooklm-format.js"
-import { filterUsableQuestions } from "./question-quality.mjs"
+import { notebookLmQuestionToApp } from "../src/notebooklm-format.js"
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..")
-const NOTEBOOK_DATA = join(root, "data", "notebooklm", "preguntas_datadog.json")
-const TEST_PACK_COUNT = 6
+const STUDY_DIR = join(root, "data", "notebooklm")
+const TEST_SIZE = 20
+const SIM_SIZE = 90
+const SIM_PRETEST = 15
 
 function mulberry32(seed) {
   return function () {
@@ -47,331 +44,136 @@ function shuffleWithSeed(arr, seed) {
   return a
 }
 
-function stripHtml(html) {
-  return html
-    .replace(/<script[\s\S]*?<\/script>/gi, "")
-    .replace(/<style[\s\S]*?<\/style>/gi, "")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-}
-
-function extractDocFacts(html, source) {
-  const facts = []
-  const clean = html.replace(/<script[\s\S]*?<\/script>/gi, "").replace(/<style[\s\S]*?<\/style>/gi, "")
-  const re = /<h2[^>]*>([\s\S]*?)<\/h2>([\s\S]*?)(?=<h2|$)/gi
-  let m
-  while ((m = re.exec(clean)) !== null) {
-    const heading = stripHtml(m[1]).slice(0, 120)
-    const body = stripHtml(m[2]).slice(0, 500)
-    if (heading.length < 8 || body.length < 40) continue
-    if (/cookie|consent|navigation/i.test(heading)) continue
-    facts.push({ heading, body, source })
-  }
-  if (!facts.length) {
-    const text = stripHtml(clean).slice(0, 4000)
-    if (text.length > 120) facts.push({ heading: source.title, body: text, source })
-  }
-  return facts
-}
-
-function answerSummary(text) {
-  return examOptionText(stripMarkdown(text))
-}
-
-function pickDistractors(card, pool, rnd) {
-  const picked = []
-  const used = new Set([answerSummary(card.back).toLowerCase()])
-  const candidates = pool.filter((c) => c.id !== card.id)
-  const same = candidates.filter((c) => c.domain === card.domain)
-  const ordered = [...same, ...candidates.filter((c) => c.domain !== card.domain)]
-  while (picked.length < 3 && ordered.length) {
-    const idx = Math.floor(rnd() * ordered.length)
-    const c = ordered.splice(idx, 1)[0]
-    const s = answerSummary(c.back)
-    const key = s.toLowerCase()
-    if (used.has(key) || s.length < 10) continue
-    used.add(key)
-    picked.push(s)
-  }
-  while (picked.length < 3) picked.push(`Opción incorrecta (${picked.length + 1})`)
-  return picked
-}
-
-function toMcq(card, pool) {
-  const rnd = mulberry32(hashSeed(card.id))
-  const correctText = answerSummary(card.back)
-  const options = [correctText, ...pickDistractors(card, pool, rnd)]
-  for (let i = options.length - 1; i > 0; i--) {
-    const j = Math.floor(rnd() * (i + 1))
-    ;[options[i], options[j]] = [options[j], options[i]]
-  }
-  const rationale = buildWhyCorrect(card, correctText)
-  return {
-    id: card.id,
-    domain: card.domain,
-    domainLabel: DOMAIN_LABELS[card.domain] || card.domain,
-    question: card.front,
-    options,
-    correctIndex: options.indexOf(correctText),
-    explanation: stripMarkdown(card.back),
-    whyCorrect: rationale.whyCorrect,
-    sourceUrl: rationale.sourceUrl,
-    sourceTitle: rationale.sourceTitle,
-    sourceTag: card.sourceTag || "emberize",
-    answerType: "single",
-  }
-}
-
-async function fetchFacts() {
-  const cards = []
-  for (const source of NOTEBOOK_SOURCES) {
-    try {
-      const res = await fetch(source.url, {
-        headers: { "User-Agent": "memory-cards-study-bot/1.0" },
-      })
-      if (!res.ok) {
-        console.warn(`SKIP ${source.id}: HTTP ${res.status}`)
-        continue
-      }
-      const html = await res.text()
-      const facts = extractDocFacts(html, source)
-      facts.slice(0, 12).forEach((f, i) => {
-        cards.push({
-          id: `doc-${source.id}-${i}`,
-          domain: source.domain,
-          front: `En ${source.title}: «${stripMarkdown(f.heading)}» — ¿cuál afirmación es correcta?`,
-          back: stripMarkdown(f.body),
-          docHeading: stripMarkdown(f.heading),
-          sourceTag: source.id,
-          sourceUrl: source.url,
-          sourceTitle: source.title,
-        })
-      })
-      console.log(`  ${source.id}: ${Math.min(facts.length, 12)} preguntas`)
-    } catch (err) {
-      console.warn(`SKIP ${source.id}:`, err.message)
-    }
-  }
-  return cards
-}
-
-function loadEmberizeCards() {
-  const path = join(root, "public", "datadog-quiz.json")
-  const data = JSON.parse(readFileSync(path, "utf8"))
-  return (data.questions || []).map((q) => ({
-    id: q.id,
-    domain: q.domain,
-    front: q.question,
-    back: q.explanation,
-    sourceTag: "emberize",
-  }))
-}
-
-function dedupeCards(cards) {
-  const seen = new Set()
-  return cards.filter((c) => {
-    const key = c.front.toLowerCase().slice(0, 100)
-    if (seen.has(key)) return false
-    seen.add(key)
-    return true
-  })
-}
-
-function buildPool(rawCards) {
-  const deduped = dedupeCards(rawCards)
-  const singles = deduped.map((c) => toMcq(c, deduped))
-  const multis = buildMultiQuestions(deduped, deduped)
-  return [...singles, ...multis]
-}
-
-function isMulti(q) {
-  return q.answerType === "multiple"
-}
-
-function loadNotebookLmQuestions() {
-  try {
-    const raw = JSON.parse(readFileSync(NOTEBOOK_DATA, "utf8"))
-    const std = notebookLmEsToStandard(raw)
-    return std.questions || []
-  } catch (err) {
-    console.warn("NotebookLM (data/notebooklm/preguntas_datadog.json):", err.message)
-    return []
-  }
-}
-
-function notebookSliceForTest(notebookQs, testIndex) {
-  return notebookQs.filter((_, i) => i % TEST_PACK_COUNT === testIndex - 1)
-}
-
-/** Mezcla preguntas NotebookLM (repartidas entre tests) con el banco generado. */
-function composeTestPack(pool, notebookQs, total, multiCount, seed, testIndex) {
-  const nbPick = notebookSliceForTest(notebookQs, testIndex)
-  const pickedIds = new Set(nbPick.map((q) => q.id))
-  const restPool = pool.filter((q) => !pickedIds.has(q.id))
-  const need = Math.max(0, total - nbPick.length)
-  const rest = composePack(restPool, need, multiCount, seed, true)
-  return shuffleWithSeed([...nbPick, ...rest], seed + 7).slice(0, total)
-}
-
-function composePack(pool, total, multiCount, seed, allowRepeat = false) {
-  const multis = pool.filter(isMulti)
-  const singles = pool.filter((q) => !isMulti(q))
-  const multiPick = pickN(multis, Math.min(multiCount, multis.length), seed, false)
-  const singleNeed = total - multiPick.length
-  const singlePick = pickN(singles, singleNeed, seed + 11, allowRepeat)
-  return shuffleWithSeed([...multiPick, ...singlePick], seed + 23).slice(0, total)
-}
-
-function pickN(pool, n, seed, allowRepeat = false) {
-  const rnd = mulberry32(seed)
-  const out = []
-  const used = new Set()
-  const shuffled = shuffleWithSeed(pool, seed)
-  for (const q of shuffled) {
-    if (out.length >= n) break
-    if (!allowRepeat && used.has(q.id)) continue
-    used.add(q.id)
-    out.push(q)
-  }
-  while (out.length < n) {
-    if (!pool.length) break
-    const q = pool[Math.floor(rnd() * pool.length)]
-    if (!q) break
-    out.push({ ...q, id: `${q.id}-r${out.length}` })
-  }
+/** Baraja las opciones de forma determinista y recalcula los índices correctos. */
+function shuffleOptions(q) {
+  const order = shuffleWithSeed(
+    q.options.map((_, i) => i),
+    hashSeed(q.id),
+  )
+  const newIndex = (old) => order.indexOf(old)
+  const out = { ...q, options: order.map((i) => q.options[i]), correctIndex: newIndex(q.correctIndex) }
+  if (q.correctIndices) out.correctIndices = q.correctIndices.map(newIndex).sort((a, b) => a - b)
   return out
 }
 
-function markPretestQuestions(questions, seed, pretestCount = 15) {
+function loadStudyBank() {
+  const files = readdirSync(STUDY_DIR).filter((f) => f.endsWith(".json")).sort()
+  const seen = new Set()
+  const bank = []
+  for (const file of files) {
+    const data = JSON.parse(readFileSync(join(STUDY_DIR, file), "utf8"))
+    const prefix = file === "preguntas_datadog.json" ? "nb" : "doc"
+    for (const [i, raw] of (data.preguntas || []).entries()) {
+      const q = notebookLmQuestionToApp(raw, i, { idPrefix: prefix })
+      const key = q.question.toLowerCase().trim()
+      if (seen.has(key) || seen.has(q.id)) continue
+      seen.add(key)
+      seen.add(q.id)
+      bank.push(shuffleOptions(q))
+    }
+    console.log(`  ${file}: ${data.preguntas?.length || 0} preguntas`)
+  }
+  return bank
+}
+
+/** Orden barajado que reparte cada dominio de forma proporcional a lo largo de todo el orden. */
+function balancedOrder(pool, seed) {
+  const byDomain = new Map()
+  for (const q of shuffleWithSeed(pool, seed)) {
+    if (!byDomain.has(q.domain)) byDomain.set(q.domain, [])
+    byDomain.get(q.domain).push(q)
+  }
+  const rnd = mulberry32(seed + 1)
+  const placed = [...byDomain.values()].flatMap((list) => {
+    const offset = rnd()
+    return list.map((q, k) => ({ q, pos: (k + offset) / list.length }))
+  })
+  return placed.sort((a, b) => a.pos - b.pos).map((p) => p.q)
+}
+
+/** Toma `size` preguntas empezando en `start`, dando la vuelta al final del orden. */
+function takeWrapped(order, start, size) {
+  return Array.from({ length: Math.min(size, order.length) }, (_, i) => order[(start + i) % order.length])
+}
+
+function markPretestQuestions(questions, seed, pretestCount) {
   const indices = shuffleWithSeed(
     questions.map((_, i) => i),
     seed,
   ).slice(0, pretestCount)
   const pretestSet = new Set(indices)
-  const pretestItemIds = indices.map((i) => questions[i].id)
-  const marked = questions.map((q, i) => ({
-    ...q,
-    isPretest: pretestSet.has(i),
-  }))
-  return { questions: marked, pretestItemIds }
+  return {
+    questions: questions.map((q, i) => ({ ...q, isPretest: pretestSet.has(i) })),
+    pretestItemIds: indices.map((i) => questions[i].id),
+  }
 }
 
 function writePack(dir, name, meta, questions, scoring = null) {
-  const file = join(dir, `${name}.json`)
-  const body = {
-    ...meta,
-    count: questions.length,
-    domains: DOMAIN_LABELS,
-    questions,
-  }
+  const body = { ...meta, count: questions.length, domains: DOMAIN_LABELS, questions }
   if (scoring) body.scoring = scoring
-  writeFileSync(file, JSON.stringify(body, null, 2), "utf8")
+  writeFileSync(join(dir, `${name}.json`), JSON.stringify(body, null, 2), "utf8")
   return `${name}.json`
 }
 
-async function main() {
-  console.log("Cargando emberize (sin trozos automáticos de documentación)…")
-  const emberize = loadEmberizeCards()
-  const notebookQs = loadNotebookLmQuestions()
-  const generated = filterUsableQuestions(buildPool(emberize))
-  console.log(
-    `  Tarjetas emberize legibles: ${generated.length} · Preguntas de estudio (JSON): ${notebookQs.length}`,
-  )
-  const nbKeys = new Set(notebookQs.map((q) => q.question.toLowerCase().slice(0, 90)))
-  const pool = [
-    ...notebookQs,
-    ...generated.filter((q) => !nbKeys.has(q.question.toLowerCase().slice(0, 90))),
-  ]
-  const multiN = pool.filter(isMulti).length
-  console.log(
-    `Banco total: ${pool.length} preguntas (${notebookQs.length} de tu JSON de estudio, ${multiN} múltiple)`,
-  )
+function main() {
+  console.log("Cargando banco de estudio (data/notebooklm/*.json)…")
+  const pool = loadStudyBank()
+  console.log(`Banco total: ${pool.length} preguntas únicas (${pool.filter((q) => q.correctIndices).length} de respuesta múltiple)`)
 
   const outDir = join(root, "public", "exams")
   mkdirSync(outDir, { recursive: true })
+  for (const f of readdirSync(outDir)) {
+    if (/^(test-\d+|simulacro-[a-z]|notebooklm-datadog-20)\.json$/.test(f)) rmSync(join(outDir, f))
+  }
 
   const manifest = {
     generatedAt: new Date().toISOString(),
     poolSize: pool.length,
     notebookSources: NOTEBOOK_SOURCES.map((s) => s.url),
-    notebooklmFile: "data/notebooklm/preguntas_datadog.json",
-    notebooklmQuestions: notebookQs.length,
     tests20: [],
     simulacros90: [],
-    notebooklm: [],
   }
 
-  if (notebookQs.length) {
-    writePack(
-      outDir,
-      "notebooklm-datadog-20",
-      {
-        id: "notebooklm-datadog",
-        title: JSON.parse(readFileSync(NOTEBOOK_DATA, "utf8")).titulo || "NotebookLM — Datadog",
-        type: "test20",
-        description: "20 preguntas de estudio basadas en la documentación Datadog (tu JSON de cuaderno).",
-        passPercent: 70,
-      },
-      notebookQs,
-    )
-    manifest.notebooklm.push({
-      id: "notebooklm-datadog",
-      file: "notebooklm-datadog-20.json",
-      title: "Estudio Datadog (20)",
-    })
-  }
-
-  for (let i = 1; i <= 6; i++) {
-    const questions = notebookQs.length
-      ? composeTestPack(pool, notebookQs, 20, 1, 1000 + i * 17, i)
-      : composePack(pool, 20, 1, 1000 + i * 17, false)
-    const file = writePack(outDir, `test-${String(i).padStart(2, "0")}`, {
-      id: `test-${String(i).padStart(2, "0")}`,
-      title: `Test ${i} — 20 preguntas`,
-      type: "test20",
-      description:
-        "Mezcla preguntas de tu JSON de estudio (docs Datadog) con material extra. Aprobado práctica: ≥70%.",
-      passPercent: 70,
-    }, questions)
-    manifest.tests20.push({ id: `test-${String(i).padStart(2, "0")}`, file, title: `Test ${i} (20)` })
-  }
-
-  const simNames = [
-    { id: "simulacro-a", title: "Simulacro A — 90 preguntas", seed: 9001 },
-    { id: "simulacro-b", title: "Simulacro B — 90 preguntas", seed: 9002 },
-    { id: "simulacro-c", title: "Simulacro C — 90 preguntas", seed: 9003 },
-  ]
-  for (const sim of simNames) {
-    const raw = composePack(pool, 90, 6, sim.seed, true)
-    const { questions, pretestItemIds } = markPretestQuestions(raw, sim.seed + 99, 15)
+  const testOrder = balancedOrder(pool, 1017)
+  const testCount = Math.ceil(pool.length / TEST_SIZE)
+  for (let i = 0; i < testCount; i++) {
+    const id = `test-${String(i + 1).padStart(2, "0")}`
     const file = writePack(
       outDir,
-      sim.id,
+      id,
       {
-        id: sim.id,
-        title: sim.title,
+        id,
+        title: `Test ${i + 1} — 20 preguntas`,
+        type: "test20",
+        description: "Preguntas basadas en la documentación oficial de Datadog. Aprobado práctica: ≥70%.",
+        passPercent: 70,
+      },
+      takeWrapped(testOrder, i * TEST_SIZE, TEST_SIZE),
+    )
+    manifest.tests20.push({ id, file, title: `Test ${i + 1} (20)` })
+  }
+
+  const simOrder = balancedOrder(pool, 9001)
+  for (const [i, letter] of ["a", "b", "c"].entries()) {
+    const id = `simulacro-${letter}`
+    const title = `Simulacro ${letter.toUpperCase()} — 90 preguntas`
+    const raw = shuffleWithSeed(takeWrapped(simOrder, i * SIM_SIZE, SIM_SIZE), 9100 + i)
+    const { questions, pretestItemIds } = markPretestQuestions(raw, 9200 + i, SIM_PRETEST)
+    const file = writePack(
+      outDir,
+      id,
+      {
+        id,
+        title,
         type: "simulacro90",
-        description:
-          "90 preguntas, resultado X/75. Mínimo referencia 48/75; apunta a 55–60+ para ir tranquilo.",
+        description: "90 preguntas, resultado X/75. Mínimo referencia 48/75; apunta a 55–60+ para ir tranquilo.",
         passPercent: 64,
-        examLike: {
-          durationMinutes: 120,
-          scoredItems: 75,
-          pretestItems: 15,
-          passPercent: 64,
-          passMinScored: 48,
-        },
+        examLike: { durationMinutes: 120, scoredItems: 75, pretestItems: SIM_PRETEST, passPercent: 64, passMinScored: 48 },
       },
       questions,
-      {
-        totalItems: 90,
-        scoredItems: 75,
-        pretestItems: 15,
-        pretestItemIds,
-      },
+      { totalItems: SIM_SIZE, scoredItems: 75, pretestItems: SIM_PRETEST, pretestItemIds },
     )
-    manifest.simulacros90.push({ id: sim.id, file, title: sim.title })
+    manifest.simulacros90.push({ id, file, title })
   }
 
   writeFileSync(join(outDir, "manifest.json"), JSON.stringify(manifest, null, 2), "utf8")
@@ -390,10 +192,8 @@ async function main() {
     ),
     "utf8",
   )
-  console.log(`OK: manifest + 6 tests de 20 + 3 simulacros de 90 en public/exams/`)
+  console.log(`OK: ${testCount} tests de 20 + 3 simulacros de 90 en public/exams/`)
 }
 
-main().catch((e) => {
-  console.error(e)
-  process.exit(1)
-})
+if (!existsSync(STUDY_DIR)) throw new Error(`Falta ${STUDY_DIR}`)
+main()

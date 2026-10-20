@@ -1,0 +1,418 @@
+{
+  "id": "test-08",
+  "title": "Test 8 — 20 preguntas",
+  "type": "test20",
+  "description": "Preguntas basadas en la documentación oficial de Datadog. Aprobado práctica: ≥70%.",
+  "passPercent": 70,
+  "count": 20,
+  "domains": {
+    "essential": "Conceptos esenciales",
+    "infra": "Infraestructura y Agent",
+    "network": "Red y configuración",
+    "collection": "Recolección de datos",
+    "troubleshoot": "Troubleshooting",
+    "viz": "Visualización y uso"
+  },
+  "questions": [
+    {
+      "id": "doc-ky-4",
+      "domain": "network",
+      "domainLabel": "Red y configuración",
+      "question": "¿Cuál es la buena práctica al definir contextos (scopes) para una clave de aplicación?",
+      "options": [
+        "Copiar los contextos de la clave de API",
+        "No definir contextos nunca",
+        "Darle siempre permisos de administrador para evitar errores",
+        "Darle solo los permisos mínimos necesarios para que la aplicación funcione"
+      ],
+      "correctIndex": 3,
+      "explanation": "Se recomienda el mínimo privilegio. Por ejemplo, una app que solo lee paneles no necesita gestionar usuarios.",
+      "whyCorrect": "Se recomienda el mínimo privilegio. Por ejemplo, una app que solo lee paneles no necesita gestionar usuarios.",
+      "hint": "Tema: Claves de API y de aplicación",
+      "sourceTitle": "Claves de API y de aplicación",
+      "sourceUrl": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-me-7",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Qué tipo de métrica es el adecuado para el uso de RAM o CPU de un host?",
+      "options": [
+        "Distribution, porque calcula percentiles globales",
+        "Count, porque suma todos los valores",
+        "Gauge, porque toma el último valor reportado en el intervalo",
+        "Rate, porque divide por el tiempo"
+      ],
+      "correctIndex": 2,
+      "explanation": "Un gauge toma el último valor del intervalo, que representa bien el estado del host. Un count daría valores inexactos y extremos.",
+      "whyCorrect": "Un gauge toma el último valor del intervalo, que representa bien el estado del host. Un count daría valores inexactos y extremos.",
+      "hint": "Tema: Métricas — tipos",
+      "sourceTitle": "Métricas — tipos",
+      "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "nb-12",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Cuál de las siguientes métricas es recopilada nativamente por la integración de Docker para indicar la cantidad de contenedores ejecutándose en el host?",
+      "options": [
+        "container.count.total",
+        "docker.status.active",
+        "docker.containers.running",
+        "sys.docker.active_containers"
+      ],
+      "correctIndex": 2,
+      "explanation": "La métrica 'docker.containers.running' mide la cantidad de contenedores en estado de ejecución en la instancia donde opera el Agente.",
+      "whyCorrect": "La métrica 'docker.containers.running' mide la cantidad de contenedores en estado de ejecución en la instancia donde opera el Agente.",
+      "hint": "Tema: Docker Daemon Integration",
+      "sourceTitle": "Docker Daemon Integration",
+      "sourceUrl": "",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-da-6",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Qué hace la variable DD_ENV?",
+      "options": [
+        "Activa el modo debug",
+        "Establece la etiqueta global env para todos los datos emitidos",
+        "Indica la clave de API por entorno",
+        "Define el entorno de Python del Agent"
+      ],
+      "correctIndex": 1,
+      "explanation": "DD_ENV fija la etiqueta env para todos los datos que envía el Agent.",
+      "whyCorrect": "DD_ENV fija la etiqueta env para todos los datos que envía el Agent.",
+      "hint": "Tema: Agent en Docker",
+      "sourceTitle": "Agent en Docker",
+      "sourceUrl": "https://docs.datadoghq.com/es/containers/docker/?tab=standard",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-tr-1",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Qué hace ddtrace-run?",
+      "options": [
+        "Traza frameworks web y módulos de base de datos compatibles sin cambiar el código",
+        "Instala el Datadog Agent en el host",
+        "Ejecuta los checks de Python del Agent",
+        "Convierte logs en métricas"
+      ],
+      "correctIndex": 0,
+      "explanation": "ddtrace-run instrumenta automáticamente la aplicación, por ejemplo: ddtrace-run python my_app.py.",
+      "whyCorrect": "ddtrace-run instrumenta automáticamente la aplicación, por ejemplo: ddtrace-run python my_app.py.",
+      "hint": "Tema: ddtrace (APM en Python)",
+      "sourceTitle": "ddtrace (APM en Python)",
+      "sourceUrl": "https://ddtrace.readthedocs.io/en/stable/advanced_usage.html",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ag-1",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Qué es el Datadog Agent?",
+      "options": [
+        "Un servicio SaaS que escanea tus servidores en remoto sin instalar nada",
+        "Una extensión de navegador para ver dashboards",
+        "Software que se ejecuta en tus servidores, recopila eventos y métricas y los envía a Datadog",
+        "Una base de datos local donde se guardan las métricas"
+      ],
+      "correctIndex": 2,
+      "explanation": "El Agent corre en tus hosts, recoge eventos y métricas y los envía a Datadog para analizarlos.",
+      "whyCorrect": "El Agent corre en tus hosts, recoge eventos y métricas y los envía a Datadog para analizarlos.",
+      "hint": "Tema: Datadog Agent",
+      "sourceTitle": "Datadog Agent",
+      "sourceUrl": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "nb-10",
+      "domain": "troubleshoot",
+      "domainLabel": "Troubleshooting",
+      "question": "¿Cómo combina las alertas un 'Composite Monitor' (Monitor Compuesto)?",
+      "options": [
+        "Utilizando expresiones lógicas booleanas (como AND, OR, NOT) sobre el estado de varios monitores individuales.",
+        "Fusionando múltiples logs en una sola traza de APM.",
+        "Creando un dashboard automático que consolida varios widgets.",
+        "Promediando los valores numéricos de dos métricas distintas."
+      ],
+      "correctIndex": 0,
+      "explanation": "Un Composite Monitor permite definir reglas complejas como 'A && B' para gatillar una notificación solo cuando ambos monitores estén en estado crítico.",
+      "whyCorrect": "Un Composite Monitor permite definir reglas complejas como 'A && B' para gatillar una notificación solo cuando ambos monitores estén en estado crítico.",
+      "hint": "Tema: Tipos de Monitores - Composite",
+      "sourceTitle": "Tipos de Monitores - Composite",
+      "sourceUrl": "",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-me-12",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "En una consulta, ¿qué controla el agrupamiento (group by) de la agregación espacial?",
+      "options": [
+        "Qué constituye una línea en el gráfico; por ejemplo, una línea por región",
+        "Qué usuarios pueden ver el dashboard",
+        "El color del gráfico",
+        "Cada cuántos segundos se toma un punto"
+      ],
+      "correctIndex": 0,
+      "explanation": "Agrupar por región con cientos de servidores en cuatro regiones da cuatro series temporales, una por región.",
+      "whyCorrect": "Agrupar por región con cientos de servidores en cuatro regiones da cuatro series temporales, una por región.",
+      "hint": "Tema: Métricas — consulta",
+      "sourceTitle": "Métricas — consulta",
+      "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "nb-3",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Qué montaje de volumen es imprescindible para que el contenedor del Datadog Agent interactúe con el demonio de Docker y descubra contenedores?",
+      "options": [
+        "-v /var/run/docker.sock:/var/run/docker.sock:ro",
+        "-v /var/log/docker:/var/log/docker:ro",
+        "-v /etc/docker/daemon.json:/etc/docker/daemon.json:ro",
+        "-v /usr/bin/docker:/usr/bin/docker:ro"
+      ],
+      "correctIndex": 0,
+      "explanation": "Montar el socket de Docker (/var/run/docker.sock) en modo lectura permite al Agente comunicarse con la API de Docker Daemon.",
+      "whyCorrect": "Montar el socket de Docker (/var/run/docker.sock) en modo lectura permite al Agente comunicarse con la API de Docker Daemon.",
+      "hint": "Tema: Agente de Docker - Volúmenes",
+      "sourceTitle": "Agente de Docker - Volúmenes",
+      "sourceUrl": "",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-qg-3",
+      "domain": "viz",
+      "domainLabel": "Visualización y uso",
+      "question": "¿En qué orden procesa el backend de Datadog una consulta para dibujar un gráfico?",
+      "options": [
+        "Encontrar las series → agregación temporal → agregación espacial → funciones",
+        "Agregación espacial → encontrar las series → funciones → agregación temporal",
+        "Agregación temporal → funciones → agregación espacial → encontrar las series",
+        "Funciones → agregación temporal → encontrar las series → agregación espacial"
+      ],
+      "correctIndex": 0,
+      "explanation": "Primero filtra las fuentes por contexto, luego agrega en el tiempo (rollup), después combina fuentes (espacio) y por último aplica funciones.",
+      "whyCorrect": "Primero filtra las fuentes por contexto, luego agrega en el tiempo (rollup), después combina fuentes (espacio) y por último aplica funciones.",
+      "hint": "Tema: De la consulta al gráfico",
+      "sourceTitle": "De la consulta al gráfico",
+      "sourceUrl": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ky-8",
+      "domain": "network",
+      "domainLabel": "Red y configuración",
+      "question": "¿Se puede restaurar una clave de aplicación revocada?",
+      "options": [
+        "No, la revocación de una clave de aplicación es permanente",
+        "Sí, durante 7 días",
+        "Sí, durante 30 días",
+        "Sí, con el endpoint /api/v2/validate_keys"
+      ],
+      "correctIndex": 0,
+      "explanation": "La ventana de 7 días solo aplica a claves de API. Revocar una clave de aplicación es permanente.",
+      "whyCorrect": "La ventana de 7 días solo aplica a claves de API. Revocar una clave de aplicación es permanente.",
+      "hint": "Tema: Claves de API y de aplicación",
+      "sourceTitle": "Claves de API y de aplicación",
+      "sourceUrl": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-di-7",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿A qué repositorio de Docker Hub se movió la imagen del Agent?",
+      "options": [
+        "De datadog/agent a datadog/dogstatsd",
+        "De datadog/agent a datadog/docker-dd-agent",
+        "No ha cambiado nunca",
+        "De datadog/docker-dd-agent a datadog/agent"
+      ],
+      "correctIndex": 3,
+      "explanation": "El repositorio de Docker Hub cambió de datadog/docker-dd-agent a datadog/agent.",
+      "whyCorrect": "El repositorio de Docker Hub cambió de datadog/docker-dd-agent a datadog/agent.",
+      "hint": "Tema: Integración Docker",
+      "sourceTitle": "Integración Docker",
+      "sourceUrl": "https://docs.datadoghq.com/es/integrations/docker/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ma-5",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Qué permiso necesita un usuario para crear, editar o borrar configuraciones de etiquetas de métricas por API?",
+      "options": [
+        "Metrics Read",
+        "Dashboards Write",
+        "Admin de la organización",
+        "Manage Tags for Metrics"
+      ],
+      "correctIndex": 3,
+      "explanation": "Los métodos Post, Patch y Delete de manage_tags requieren el permiso Manage Tags for Metrics.",
+      "whyCorrect": "Los métodos Post, Patch y Delete de manage_tags requieren el permiso Manage Tags for Metrics.",
+      "hint": "Tema: API de métricas",
+      "sourceTitle": "API de métricas",
+      "sourceUrl": "https://docs.datadoghq.com/es/api/latest/metrics/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ag-14",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Qué es el Cluster Agent?",
+      "options": [
+        "Un panel para agrupar hosts por región",
+        "Una versión del Agent diseñada para recopilar de forma eficiente datos de un clúster orquestado de Kubernetes",
+        "El Agent instalado en el portátil del administrador",
+        "Un tipo de monitor para clústeres"
+      ],
+      "correctIndex": 1,
+      "explanation": "El Cluster Agent centraliza la recogida de datos del clúster para no sobrecargar la API de Kubernetes.",
+      "whyCorrect": "El Cluster Agent centraliza la recogida de datos del clúster para no sobrecargar la API de Kubernetes.",
+      "hint": "Tema: Datadog Agent — Kubernetes",
+      "sourceTitle": "Datadog Agent — Kubernetes",
+      "sourceUrl": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-tr-9",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Es compatible ddtrace-run con uWSGI?",
+      "options": [
+        "No; con uWSGI se usa la opción import=ddtrace.auto y requisitos como enable-threads",
+        "Sí, pero solo en Windows",
+        "No, ddtrace no funciona con uWSGI de ninguna forma",
+        "Sí, sin ninguna configuración"
+      ],
+      "correctIndex": 0,
+      "explanation": "ddtrace-run no se soporta con uWSGI; hay que habilitar threads y lazy-apps (o fork hooks) e importar ddtrace.auto.",
+      "whyCorrect": "ddtrace-run no se soporta con uWSGI; hay que habilitar threads y lazy-apps (o fork hooks) e importar ddtrace.auto.",
+      "hint": "Tema: ddtrace (APM en Python)",
+      "sourceTitle": "ddtrace (APM en Python)",
+      "sourceUrl": "https://ddtrace.readthedocs.io/en/stable/advanced_usage.html",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-di-4",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "El Agent está instalado directamente en el host y debe leer Docker. ¿Qué permiso necesita su usuario?",
+      "options": [
+        "Pertenecer al grupo docker (usermod -a -G docker dd-agent)",
+        "Ninguno: Docker es accesible para todos",
+        "Pertenecer al grupo sudo",
+        "Ser root en todo momento"
+      ],
+      "correctIndex": 0,
+      "explanation": "Hay que añadir el usuario dd-agent al grupo docker para que pueda acceder al socket de Docker.",
+      "whyCorrect": "Hay que añadir el usuario dd-agent al grupo docker para que pueda acceder al socket de Docker.",
+      "hint": "Tema: Integración Docker",
+      "sourceTitle": "Integración Docker",
+      "sourceUrl": "https://docs.datadoghq.com/es/integrations/docker/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-gs-4",
+      "domain": "essential",
+      "domainLabel": "Conceptos esenciales",
+      "question": "¿Qué funcionalidad bloquea el código defectuoso para que no llegue a producción?",
+      "options": [
+        "Watchdog",
+        "PR Gates",
+        "Incident Management",
+        "Session Replay"
+      ],
+      "correctIndex": 1,
+      "explanation": "En la categoría de pruebas, PR Gates impide que código defectuoso se despliegue en producción.",
+      "whyCorrect": "En la categoría de pruebas, PR Gates impide que código defectuoso se despliegue en producción.",
+      "hint": "Tema: Guía de inicio rápido",
+      "sourceTitle": "Guía de inicio rápido",
+      "sourceUrl": "https://docs.datadoghq.com/es/getting_started/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-il-1",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Qué muestra la lista de servidores (Host List)?",
+      "options": [
+        "Solo los servidores con alertas activas",
+        "Un inventario en tiempo real de los servidores que reportan a Datadog mediante el Agent o integraciones en la nube",
+        "Los contenedores parados en las últimas 24 horas",
+        "La lista de usuarios de la organización"
+      ],
+      "correctIndex": 1,
+      "explanation": "Es el inventario en tiempo real de hosts, tanto los que tienen Agent como los que llegan por integraciones cloud.",
+      "whyCorrect": "Es el inventario en tiempo real de hosts, tanto los que tienen Agent como los que llegan por integraciones cloud.",
+      "hint": "Tema: Lista de servidores",
+      "sourceTitle": "Lista de servidores",
+      "sourceUrl": "https://docs.datadoghq.com/es/infrastructure/list/",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "nb-8",
+      "domain": "troubleshoot",
+      "domainLabel": "Troubleshooting",
+      "question": "¿Para qué sirve específicamente un 'Outlier Monitor' (Monitor de Valores Atípicos)?",
+      "options": [
+        "Para alertar cuando un miembro de un grupo (ej. un servidor en un clúster) se comporta de forma significativamente diferente al resto del grupo.",
+        "Para evaluar patrones estacionales comparados con la misma hora de la semana anterior.",
+        "Para monitorear únicamente la disponibilidad de la red mediante pings ICMP.",
+        "Para predecir cuándo se agotará el espacio en disco en los próximos 30 días."
+      ],
+      "correctIndex": 0,
+      "explanation": "Outlier Detection utiliza algoritmos para identificar elementos de un grupo cuyo comportamiento se desvía estadísticamente del promedio de sus pares.",
+      "whyCorrect": "Outlier Detection utiliza algoritmos para identificar elementos de un grupo cuyo comportamiento se desvía estadísticamente del promedio de sus pares.",
+      "hint": "Tema: Tipos de Monitores - Outlier",
+      "sourceTitle": "Tipos de Monitores - Outlier",
+      "sourceUrl": "",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-ds-6",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "Necesitas cambiar el puerto de DogStatsD en un Agent de host. ¿Qué haces?",
+      "options": [
+        "Crear una nueva clave de API",
+        "Configurar dogstatsd_port en el archivo principal del Agent y reiniciar el Agent",
+        "Cambiarlo desde la lista de servidores",
+        "No se puede cambiar"
+      ],
+      "correctIndex": 1,
+      "explanation": "Se ajusta dogstatsd_port (por defecto 8125) en datadog.yaml y se reinicia el Agent.",
+      "whyCorrect": "Se ajusta dogstatsd_port (por defecto 8125) en datadog.yaml y se reinicia el Agent.",
+      "hint": "Tema: DogStatsD",
+      "sourceTitle": "DogStatsD",
+      "sourceUrl": "https://docs.datadoghq.com/es/extend/dogstatsd/?tab=agentedehost",
+      "sourceTag": "study-pack",
+      "answerType": "single"
+    }
+  ]
+}

@@ -178,12 +178,12 @@
       "pregunta": "¿Qué método HTTP y endpoint de la API REST se utiliza para enviar métricas de series temporales directamente a Datadog sin usar el Agent?",
       "opciones": [
         "A) GET /api/v1/metrics",
-        "B) POST /api/v1/series",
+        "B) POST /api/v2/series",
         "C) PUT /api/v2/metrics/upload",
         "D) POST /api/v1/ingest/metrics"
       ],
-      "respuesta_correcta": "B) POST /api/v1/series",
-      "explicacion": "El endpoint 'POST /api/v1/series' acepta un objeto JSON con puntos de datos de series temporales para ingestar métricas directamente en Datadog."
+      "respuesta_correcta": "B) POST /api/v2/series",
+      "explicacion": "El endpoint 'POST /api/v2/series' (Submit metrics) acepta un objeto JSON con puntos de datos de series temporales para ingestar métricas directamente en Datadog."
     },
     {
       "id": 15,

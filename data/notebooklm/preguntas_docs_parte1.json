@@ -1,0 +1,951 @@
+{
+  "titulo": "Datadog Fundamentals — documentación oficial (parte 1)",
+  "descripcion": "Preguntas redactadas a partir de las páginas oficiales: inicio, Agent, métricas, lista de servidores, claves e integraciones basadas en Agent.",
+  "preguntas": [
+    {
+      "id": "gs-1",
+      "fuente_tema": "Guía de inicio rápido",
+      "url_fuente": "https://docs.datadoghq.com/es/getting_started/",
+      "pregunta": "¿Cómo define la documentación oficial a Datadog?",
+      "opciones": [
+        "Una plataforma de observabilidad que apoya cada fase del desarrollo de software en cualquier stack",
+        "Un sistema gestor de bases de datos de series temporales que se instala on-premise",
+        "Un orquestador de contenedores alternativo a Kubernetes",
+        "Un IDE para desarrollar paneles de monitorización"
+      ],
+      "respuesta_correcta": "Una plataforma de observabilidad que apoya cada fase del desarrollo de software en cualquier stack",
+      "explicacion": "Datadog es una plataforma de observabilidad formada por muchos productos para construir, probar, monitorear, depurar, optimizar y proteger software. Se pueden usar por separado o combinados."
+    },
+    {
+      "id": "gs-2",
+      "fuente_tema": "Guía de inicio rápido",
+      "url_fuente": "https://docs.datadoghq.com/es/getting_started/",
+      "pregunta": "¿Qué producto simula usuarios de todo el mundo para probar una aplicación web, una API o una app móvil?",
+      "opciones": ["Synthetic Monitoring", "Real User Monitoring", "Continuous Profiler", "Code Security"],
+      "respuesta_correcta": "Synthetic Monitoring",
+      "explicacion": "Synthetic Monitoring ejecuta pruebas simuladas desde distintas ubicaciones. RUM, en cambio, mide a usuarios reales."
+    },
+    {
+      "id": "gs-3",
+      "fuente_tema": "Guía de inicio rápido",
+      "url_fuente": "https://docs.datadoghq.com/es/getting_started/",
+      "pregunta": "¿Qué producto mide la experiencia de los usuarios reales y ayuda a detectar su frustración?",
+      "opciones": ["Real User Monitoring (RUM)", "Synthetic Monitoring", "Cloud SIEM", "PR Gates"],
+      "respuesta_correcta": "Real User Monitoring (RUM)",
+      "explicacion": "La guía indica que Real User Monitoring mide la rotación de usuarios y detecta la frustración del usuario."
+    },
+    {
+      "id": "gs-4",
+      "fuente_tema": "Guía de inicio rápido",
+      "url_fuente": "https://docs.datadoghq.com/es/getting_started/",
+      "pregunta": "¿Qué funcionalidad bloquea el código defectuoso para que no llegue a producción?",
+      "opciones": ["PR Gates", "Session Replay", "Watchdog", "Incident Management"],
+      "respuesta_correcta": "PR Gates",
+      "explicacion": "En la categoría de pruebas, PR Gates impide que código defectuoso se despliegue en producción."
+    },
+    {
+      "id": "gs-5",
+      "fuente_tema": "Guía de inicio rápido",
+      "url_fuente": "https://docs.datadoghq.com/es/getting_started/",
+      "pregunta": "Según la guía de inicio, ¿de cuántos servicios de AWS recopila datos la integración de AWS?",
+      "opciones": ["Más de 90 servicios", "Solo EC2 y S3", "Exactamente 25 servicios", "Ninguno: AWS requiere el Agent en cada recurso"],
+      "respuesta_correcta": "Más de 90 servicios",
+      "explicacion": "La integración de AWS recopila registros, eventos y métricas de más de 90 servicios de AWS."
+    },
+    {
+      "id": "gs-6",
+      "fuente_tema": "Guía de inicio rápido",
+      "url_fuente": "https://docs.datadoghq.com/es/getting_started/",
+      "pregunta": "¿Para qué sirven los Notebooks de Datadog?",
+      "opciones": [
+        "Combinar gráficos en vivo, métricas, registros y monitores para aislar problemas y crear guías interactivas",
+        "Ejecutar scripts de Python dentro del Agent",
+        "Guardar y rotar las claves de API de la organización",
+        "Configurar el sitio de Datadog de cada host"
+      ],
+      "respuesta_correcta": "Combinar gráficos en vivo, métricas, registros y monitores para aislar problemas y crear guías interactivas",
+      "explicacion": "Los Notebooks mezclan datos en vivo con texto para investigar problemas y documentar procedimientos."
+    },
+    {
+      "id": "gs-7",
+      "fuente_tema": "Guía de inicio rápido",
+      "url_fuente": "https://docs.datadoghq.com/es/getting_started/",
+      "pregunta": "¿Qué servicio de plataforma automatiza procesos de extremo a extremo en respuesta a alertas y señales de seguridad?",
+      "opciones": ["Workflow Automation", "Fleet Automation", "Synthetic Monitoring", "Metrics Summary"],
+      "respuesta_correcta": "Workflow Automation",
+      "explicacion": "Workflow Automation ejecuta flujos automáticos ante alertas o señales. Fleet Automation, en cambio, gestiona los Agents."
+    },
+    {
+      "id": "gs-8",
+      "fuente_tema": "Guía de inicio rápido",
+      "url_fuente": "https://docs.datadoghq.com/es/getting_started/",
+      "pregunta": "¿Para qué sirve elegir el «sitio de Datadog»?",
+      "opciones": [
+        "Para usar el sitio adecuado a tu región y a tus requisitos de seguridad",
+        "Para cambiar el idioma de la interfaz",
+        "Para definir el hostname que reporta el Agent",
+        "Para elegir el plan de facturación"
+      ],
+      "respuesta_correcta": "Para usar el sitio adecuado a tu región y a tus requisitos de seguridad",
+      "explicacion": "Cada sitio (US1, EU1, etc.) corresponde a una región. El Agent y la API deben apuntar al sitio de tu organización."
+    },
+    {
+      "id": "gs-9",
+      "fuente_tema": "Guía de inicio rápido",
+      "url_fuente": "https://docs.datadoghq.com/es/getting_started/",
+      "pregunta": "¿Qué servicio de plataforma te avisa con alertas y notificaciones cuando ocurren cambios críticos?",
+      "opciones": ["Monitors", "Dashboards", "Notebooks", "Teams"],
+      "respuesta_correcta": "Monitors",
+      "explicacion": "Los Monitors evalúan datos y notifican al equipo cuando se cumplen condiciones de alerta."
+    },
+    {
+      "id": "gs-10",
+      "fuente_tema": "Guía de inicio rápido",
+      "url_fuente": "https://docs.datadoghq.com/es/getting_started/",
+      "pregunta": "¿Qué producto permite ver cómo interactúan los usuarios con tu producto reproduciendo sus sesiones?",
+      "opciones": ["Session Replay", "Continuous Profiler", "Database Monitoring", "CI Visibility"],
+      "respuesta_correcta": "Session Replay",
+      "explicacion": "Session Replay reproduce la sesión del usuario para entender su comportamiento real."
+    },
+
+    {
+      "id": "ag-1",
+      "fuente_tema": "Datadog Agent",
+      "url_fuente": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "pregunta": "¿Qué es el Datadog Agent?",
+      "opciones": [
+        "Software que se ejecuta en tus servidores, recopila eventos y métricas y los envía a Datadog",
+        "Un servicio SaaS que escanea tus servidores en remoto sin instalar nada",
+        "Una extensión de navegador para ver dashboards",
+        "Una base de datos local donde se guardan las métricas"
+      ],
+      "respuesta_correcta": "Software que se ejecuta en tus servidores, recopila eventos y métricas y los envía a Datadog",
+      "explicacion": "El Agent corre en tus hosts, recoge eventos y métricas y los envía a Datadog para analizarlos."
+    },
+    {
+      "id": "ag-2",
+      "fuente_tema": "Datadog Agent",
+      "url_fuente": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "pregunta": "¿Es el Datadog Agent de código abierto?",
+      "opciones": [
+        "Sí, su código está publicado en GitHub (DataDog/datadog-agent)",
+        "No, es software propietario y cerrado",
+        "Solo la versión para Windows",
+        "Solo para clientes con plan Enterprise"
+      ],
+      "respuesta_correcta": "Sí, su código está publicado en GitHub (DataDog/datadog-agent)",
+      "explicacion": "La documentación indica que el Agent es open source y su código está en el repositorio DataDog/datadog-agent."
+    },
+    {
+      "id": "ag-3",
+      "fuente_tema": "Datadog Agent",
+      "url_fuente": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "pregunta": "¿Con qué frecuencia recomienda Datadog actualizar el Agent?",
+      "opciones": [
+        "Con cada versión menor y de parche o, como mínimo, una vez al mes",
+        "Una vez al año",
+        "Solo cuando sale una versión principal",
+        "Nunca: se actualiza solo sin intervención"
+      ],
+      "respuesta_correcta": "Con cada versión menor y de parche o, como mínimo, una vez al mes",
+      "explicacion": "Datadog recomienda actualizar con cada versión menor y de parche, o al menos mensualmente."
+    },
+    {
+      "id": "ag-4",
+      "fuente_tema": "Datadog Agent — Fleet Automation",
+      "url_fuente": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "pregunta": "¿Cuál es el flujo recomendado dentro de la aplicación para instalar, actualizar, configurar y solucionar problemas del Agent a gran escala?",
+      "opciones": ["Fleet Automation", "Workflow Automation", "Cluster Agent", "Metrics Explorer"],
+      "respuesta_correcta": "Fleet Automation",
+      "explicacion": "Fleet Automation es el flujo principal para gestionar la flota de Agents: versiones, configuración, actualizaciones remotas y flares."
+    },
+    {
+      "id": "ag-5",
+      "fuente_tema": "Datadog Agent — Fleet Automation",
+      "url_fuente": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "pregunta": "¿Qué permite Fleet Automation respecto a las claves de API?",
+      "opciones": [
+        "Identificar qué Agents usan una clave de API concreta y rotarla de forma segura",
+        "Crear claves de API sin necesidad de permisos",
+        "Convertir una clave de API en una clave de aplicación",
+        "Ver el valor de las claves de API revocadas"
+      ],
+      "respuesta_correcta": "Identificar qué Agents usan una clave de API concreta y rotarla de forma segura",
+      "explicacion": "Entre sus funciones está auditar el uso de claves de API: saber qué Agents usan cada clave para rotarlas sin cortar servicio."
+    },
+    {
+      "id": "ag-6",
+      "fuente_tema": "Datadog Agent — GUI",
+      "url_fuente": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "pregunta": "¿En qué sistemas operativos está habilitada por defecto la interfaz gráfica (GUI) del Agent?",
+      "opciones": ["Windows y macOS", "Linux y Windows", "Solo Linux", "En todos los sistemas operativos"],
+      "respuesta_correcta": "Windows y macOS",
+      "explicacion": "La GUI está habilitada por defecto en Windows y macOS. En Linux viene deshabilitada."
+    },
+    {
+      "id": "ag-7",
+      "fuente_tema": "Datadog Agent — GUI",
+      "url_fuente": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "pregunta": "¿Qué comando abre la GUI del Agent en el navegador predeterminado?",
+      "opciones": ["datadog-agent launch-gui", "datadog-agent gui --start", "datadog-agent status --web", "datadog-agent open"],
+      "respuesta_correcta": "datadog-agent launch-gui",
+      "explicacion": "El comando documentado es datadog-agent launch-gui."
+    },
+    {
+      "id": "ag-8",
+      "fuente_tema": "Datadog Agent — GUI",
+      "url_fuente": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "pregunta": "¿Cómo se deshabilita la GUI del Agent?",
+      "opciones": [
+        "Poniendo el puerto de la GUI a -1 en datadog.yaml",
+        "Borrando el archivo datadog.yaml",
+        "Poniendo el puerto de la GUI a 0",
+        "Desinstalando el Agent y reinstalándolo sin GUI"
+      ],
+      "respuesta_correcta": "Poniendo el puerto de la GUI a -1 en datadog.yaml",
+      "explicacion": "El puerto se puede cambiar en datadog.yaml. Para deshabilitar la GUI, el valor del puerto debe ser -1."
+    },
+    {
+      "id": "ag-9",
+      "fuente_tema": "Datadog Agent — GUI",
+      "url_fuente": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "pregunta": "Por seguridad, ¿desde dónde se puede acceder a la GUI del Agent?",
+      "opciones": [
+        "Solo desde la interfaz local (localhost/127.0.0.1) del servidor donde corre el Agent",
+        "Desde cualquier equipo de la red interna",
+        "Desde la aplicación web de Datadog",
+        "Desde cualquier IP con la clave de API"
+      ],
+      "respuesta_correcta": "Solo desde la interfaz local (localhost/127.0.0.1) del servidor donde corre el Agent",
+      "explicacion": "La GUI solo escucha en localhost, así que debes estar en el mismo servidor donde corre el Agent."
+    },
+    {
+      "id": "ag-10",
+      "fuente_tema": "Datadog Agent — configuración",
+      "url_fuente": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "pregunta": "¿Cuál es el valor por defecto del parámetro site en datadog.yaml?",
+      "opciones": ["datadoghq.com", "datadoghq.eu", "us3.datadoghq.com", "app.datadog.io"],
+      "respuesta_correcta": "datadoghq.com",
+      "explicacion": "El parámetro site se define en datadog.yaml y por defecto vale datadoghq.com (sitio US1)."
+    },
+    {
+      "id": "ag-11",
+      "fuente_tema": "Datadog Agent",
+      "url_fuente": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "pregunta": "¿Para qué existe un paquete independiente de DogStatsD, sin el Agent completo?",
+      "opciones": [
+        "Para entornos con contenedores donde DogStatsD corre como sidecar o servidores que solo necesitan DogStatsD",
+        "Para enviar logs desde el navegador",
+        "Para sustituir a la API HTTP de métricas",
+        "Para ejecutar checks de Python sin instalar el Agent"
+      ],
+      "respuesta_correcta": "Para entornos con contenedores donde DogStatsD corre como sidecar o servidores que solo necesitan DogStatsD",
+      "explicacion": "Se recomienda el Agent completo, pero el paquete DogStatsD sirve como sidecar o para servidores DogStatsD sin el resto de funciones."
+    },
+    {
+      "id": "ag-12",
+      "fuente_tema": "Datadog Agent — consumo de recursos",
+      "url_fuente": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "pregunta": "En la prueba de consumo del Agent 7.34 sobre una EC2 c5.xlarge, ¿cuánta memoria RAM usó aproximadamente?",
+      "opciones": ["~130 MB (RSS)", "~1,3 GB", "~13 MB", "~4 GB"],
+      "respuesta_correcta": "~130 MB (RSS)",
+      "explicacion": "La documentación indica ~0,08 % de CPU y ~130 MB de RAM (RSS) en esa prueba."
+    },
+    {
+      "id": "ag-13",
+      "fuente_tema": "Datadog Agent — consumo de recursos",
+      "url_fuente": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "pregunta": "¿Qué tipo de comprobaciones aumenta el uso de memoria del Agent según el número de beans que exponen las JVM?",
+      "opciones": ["Las comprobaciones JMX", "Las comprobaciones de disco", "Las comprobaciones NTP", "Las comprobaciones de red"],
+      "respuesta_correcta": "Las comprobaciones JMX",
+      "explicacion": "Habilitar JMX obliga al Agent a usar más memoria en función del número de beans de las JVM monitorizadas."
+    },
+    {
+      "id": "ag-14",
+      "fuente_tema": "Datadog Agent — Kubernetes",
+      "url_fuente": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "pregunta": "¿Qué es el Cluster Agent?",
+      "opciones": [
+        "Una versión del Agent diseñada para recopilar de forma eficiente datos de un clúster orquestado de Kubernetes",
+        "El Agent instalado en el portátil del administrador",
+        "Un panel para agrupar hosts por región",
+        "Un tipo de monitor para clústeres"
+      ],
+      "respuesta_correcta": "Una versión del Agent diseñada para recopilar de forma eficiente datos de un clúster orquestado de Kubernetes",
+      "explicacion": "El Cluster Agent centraliza la recogida de datos del clúster para no sobrecargar la API de Kubernetes."
+    },
+    {
+      "id": "ag-15",
+      "fuente_tema": "Datadog Agent — red",
+      "url_fuente": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "pregunta": "Tu red restringe el tráfico saliente de los servidores. ¿Qué recomienda la documentación para el tráfico del Agent?",
+      "opciones": ["Usar un proxy", "Desactivar el Agent", "Enviar las métricas por correo electrónico", "Abrir todos los puertos entrantes"],
+      "respuesta_correcta": "Usar un proxy",
+      "explicacion": "Si la red limita el tráfico saliente, el Agent puede enviar sus datos a través de un proxy."
+    },
+    {
+      "id": "ag-16",
+      "fuente_tema": "Datadog Agent — GUI",
+      "url_fuente": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "pregunta": "¿En qué plataforma NO es compatible la interfaz gráfica del Agent?",
+      "opciones": ["Windows de 32 bits", "macOS", "Windows de 64 bits", "Ninguna: es compatible en todas"],
+      "respuesta_correcta": "Windows de 32 bits",
+      "explicacion": "La documentación indica que la GUI del Agent no es compatible con Windows de 32 bits."
+    },
+
+    {
+      "id": "me-1",
+      "fuente_tema": "Métricas",
+      "url_fuente": "https://docs.datadoghq.com/es/metrics/",
+      "pregunta": "¿Cómo ingiere y almacena Datadog los datos de métricas?",
+      "opciones": [
+        "Como puntos con un valor y una marca de tiempo; una secuencia de puntos forma una serie temporal",
+        "Como líneas de texto libre, igual que los logs",
+        "Como archivos CSV diarios por host",
+        "Como trazas con spans anidados"
+      ],
+      "respuesta_correcta": "Como puntos con un valor y una marca de tiempo; una secuencia de puntos forma una serie temporal",
+      "explicacion": "Cada punto es [valor, timestamp] y una secuencia de puntos forma una serie temporal."
+    },
+    {
+      "id": "me-2",
+      "fuente_tema": "Métricas",
+      "url_fuente": "https://docs.datadoghq.com/es/metrics/",
+      "pregunta": "¿Qué ocurre con una métrica enviada con una marca de tiempo con fracciones de segundo?",
+      "opciones": [
+        "Se redondea al segundo más cercano",
+        "Se descarta",
+        "Se guarda con precisión de milisegundos",
+        "Se convierte en un evento"
+      ],
+      "respuesta_correcta": "Se redondea al segundo más cercano",
+      "explicacion": "Las marcas de tiempo con fracciones de segundo se redondean al segundo más cercano."
+    },
+    {
+      "id": "me-3",
+      "fuente_tema": "Métricas",
+      "url_fuente": "https://docs.datadoghq.com/es/metrics/",
+      "pregunta": "Llegan dos puntos de la misma métrica con la misma marca de tiempo. ¿Qué hace Datadog?",
+      "opciones": [
+        "El punto más reciente sobrescribe al anterior",
+        "Suma ambos valores",
+        "Calcula el promedio",
+        "Rechaza los dos"
+      ],
+      "respuesta_correcta": "El punto más reciente sobrescribe al anterior",
+      "explicacion": "Si hay puntos con la misma marca de tiempo, el más reciente sobrescribe a los anteriores."
+    },
+    {
+      "id": "me-4",
+      "fuente_tema": "Métricas — envío",
+      "url_fuente": "https://docs.datadoghq.com/es/metrics/",
+      "pregunta": "¿A través de qué tres vías se pueden enviar métricas personalizadas a Datadog? (elige 3)",
+      "opciones": ["El Agent", "DogStatsD", "La API HTTP", "Traps SNMP enviados al sitio web", "Un archivo subido por FTP"],
+      "respuestas_correctas": ["El Agent", "DogStatsD", "La API HTTP"],
+      "explicacion": "Las métricas personalizadas se envían a través del Agent, DogStatsD o la API HTTP."
+    },
+    {
+      "id": "me-5",
+      "fuente_tema": "Métricas — tipos",
+      "url_fuente": "https://docs.datadoghq.com/es/metrics/",
+      "pregunta": "¿Qué hace un tipo de métrica count con los valores enviados durante un intervalo?",
+      "opciones": [
+        "Los suma todos",
+        "Se queda con el último valor",
+        "Calcula la mediana",
+        "Divide el total entre el número de hosts"
+      ],
+      "respuesta_correcta": "Los suma todos",
+      "explicacion": "Un count suma todos los valores enviados en el intervalo, por ejemplo para contar visitas a un sitio web."
+    },
+    {
+      "id": "me-6",
+      "fuente_tema": "Métricas — tipos",
+      "url_fuente": "https://docs.datadoghq.com/es/metrics/",
+      "pregunta": "Quieres ver las visitas al sitio web por segundo. ¿Qué tipo de métrica encaja mejor?",
+      "opciones": ["Rate", "Gauge", "Histogram", "Set"],
+      "respuesta_correcta": "Rate",
+      "explicacion": "Un rate toma el conteo y lo divide por la duración del intervalo: da valores por segundo."
+    },
+    {
+      "id": "me-7",
+      "fuente_tema": "Métricas — tipos",
+      "url_fuente": "https://docs.datadoghq.com/es/metrics/",
+      "pregunta": "¿Qué tipo de métrica es el adecuado para el uso de RAM o CPU de un host?",
+      "opciones": ["Gauge, porque toma el último valor reportado en el intervalo", "Count, porque suma todos los valores", "Rate, porque divide por el tiempo", "Distribution, porque calcula percentiles globales"],
+      "respuesta_correcta": "Gauge, porque toma el último valor reportado en el intervalo",
+      "explicacion": "Un gauge toma el último valor del intervalo, que representa bien el estado del host. Un count daría valores inexactos y extremos."
+    },
+    {
+      "id": "me-8",
+      "fuente_tema": "Métricas — tipos",
+      "url_fuente": "https://docs.datadoghq.com/es/metrics/",
+      "pregunta": "¿Qué valores reporta una métrica de tipo histograma? (elige todas las correctas)",
+      "opciones": ["Promedio (avg)", "Conteo (count)", "Mediana", "Percentil 95", "Máximo", "Percentil 99,9"],
+      "respuestas_correctas": ["Promedio (avg)", "Conteo (count)", "Mediana", "Percentil 95", "Máximo"],
+      "explicacion": "Un histograma genera cinco series: promedio, conteo, mediana, percentil 95 y máximo."
+    },
+    {
+      "id": "me-9",
+      "fuente_tema": "Métricas — tipos",
+      "url_fuente": "https://docs.datadoghq.com/es/metrics/",
+      "pregunta": "¿En qué se diferencia una distribución de un histograma?",
+      "opciones": [
+        "La distribución resume los valores de todos los hosts del entorno y permite elegir percentiles (p50, p75, p90, p95, p99)",
+        "La distribución solo guarda el último valor",
+        "La distribución no admite etiquetas",
+        "No hay diferencia: son sinónimos"
+      ],
+      "respuesta_correcta": "La distribución resume los valores de todos los hosts del entorno y permite elegir percentiles (p50, p75, p90, p95, p99)",
+      "explicacion": "El histograma se agrega por host. La distribución se agrega globalmente y da percentiles precisos para todo el entorno."
+    },
+    {
+      "id": "me-10",
+      "fuente_tema": "Métricas — Agent",
+      "url_fuente": "https://docs.datadoghq.com/es/metrics/",
+      "pregunta": "¿Envía el Agent una petición a Datadog por cada punto de datos que recibe?",
+      "opciones": [
+        "No: agrega los valores durante un intervalo de flush y los envía juntos",
+        "Sí, cada punto viaja en una petición propia",
+        "Solo para métricas de tipo gauge",
+        "Solo si el host tiene más de 4 CPU"
+      ],
+      "respuesta_correcta": "No: agrega los valores durante un intervalo de flush y los envía juntos",
+      "explicacion": "El Agent informa los valores recogidos en cada intervalo de flush. El tipo de métrica decide cómo se agregan."
+    },
+    {
+      "id": "me-11",
+      "fuente_tema": "Métricas — consulta",
+      "url_fuente": "https://docs.datadoghq.com/es/metrics/",
+      "pregunta": "¿Cuál es la agregación temporal por defecto en una consulta de métricas?",
+      "opciones": ["avg", "sum", "max", "count"],
+      "respuesta_correcta": "avg",
+      "explicacion": "Por defecto se aplica avg. También están disponibles sum, min, max y count."
+    },
+    {
+      "id": "me-12",
+      "fuente_tema": "Métricas — consulta",
+      "url_fuente": "https://docs.datadoghq.com/es/metrics/",
+      "pregunta": "En una consulta, ¿qué controla el agrupamiento (group by) de la agregación espacial?",
+      "opciones": [
+        "Qué constituye una línea en el gráfico; por ejemplo, una línea por región",
+        "Cada cuántos segundos se toma un punto",
+        "El color del gráfico",
+        "Qué usuarios pueden ver el dashboard"
+      ],
+      "respuesta_correcta": "Qué constituye una línea en el gráfico; por ejemplo, una línea por región",
+      "explicacion": "Agrupar por región con cientos de servidores en cuatro regiones da cuatro series temporales, una por región."
+    },
+    {
+      "id": "me-13",
+      "fuente_tema": "Métricas — consulta",
+      "url_fuente": "https://docs.datadoghq.com/es/metrics/",
+      "pregunta": "¿Se aplica la agregación temporal en todas las consultas de métricas?",
+      "opciones": [
+        "Sí, se aplica siempre en cada consulta",
+        "Solo si añades .rollup() de forma explícita",
+        "Solo en ventanas de más de un mes",
+        "Nunca en los dashboards"
+      ],
+      "respuesta_correcta": "Sí, se aplica siempre en cada consulta",
+      "explicacion": "Hay más puntos que píxeles, así que Datadog siempre combina puntos en intervalos (rollup)."
+    },
+    {
+      "id": "me-14",
+      "fuente_tema": "Métricas — Metrics Summary",
+      "url_fuente": "https://docs.datadoghq.com/es/metrics/",
+      "pregunta": "¿El número de métricas distintas del panel de Metrics Summary determina tu factura?",
+      "opciones": [
+        "No; para un cálculo preciso hay que consultar los usage details",
+        "Sí, es exactamente el importe que se factura",
+        "Sí, pero solo para métricas gauge",
+        "Solo en organizaciones con más de 50 hosts"
+      ],
+      "respuesta_correcta": "No; para un cálculo preciso hay que consultar los usage details",
+      "explicacion": "La documentación aclara que ese número no define la factura; el uso real está en usage details."
+    },
+    {
+      "id": "me-15",
+      "fuente_tema": "Métricas — envío",
+      "url_fuente": "https://docs.datadoghq.com/es/metrics/",
+      "pregunta": "¿Se pueden generar métricas dentro de la propia plataforma, por ejemplo a partir de logs?",
+      "opciones": [
+        "Sí, por ejemplo contando los códigos de error que aparecen en los logs y guardándolo como métrica",
+        "No, todas las métricas deben venir del Agent",
+        "Solo con la integración de AWS",
+        "Solo métricas de tipo distribución"
+      ],
+      "respuesta_correcta": "Sí, por ejemplo contando los códigos de error que aparecen en los logs y guardándolo como métrica",
+      "explicacion": "La documentación pone como ejemplo contar códigos de estado de error en los logs y almacenarlos como una nueva métrica."
+    },
+    {
+      "id": "me-16",
+      "fuente_tema": "Métricas — funciones",
+      "url_fuente": "https://docs.datadoghq.com/es/metrics/",
+      "pregunta": "¿Cómo calcularías la tasa de uso de memoria de la JVM con dos métricas existentes?",
+      "opciones": [
+        "Con una función aritmética entre métricas: jvm.heap_memory / jvm.heap_memory_max",
+        "Creando un monitor de tipo Composite",
+        "Con un filtro de etiquetas account:prod",
+        "Cambiando el tipo de métrica a count"
+      ],
+      "respuesta_correcta": "Con una función aritmética entre métricas: jvm.heap_memory / jvm.heap_memory_max",
+      "explicacion": "Las funciones permiten aritmética entre métricas para crear una nueva serie, como el cociente entre heap usado y máximo."
+    },
+
+    {
+      "id": "il-1",
+      "fuente_tema": "Lista de servidores",
+      "url_fuente": "https://docs.datadoghq.com/es/infrastructure/list/",
+      "pregunta": "¿Qué muestra la lista de servidores (Host List)?",
+      "opciones": [
+        "Un inventario en tiempo real de los servidores que reportan a Datadog mediante el Agent o integraciones en la nube",
+        "Solo los servidores con alertas activas",
+        "La lista de usuarios de la organización",
+        "Los contenedores parados en las últimas 24 horas"
+      ],
+      "respuesta_correcta": "Un inventario en tiempo real de los servidores que reportan a Datadog mediante el Agent o integraciones en la nube",
+      "explicacion": "Es el inventario en tiempo real de hosts, tanto los que tienen Agent como los que llegan por integraciones cloud."
+    },
+    {
+      "id": "il-2",
+      "fuente_tema": "Lista de servidores",
+      "url_fuente": "https://docs.datadoghq.com/es/infrastructure/list/",
+      "pregunta": "Por defecto, ¿qué servidores muestra la lista de servidores?",
+      "opciones": [
+        "Los que han tenido actividad en los últimos 15 minutos",
+        "Los que han reportado en los últimos 7 días",
+        "Todos los que alguna vez reportaron",
+        "Solo los que tienen el Agent 7"
+      ],
+      "respuesta_correcta": "Los que han tenido actividad en los últimos 15 minutos",
+      "explicacion": "De forma predeterminada se muestran los servidores con actividad en los últimos 15 minutos."
+    },
+    {
+      "id": "il-3",
+      "fuente_tema": "Lista de servidores",
+      "url_fuente": "https://docs.datadoghq.com/es/infrastructure/list/",
+      "pregunta": "¿Debe usarse la lista de servidores para estimar la facturación de hosts?",
+      "opciones": [
+        "No; para eso está la página de facturación",
+        "Sí, es la fuente oficial de facturación",
+        "Sí, si se filtra por los últimos 30 días",
+        "Solo en cuentas con AWS"
+      ],
+      "respuesta_correcta": "No; para eso está la página de facturación",
+      "explicacion": "La documentación advierte que esta lista no sirve para estimar la facturación de servidores."
+    },
+    {
+      "id": "il-4",
+      "fuente_tema": "Lista de servidores",
+      "url_fuente": "https://docs.datadoghq.com/es/infrastructure/list/",
+      "pregunta": "Entre los filtros rápidos de la lista de servidores, ¿por qué fuente de telemetría se puede filtrar?",
+      "opciones": ["Datadog Agent u OpenTelemetry", "Solo SNMP", "Syslog o journald", "Prometheus o Graphite"],
+      "respuesta_correcta": "Datadog Agent u OpenTelemetry",
+      "explicacion": "Los filtros rápidos incluyen proveedor de nube, fuente de telemetría (Agent u OpenTelemetry), sistema operativo y hardware (GPU)."
+    },
+    {
+      "id": "il-5",
+      "fuente_tema": "Lista de servidores",
+      "url_fuente": "https://docs.datadoghq.com/es/infrastructure/list/",
+      "pregunta": "¿Qué muestra la columna combinada «Software» de la lista de servidores?",
+      "opciones": [
+        "El servidor web, la base de datos, la caché y el orquestador de contenedores detectados",
+        "Las versiones de todos los paquetes instalados",
+        "Las licencias de software contratadas",
+        "Los procesos con más consumo de CPU"
+      ],
+      "respuesta_correcta": "El servidor web, la base de datos, la caché y el orquestador de contenedores detectados",
+      "explicacion": "Software muestra servidor web, base de datos, caché y orquestador (Docker, Kubernetes) si se detectan."
+    },
+    {
+      "id": "il-6",
+      "fuente_tema": "Lista de servidores",
+      "url_fuente": "https://docs.datadoghq.com/es/infrastructure/list/",
+      "pregunta": "¿Qué muestra la columna combinada «Integrations»?",
+      "opciones": [
+        "Las integraciones del Datadog Agent habilitadas en el servidor",
+        "Las integraciones disponibles en el marketplace",
+        "Las claves de API usadas por el host",
+        "Los monitores asociados al host"
+      ],
+      "respuesta_correcta": "Las integraciones del Datadog Agent habilitadas en el servidor",
+      "explicacion": "Integrations lista las integraciones del Agent activas en cada servidor."
+    },
+    {
+      "id": "il-7",
+      "fuente_tema": "Lista de servidores",
+      "url_fuente": "https://docs.datadoghq.com/es/infrastructure/list/",
+      "pregunta": "Quieres conservar tu combinación de filtros y columnas de la lista de servidores. ¿Qué usas?",
+      "opciones": ["Una vista guardada (Save as new view)", "Un monitor de host", "Un notebook", "Una clave de aplicación"],
+      "respuesta_correcta": "Una vista guardada (Save as new view)",
+      "explicacion": "Desde el panel Views puedes guardar la configuración como nueva vista y marcarla como favorita."
+    },
+    {
+      "id": "il-8",
+      "fuente_tema": "Lista de servidores",
+      "url_fuente": "https://docs.datadoghq.com/es/infrastructure/list/",
+      "pregunta": "¿Cómo puedes auditar qué versiones del Agent se ejecutan en tus servidores?",
+      "opciones": [
+        "Con el script get_host_agent_list, que usa el host overview report",
+        "Abriendo la GUI del Agent en cada servidor",
+        "Con un monitor de tipo Outlier",
+        "Con el comando datadog-agent launch-gui"
+      ],
+      "respuesta_correcta": "Con el script get_host_agent_list, que usa el host overview report",
+      "explicacion": "El script get_host_agent_list muestra los Agents en ejecución con su versión. Fleet Automation también permite ver versiones."
+    },
+    {
+      "id": "il-9",
+      "fuente_tema": "Lista de servidores",
+      "url_fuente": "https://docs.datadoghq.com/es/infrastructure/list/",
+      "pregunta": "¿Por qué pueden aparecer en la lista de servidores instancias EC2 que no tienen el Agent instalado?",
+      "opciones": [
+        "Porque la integración de AWS las descubre al configurar la cuenta de AWS",
+        "Porque Datadog instala el Agent automáticamente",
+        "Porque DogStatsD las detecta por UDP",
+        "No pueden aparecer sin Agent"
+      ],
+      "respuesta_correcta": "Porque la integración de AWS las descubre al configurar la cuenta de AWS",
+      "explicacion": "Al configurar la integración de AWS, las instancias EC2 aparecen aunque no tengan Agent. Se pueden listar con la exportación JSON."
+    },
+    {
+      "id": "il-10",
+      "fuente_tema": "Lista de servidores",
+      "url_fuente": "https://docs.datadoghq.com/es/infrastructure/list/",
+      "pregunta": "¿Dónde se encuentra la lista de servidores en la aplicación?",
+      "opciones": ["Infraestructura > Servidores", "Monitors > Gestionar", "Logs > Explorer", "APM > Servicios"],
+      "respuesta_correcta": "Infraestructura > Servidores",
+      "explicacion": "La lista de servidores se abre desde Infraestructura > Servidores."
+    },
+
+    {
+      "id": "ky-1",
+      "fuente_tema": "Claves de API y de aplicación",
+      "url_fuente": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "pregunta": "¿Qué necesita el Datadog Agent para poder enviar métricas y eventos a Datadog?",
+      "opciones": ["Una clave de API", "Una clave de aplicación", "Un token de cliente", "Un usuario administrador"],
+      "respuesta_correcta": "Una clave de API",
+      "explicacion": "Las claves de API son únicas por organización y el Agent las necesita para enviar métricas y eventos."
+    },
+    {
+      "id": "ky-2",
+      "fuente_tema": "Claves de API y de aplicación",
+      "url_fuente": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "pregunta": "¿Qué permisos tiene por defecto una clave de aplicación?",
+      "opciones": [
+        "Los mismos que el usuario que la creó",
+        "Permisos de administrador de la organización",
+        "Solo lectura de dashboards",
+        "Ninguno hasta que se le asigne un rol"
+      ],
+      "respuesta_correcta": "Los mismos que el usuario que la creó",
+      "explicacion": "Las claves de aplicación están asociadas al usuario que las creó y por defecto heredan sus permisos."
+    },
+    {
+      "id": "ky-3",
+      "fuente_tema": "Claves de API y de aplicación",
+      "url_fuente": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "pregunta": "¿Qué implica el modo de lectura única (OTR) en las claves de aplicación?",
+      "opciones": [
+        "El secreto de la clave solo se muestra una vez, al crearla, y no se puede recuperar después",
+        "La clave solo se puede usar una vez",
+        "La clave solo permite peticiones GET",
+        "La clave caduca a las 24 horas"
+      ],
+      "respuesta_correcta": "El secreto de la clave solo se muestra una vez, al crearla, y no se puede recuperar después",
+      "explicacion": "Con OTR habilitado, el secreto solo es visible en la creación y no se recupera ni por la interfaz ni por la API."
+    },
+    {
+      "id": "ky-4",
+      "fuente_tema": "Claves de API y de aplicación",
+      "url_fuente": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "pregunta": "¿Cuál es la buena práctica al definir contextos (scopes) para una clave de aplicación?",
+      "opciones": [
+        "Darle solo los permisos mínimos necesarios para que la aplicación funcione",
+        "Darle siempre permisos de administrador para evitar errores",
+        "No definir contextos nunca",
+        "Copiar los contextos de la clave de API"
+      ],
+      "respuesta_correcta": "Darle solo los permisos mínimos necesarios para que la aplicación funcione",
+      "explicacion": "Se recomienda el mínimo privilegio. Por ejemplo, una app que solo lee paneles no necesita gestionar usuarios."
+    },
+    {
+      "id": "ky-5",
+      "fuente_tema": "Claves de API y de aplicación",
+      "url_fuente": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "pregunta": "Una aplicación web en el navegador debe enviar logs y eventos RUM. ¿Qué credencial usa?",
+      "opciones": [
+        "Un token de cliente, porque una clave de API quedaría expuesta en el cliente",
+        "La clave de API de la organización",
+        "Una clave de aplicación de un administrador",
+        "Ninguna: el navegador no necesita credenciales"
+      ],
+      "respuesta_correcta": "Un token de cliente, porque una clave de API quedaría expuesta en el cliente",
+      "explicacion": "Por seguridad, las claves de API no se usan en navegadores, móviles ni TV. Para eso existen los tokens de cliente."
+    },
+    {
+      "id": "ky-6",
+      "fuente_tema": "Claves de API y de aplicación",
+      "url_fuente": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "pregunta": "Por defecto, ¿cuántas claves de API puede tener una organización?",
+      "opciones": ["Hasta 50", "Hasta 5", "Hasta 500", "Ilimitadas"],
+      "respuesta_correcta": "Hasta 50",
+      "explicacion": "El límite predeterminado es 50 (las claves gestionadas no cuentan). Para más, hay que contactar con soporte."
+    },
+    {
+      "id": "ky-7",
+      "fuente_tema": "Claves de API y de aplicación",
+      "url_fuente": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "pregunta": "Has revocado una clave de API por error. ¿Puedes recuperarla?",
+      "opciones": [
+        "Sí, durante 7 días con Unrevoke desde la interfaz",
+        "No, la revocación es inmediata y permanente",
+        "Sí, en cualquier momento mediante la API",
+        "Solo contactando con soporte en las primeras 24 horas"
+      ],
+      "respuesta_correcta": "Sí, durante 7 días con Unrevoke desde la interfaz",
+      "explicacion": "Una clave de API revocada sigue 7 días en estado Revoked y se puede restaurar solo desde la UI."
+    },
+    {
+      "id": "ky-8",
+      "fuente_tema": "Claves de API y de aplicación",
+      "url_fuente": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "pregunta": "¿Se puede restaurar una clave de aplicación revocada?",
+      "opciones": [
+        "No, la revocación de una clave de aplicación es permanente",
+        "Sí, durante 7 días",
+        "Sí, durante 30 días",
+        "Sí, con el endpoint /api/v2/validate_keys"
+      ],
+      "respuesta_correcta": "No, la revocación de una clave de aplicación es permanente",
+      "explicacion": "La ventana de 7 días solo aplica a claves de API. Revocar una clave de aplicación es permanente."
+    },
+    {
+      "id": "ky-9",
+      "fuente_tema": "Claves de API y de aplicación",
+      "url_fuente": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "pregunta": "¿Qué endpoint permite comprobar si una clave de API está activa y se puede usar?",
+      "opciones": ["/api/v1/validate", "/api/v2/series", "/api/v1/query", "/api/v1/metrics"],
+      "respuesta_correcta": "/api/v1/validate",
+      "explicacion": "Para validar una clave de API se llama a /api/v1/validate. Para claves de aplicación se usa /api/v2/validate_keys."
+    },
+    {
+      "id": "ky-10",
+      "fuente_tema": "Claves de API y de aplicación",
+      "url_fuente": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "pregunta": "Se deshabilita la cuenta de un usuario. ¿Qué pasa con las claves que creó?",
+      "opciones": [
+        "Sus claves de aplicación se revocan; sus claves de API siguen siendo válidas",
+        "Se revocan todas sus claves, de API y de aplicación",
+        "No pasa nada con ninguna clave",
+        "Sus claves de API se revocan; las de aplicación siguen válidas"
+      ],
+      "respuesta_correcta": "Sus claves de aplicación se revocan; sus claves de API siguen siendo válidas",
+      "explicacion": "Las claves de aplicación están ligadas al usuario y se revocan. Las de API pertenecen a la organización y no se eliminan."
+    },
+    {
+      "id": "ky-11",
+      "fuente_tema": "Claves de API y de aplicación",
+      "url_fuente": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "pregunta": "Necesitas que varias personas o sistemas compartan una clave de aplicación. ¿Qué recomienda Datadog?",
+      "opciones": [
+        "Usar una cuenta de servicio",
+        "Transferir la clave de un usuario a otro",
+        "Usar la clave de un administrador",
+        "Publicarla en un repositorio interno"
+      ],
+      "respuesta_correcta": "Usar una cuenta de servicio",
+      "explicacion": "Datadog no transfiere claves de aplicación entre usuarios. Para compartir, se usa una cuenta de servicio."
+    },
+    {
+      "id": "ky-12",
+      "fuente_tema": "Claves de API y de aplicación",
+      "url_fuente": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "pregunta": "Acabas de crear una clave y la usas al instante, pero recibes 401 o 403. ¿Cuál es la causa más probable?",
+      "opciones": [
+        "La clave aún no se ha propagado (consistencia eventual); reintenta tras unos segundos",
+        "La clave se creó con un nombre duplicado",
+        "Las claves nuevas solo funcionan al día siguiente",
+        "Hay que reiniciar todos los Agents"
+      ],
+      "respuesta_correcta": "La clave aún no se ha propagado (consistencia eventual); reintenta tras unos segundos",
+      "explicacion": "Las claves siguen un modelo de consistencia eventual. Se recomienda esperar unos segundos y reintentar con backoff."
+    },
+    {
+      "id": "ky-13",
+      "fuente_tema": "Claves de API y de aplicación",
+      "url_fuente": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "pregunta": "¿Dónde recomienda Datadog guardar las claves de API y de aplicación?",
+      "opciones": [
+        "En un gestor de secretos (AWS Secrets Manager, HashiCorp Vault, Azure Key Vault)",
+        "En el código fuente, dentro de un archivo de constantes",
+        "En un archivo .env versionado en Git",
+        "En la descripción del dashboard"
+      ],
+      "respuesta_correcta": "En un gestor de secretos (AWS Secrets Manager, HashiCorp Vault, Azure Key Vault)",
+      "explicacion": "Las claves no caducan solas, así que deben guardarse en un gestor de secretos y no en el código ni en archivos de entorno."
+    },
+    {
+      "id": "ky-14",
+      "fuente_tema": "Claves de API y de aplicación",
+      "url_fuente": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "pregunta": "¿Por qué conviene tener varias claves de API (por ejemplo, una por método de despliegue)?",
+      "opciones": [
+        "Para poder rotarlas o revocar solo la que se haya expuesto sin afectar al resto",
+        "Porque cada clave solo admite un host",
+        "Porque las claves caducan cada semana",
+        "Para enviar más métricas por segundo"
+      ],
+      "respuesta_correcta": "Para poder rotarlas o revocar solo la que se haya expuesto sin afectar al resto",
+      "explicacion": "Varias claves permiten rotarlas como práctica de seguridad o revocar una concreta si se expone."
+    },
+    {
+      "id": "ky-15",
+      "fuente_tema": "Claves de API y de aplicación",
+      "url_fuente": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "pregunta": "Por defecto, ¿se puede usar una clave de aplicación con las API de acciones (App Builder, Workflow Automation)?",
+      "opciones": [
+        "No; hay que habilitar el acceso a la API de acciones en esa clave",
+        "Sí, siempre",
+        "Solo si la clave tiene más de 7 días",
+        "Solo con un token de cliente"
+      ],
+      "respuesta_correcta": "No; hay que habilitar el acceso a la API de acciones en esa clave",
+      "explicacion": "Por defecto las claves de aplicación no funcionan con las API de acciones; hay que habilitarlo por UI o por API."
+    },
+    {
+      "id": "ky-16",
+      "fuente_tema": "Claves de API y de aplicación",
+      "url_fuente": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
+      "pregunta": "Una clave de API se ha publicado por error en GitHub. ¿Basta con borrar el archivo del repositorio?",
+      "opciones": [
+        "No: hay que revocar la clave, limpiar el historial, crear una nueva y revisar accesos no aprobados",
+        "Sí, borrar el archivo elimina el riesgo",
+        "Sí, si el repositorio pasa a privado",
+        "No hace falta hacer nada: las claves de API son públicas"
+      ],
+      "respuesta_correcta": "No: hay que revocar la clave, limpiar el historial, crear una nueva y revisar accesos no aprobados",
+      "explicacion": "Eliminar el archivo no garantiza que nadie la haya copiado. Hay que revocar, sanear el historial, crear otra clave, actualizar servicios y auditar la cuenta."
+    },
+
+    {
+      "id": "ai-1",
+      "fuente_tema": "Integraciones basadas en Agent",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/integrations/agent_integration/?tab=integraciónootb",
+      "pregunta": "¿Cómo se distribuye una integración basada en Agent?",
+      "opciones": [
+        "Como un paquete de Python construido sobre el Agent, que el cliente instala con el propio Agent",
+        "Como un binario de Go independiente",
+        "Como una imagen de Docker obligatoria",
+        "Como un dashboard importable en JSON"
+      ],
+      "respuesta_correcta": "Como un paquete de Python construido sobre el Agent, que el cliente instala con el propio Agent",
+      "explicacion": "Cada integración basada en Agent es un paquete de Python (wheel) que se instala a través del Agent."
+    },
+    {
+      "id": "ai-2",
+      "fuente_tema": "Integraciones basadas en Agent",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/integrations/agent_integration/?tab=integraciónootb",
+      "pregunta": "¿De qué clase base debe heredar una verificación (check) del Agent?",
+      "opciones": ["AgentCheck", "DatadogBase", "MetricCollector", "IntegrationPlugin"],
+      "respuesta_correcta": "AgentCheck",
+      "explicacion": "Todas las verificaciones deben ser subclases de AgentCheck."
+    },
+    {
+      "id": "ai-3",
+      "fuente_tema": "Integraciones basadas en Agent",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/integrations/agent_integration/?tab=integraciónootb",
+      "pregunta": "¿Qué método debe implementar obligatoriamente cada verificación del Agent?",
+      "opciones": ["check(self, instance)", "run(self)", "collect(self, config)", "main()"],
+      "respuesta_correcta": "check(self, instance)",
+      "explicacion": "El punto de entrada de cada verificación es el método check(self, instance)."
+    },
+    {
+      "id": "ai-4",
+      "fuente_tema": "Integraciones basadas en Agent",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/integrations/agent_integration/?tab=integraciónootb",
+      "pregunta": "¿Qué telemetría NO se recopila con una verificación del Agent, sino con los SDK de Datadog?",
+      "opciones": ["Las trazas", "Las métricas", "Los eventos", "Los logs"],
+      "respuesta_correcta": "Las trazas",
+      "explicacion": "Las verificaciones emiten métricas, eventos y logs. Las trazas se recogen fuera, con los SDK de instrumentación."
+    },
+    {
+      "id": "ai-5",
+      "fuente_tema": "Integraciones basadas en Agent",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/integrations/agent_integration/?tab=integraciónootb",
+      "pregunta": "¿Qué herramienta de línea de comandos se usa para generar, probar y construir integraciones del Agent?",
+      "opciones": ["ddev", "dd-cli", "agentctl", "datadog-sdk"],
+      "respuesta_correcta": "ddev",
+      "explicacion": "La herramienta de desarrollo de integraciones del Agent es ddev (por ejemplo, ddev create o ddev test)."
+    },
+    {
+      "id": "ai-6",
+      "fuente_tema": "Integraciones basadas en Agent",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/integrations/agent_integration/?tab=integraciónootb",
+      "pregunta": "¿Bajo qué espacio de nombres de Python se organizan las verificaciones del Agent?",
+      "opciones": ["datadog_checks", "datadog_agent", "dd_integrations", "checks_d"],
+      "respuesta_correcta": "datadog_checks",
+      "explicacion": "Una integración llamada X se encuentra en x/datadog_checks/x/."
+    },
+    {
+      "id": "ai-7",
+      "fuente_tema": "Integraciones basadas en Agent",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/integrations/agent_integration/?tab=integraciónootb",
+      "pregunta": "¿Qué versión de Python deben soportar las integraciones nuevas para Agent v7+?",
+      "opciones": ["Python 3", "Python 2.7", "Cualquier versión, el Agent la traduce", "Solo Python 3.6"],
+      "respuesta_correcta": "Python 3",
+      "explicacion": "Las integraciones para Agent v7+ deben soportar Python 3. Python 2.7 era para v5–v6."
+    },
+    {
+      "id": "ai-8",
+      "fuente_tema": "Integraciones basadas en Agent",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/integrations/agent_integration/?tab=integraciónootb",
+      "pregunta": "¿Qué estados puede devolver una verificación de servicio (service check) como awesome.search?",
+      "opciones": ["OK, WARNING o CRITICAL", "TRUE o FALSE", "200, 404 o 500", "UP o DOWN"],
+      "respuesta_correcta": "OK, WARNING o CRITICAL",
+      "explicacion": "En el ejemplo, devuelve OK si encuentra la cadena, WARNING si falta y CRITICAL si no puede acceder a la página."
+    },
+    {
+      "id": "ai-9",
+      "fuente_tema": "Integraciones basadas en Agent",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/integrations/agent_integration/?tab=integraciónootb",
+      "pregunta": "¿Con qué comando se instala localmente el wheel (.whl) de una integración en Linux?",
+      "opciones": [
+        "sudo -u dd-agent datadog-agent integration install -w /ruta/al/paquete.whl",
+        "pip install paquete.whl --agent",
+        "datadog-agent launch-gui --install paquete.whl",
+        "docker run datadog/agent install paquete.whl"
+      ],
+      "respuesta_correcta": "sudo -u dd-agent datadog-agent integration install -w /ruta/al/paquete.whl",
+      "explicacion": "La rueda se instala con el comando integration del Agent (v6.10.0+), en Linux como usuario dd-agent."
+    },
+    {
+      "id": "ai-10",
+      "fuente_tema": "Integraciones basadas en Agent",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/integrations/agent_integration/?tab=integraciónootb",
+      "pregunta": "¿Qué herramientas se usan para ejecutar las pruebas de una integración?",
+      "opciones": ["pytest y hatch", "JUnit y Maven", "Jest y npm", "Go test y make"],
+      "respuesta_correcta": "pytest y hatch",
+      "explicacion": "Las pruebas unitarias y de integración se ejecutan con pytest y hatch, y son obligatorias para publicar."
+    },
+    {
+      "id": "ai-11",
+      "fuente_tema": "Integraciones basadas en Agent",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/integrations/agent_integration/?tab=integraciónootb",
+      "pregunta": "¿A qué repositorio se envía una integración OOTB desarrollada por un socio tecnológico?",
+      "opciones": ["Datadog/integrations-extras", "Datadog/datadog-agent", "Datadog/dd-trace-py", "Datadog/docker-dd-agent"],
+      "respuesta_correcta": "Datadog/integrations-extras",
+      "explicacion": "Las integraciones OOTB de socios van a integrations-extras; las de pago, a Datadog/marketplace."
+    },
+    {
+      "id": "ai-12",
+      "fuente_tema": "Integraciones basadas en Agent",
+      "url_fuente": "https://docs.datadoghq.com/es/extend/integrations/agent_integration/?tab=integraciónootb",
+      "pregunta": "¿Qué opción de ddev create permite previsualizar los archivos sin escribir nada en disco?",
+      "opciones": ["-n o --dry-run", "-f o --force", "-v o --verbose", "-q o --quiet"],
+      "respuesta_correcta": "-n o --dry-run",
+      "explicacion": "La prueba en seco (-n/--dry-run) muestra lo que se generaría sin crear archivos."
+    }
+  ]
+}

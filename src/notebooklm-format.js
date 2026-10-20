@@ -41,7 +41,7 @@ export function resolveCorrectIndex(options, answer) {
 
 export function inferDomainFromTema(tema) {
   const t = String(tema || '').toLowerCase()
-  if (/docker|agent|fleet|host|infra|autodiscovery|integraci/.test(t)) return 'infra'
+  if (/docker|agent|fleet|host|servidor|infra|autodiscovery|integraci/.test(t)) return 'infra'
   if (/dogstatsd|métric|metric|api de métric|apm|ddtrace|span/.test(t)) return 'collection'
   if (/monitor|downtime|outlier|forecast|composite|alert/.test(t)) return 'troubleshoot'
   if (/consulta|gráfico|aggregat|dashboard/.test(t)) return 'viz'
@@ -54,6 +54,10 @@ export function notebookLmQuestionToApp(q, i, { idPrefix = 'nb' } = {}) {
   const options = rawOpts.map((o) => stripOptionPrefix(o))
   let correctIndex = resolveCorrectIndex(rawOpts, q.respuesta_correcta ?? q.respuesta)
   if (correctIndex < 0) correctIndex = resolveCorrectIndex(options, q.respuesta_correcta)
+  const correctIndices = Array.isArray(q.respuestas_correctas)
+    ? q.respuestas_correctas.map((a) => resolveCorrectIndex(rawOpts, a)).filter((n) => n >= 0)
+    : []
+  const multiple = correctIndices.length > 1
   const tema = q.fuente_tema || q.tema || ''
   const domain = q.domain || inferDomainFromTema(tema)
   return {
@@ -62,13 +66,15 @@ export function notebookLmQuestionToApp(q, i, { idPrefix = 'nb' } = {}) {
     domainLabel: q.domainLabel || DOMAIN_LABELS[domain] || tema,
     question: q.pregunta || q.question,
     options,
-    correctIndex: correctIndex >= 0 ? correctIndex : 0,
+    correctIndex: multiple ? correctIndices[0] : correctIndex >= 0 ? correctIndex : 0,
+    ...(multiple ? { correctIndices } : {}),
     explanation: q.explicacion || q.explanation || '',
     whyCorrect: q.explicacion || q.explanation || '',
     hint: q.pista || q.hint || (tema ? `Tema: ${tema}` : ''),
     sourceTitle: tema || 'Documentación Datadog',
+    sourceUrl: q.url_fuente || q.sourceUrl || '',
     sourceTag: 'study-pack',
-    answerType: 'single',
+    answerType: multiple ? 'multiple' : 'single',
   }
 }
 

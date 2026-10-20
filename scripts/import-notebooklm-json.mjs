@@ -1,11 +1,11 @@
 /**
- * Importa JSON NotebookLM → data/notebooklm/ + pack suelto en public/exams/.
- * Luego: node scripts/build-exam-packs.mjs (mezcla en test-01…06 y simulacros).
+ * Añade un JSON de preguntas (formato NotebookLM) al banco de estudio en data/notebooklm/.
+ * Luego: node scripts/build-exam-packs.mjs (reparte el banco en tests y simulacros).
  *
- * Uso: node scripts/import-notebooklm-json.mjs "C:\ruta\preguntas_datadog.json"
+ * Uso: node scripts/import-notebooklm-json.mjs "C:\ruta\preguntas.json"
  */
-import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
+import { copyFileSync, mkdirSync, readFileSync } from 'node:fs'
+import { basename, dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { notebookLmEsToStandard } from '../src/notebooklm-format.js'
 
@@ -16,35 +16,16 @@ if (!input) {
   process.exit(1)
 }
 
-const raw = JSON.parse(readFileSync(input, 'utf8'))
-const std = notebookLmEsToStandard(raw)
+const std = notebookLmEsToStandard(JSON.parse(readFileSync(input, 'utf8')))
+if (!std.questions?.length) {
+  console.error('El JSON no tiene preguntas[] con el formato esperado.')
+  process.exit(1)
+}
 
 const dataDir = join(root, 'data', 'notebooklm')
 mkdirSync(dataDir, { recursive: true })
-const dataPath = join(dataDir, 'preguntas_datadog.json')
+const dataPath = join(dataDir, basename(input))
 copyFileSync(input, dataPath)
 
-const pack = {
-  id: 'notebooklm-datadog',
-  title: std.title || 'NotebookLM — Datadog',
-  type: 'test20',
-  description: std.description || `${std.questions.length} preguntas NotebookLM.`,
-  passPercent: std.passPercent ?? 70,
-  count: std.questions.length,
-  domains: {
-    essential: 'Conceptos esenciales',
-    infra: 'Infraestructura y Agent',
-    network: 'Red y configuración',
-    collection: 'Recolección de datos',
-    troubleshoot: 'Troubleshooting',
-    viz: 'Visualización y uso',
-  },
-  questions: std.questions,
-}
-
-const out = join(root, 'public', 'exams', 'notebooklm-datadog-20.json')
-writeFileSync(out, JSON.stringify(pack, null, 2), 'utf8')
-console.log(`OK: ${pack.count} preguntas`)
-console.log(`  Fuente: ${dataPath}`)
-console.log(`  Pack:   ${out}`)
+console.log(`OK: ${std.questions.length} preguntas → ${dataPath}`)
 console.log('Siguiente: node scripts/build-exam-packs.mjs')
