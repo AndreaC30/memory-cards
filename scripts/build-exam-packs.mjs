@@ -11,6 +11,7 @@ import { fileURLToPath } from "node:url"
 import { NOTEBOOK_SOURCES, DOMAIN_LABELS } from "./sources.mjs"
 import { buildWhyCorrect, stripMarkdown } from "./rationale.mjs"
 import { buildMultiQuestions } from "./multi-questions.mjs"
+import { summarizeOptionText } from "./option-text.mjs"
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..")
 
@@ -71,11 +72,7 @@ function extractDocFacts(html, source) {
 }
 
 function answerSummary(text) {
-  const one = text.replace(/\s+/g, " ").trim()
-  if (one.length <= 200) return one
-  const cut = one.slice(0, 197)
-  const sp = cut.lastIndexOf(" ")
-  return (sp > 100 ? cut.slice(0, sp) : cut) + "…"
+  return summarizeOptionText(stripMarkdown(text))
 }
 
 function pickDistractors(card, pool, rnd) {

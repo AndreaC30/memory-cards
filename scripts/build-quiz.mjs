@@ -6,6 +6,7 @@ import { writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildWhyCorrect } from "./rationale.mjs";
+import { summarizeOptionText } from "./option-text.mjs";
 
 const CHUNK_URL =
   "https://datadog.emberize.es/_next/static/immutable/chunks/2l1togtwf6jnt.js";
@@ -77,13 +78,7 @@ function stripMarkdown(text) {
 }
 
 function answerSummary(back) {
-  const plain = stripMarkdown(back);
-  const firstBlock = plain.split(/\n\n+/)[0] || plain;
-  const oneLine = firstBlock.replace(/\s+/g, " ").trim();
-  if (oneLine.length <= 220) return oneLine;
-  const cut = oneLine.slice(0, 217);
-  const lastSpace = cut.lastIndexOf(" ");
-  return (lastSpace > 120 ? cut.slice(0, lastSpace) : cut) + "…";
+  return summarizeOptionText(stripMarkdown(back));
 }
 
 function mulberry32(seed) {

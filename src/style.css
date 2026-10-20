@@ -571,6 +571,19 @@ textarea {
   margin-bottom: 1rem;
 }
 
+.quiz-option-text {
+  flex: 1;
+  min-width: 0;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.quiz-correct-detail {
+  margin: 0.35rem 0 0.75rem;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
 .quiz-option {
   display: flex;
   gap: 0.65rem;

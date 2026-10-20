@@ -451,7 +451,7 @@ export function renderQuiz(quiz, escapeHtml) {
       <button type="button" class="${optionClass(q, quiz, i)}"
         data-quiz="pick" data-index="${i}" ${quiz.checked ? 'disabled' : ''} role="${role}" aria-checked="${selected.includes(i)}">
         <span class="quiz-key">${key}</span>
-        <span>${escapeHtml(text)}</span>
+        <span class="quiz-option-text">${escapeHtml(text)}</span>
       </button>`
     })
     .join('')
@@ -460,7 +460,10 @@ export function renderQuiz(quiz, escapeHtml) {
   if (quiz.checked) {
     const ok = isAnswerCorrect(q, selected)
     const correctLabels = correct.map((i) => OPTION_KEYS[i]).join(', ')
-    const correctTexts = correct.map((i) => q.options[i]).filter(Boolean).join(' · ')
+    const correctTexts =
+      !multi && correct.length === 1 && q.explanation
+        ? q.explanation
+        : correct.map((i) => q.options[i]).filter(Boolean).join(' · ')
     const why = q.whyCorrect || q.explanation || ''
     const sourceUrl = q.sourceUrl || ''
     const sourceTitle = q.sourceTitle || 'Documentación Datadog'
@@ -470,7 +473,8 @@ export function renderQuiz(quiz, escapeHtml) {
     feedback = `
       <div class="quiz-feedback ${ok ? 'is-ok' : 'is-bad'}">
         <p class="quiz-verdict"><strong>${ok ? 'Correcto' : 'Incorrecto'}</strong></p>
-        <p class="quiz-correct-line">Respuesta correcta: <strong>${correctLabels}</strong>${multi ? ' (todas las que aplican)' : ''} — ${escapeHtml(correctTexts)}</p>
+        <p class="quiz-correct-line">Respuesta correcta: <strong>${correctLabels}</strong>${multi ? ' (todas las que aplican)' : ''}</p>
+        <p class="quiz-correct-detail">${escapeHtml(correctTexts)}</p>
         <h3 class="quiz-why-heading">Por qué ${multi ? 'son correctas' : 'es correcta'}</h3>
         <p class="quiz-why-body">${escapeHtml(why)}</p>
         ${sourceLink}

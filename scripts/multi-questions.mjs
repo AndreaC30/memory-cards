@@ -1,5 +1,6 @@
 import { DOMAIN_LABELS } from "./sources.mjs"
 import { buildWhyCorrect, stripMarkdown } from "./rationale.mjs"
+import { summarizeOptionText } from "./option-text.mjs"
 
 function mulberry32(seed) {
   return function () {
@@ -34,7 +35,7 @@ export function extractListItems(text) {
   const items = []
   const push = (raw) => {
     const item = raw.replace(/\s+/g, " ").trim()
-    if (item.length >= 14 && item.length <= 220) items.push(item)
+    if (item.length >= 14 && item.length <= 720) items.push(item)
   }
   for (const line of plain.split("\n")) {
     const t = line.trim()
@@ -52,10 +53,7 @@ export function extractListItems(text) {
 }
 
 function summarizeItem(item) {
-  if (item.length <= 160) return item
-  const cut = item.slice(0, 157)
-  const sp = cut.lastIndexOf(" ")
-  return (sp > 80 ? cut.slice(0, sp) : cut) + "…"
+  return summarizeOptionText(item)
 }
 
 function wrongItemsFromPool(card, pool, count, rnd, avoid) {
