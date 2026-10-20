@@ -11,7 +11,7 @@ import { fileURLToPath } from "node:url"
 import { NOTEBOOK_SOURCES, DOMAIN_LABELS } from "./sources.mjs"
 import { buildWhyCorrect, stripMarkdown } from "./rationale.mjs"
 import { buildMultiQuestions } from "./multi-questions.mjs"
-import { summarizeOptionText } from "./option-text.mjs"
+import { examOptionText, summarizeOptionText } from "./option-text.mjs"
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..")
 
@@ -72,7 +72,7 @@ function extractDocFacts(html, source) {
 }
 
 function answerSummary(text) {
-  return summarizeOptionText(stripMarkdown(text))
+  return examOptionText(stripMarkdown(text))
 }
 
 function pickDistractors(card, pool, rnd) {
@@ -136,7 +136,7 @@ async function fetchFacts() {
         cards.push({
           id: `doc-${source.id}-${i}`,
           domain: source.domain,
-          front: `(${source.title}) ¿Qué describe la documentación sobre «${stripMarkdown(f.heading)}»?`,
+          front: `En ${source.title}: «${stripMarkdown(f.heading)}» — ¿cuál afirmación es correcta?`,
           back: stripMarkdown(f.body),
           docHeading: stripMarkdown(f.heading),
           sourceTag: source.id,

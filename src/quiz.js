@@ -10,6 +10,10 @@ export const DOMAIN_THEMES = {
 }
 
 const FOCUS_KEY = 'memory-cards-quiz-focus'
+const FLOW_KEY = 'memory-cards-quiz-flow'
+
+/** Tras revelar en modo rápido, avanzar automáticamente. */
+export const AUTO_ADVANCE_MS = 1800
 
 /** Tests cortos: un poco más exigente. */
 export const DEFAULT_PASS_PERCENT = 70
@@ -107,6 +111,84 @@ export function saveFocusMode(on) {
   }
 }
 
+export function loadFlowStyle() {
+  try {
+    return localStorage.getItem(FLOW_KEY) === 'exam' ? 'exam' : 'instant'
+  } catch {
+    return 'instant'
+  }
+}
+
+export function saveFlowStyle(flow) {
+  try {
+    localStorage.setItem(FLOW_KEY, flow === 'exam' ? 'exam' : 'instant')
+  } catch {
+    /* ignore */
+  }
+}
+
+export function defaultFlowForPack(examType) {
+  return examType === 'simulacro90' ? 'exam' : loadFlowStyle()
+}
+
+export function clearAutoAdvance(quiz) {
+  if (quiz._autoAdvanceTimer) {
+    clearTimeout(quiz._autoAdvanceTimer)
+    quiz._autoAdvanceTimer = null
+  }
+}
+
+export function scheduleAutoAdvance(quiz, onAdvance) {
+  clearAutoAdvance(quiz)
+  if (quiz.flow !== 'instant' || !quiz.checked || quiz.finished) return
+  quiz._autoAdvanceTimer = setTimeout(() => {
+    quiz._autoAdvanceTimer = null
+    if (quiz.checked && !quiz.finished) onAdvance()
+  }, AUTO_ADVANCE_MS)
+}
+
+export function parseImportedPack(data) {
+  const raw = data?.questions || data?.items || []
+  const questions = raw
+    .map((q, i) => {
+      const options = Array.isArray(q.options) ? q.options : []
+      if (!q.question && !q.prompt) return null
+      if (!options.length) return null
+      const answerType =
+        q.answerType || (Array.isArray(q.correctIndices) && q.correctIndices.length > 1 ? 'multiple' : 'single')
+      return {
+        id: q.id || `import-${i + 1}`,
+        domain: q.domain || 'essential',
+        domainLabel: q.domainLabel || DOMAIN_THEMES[q.domain || 'essential']?.label || '',
+        question: String(q.question || q.prompt),
+        options,
+        correctIndex: Number.isFinite(q.correctIndex) ? q.correctIndex : 0,
+        correctIndices: Array.isArray(q.correctIndices) ? q.correctIndices : undefined,
+        answerType,
+        explanation: q.explanation || q.rationale || '',
+        whyCorrect: q.whyCorrect || q.explanation || '',
+        hint: q.hint || q.pista || '',
+        sourceUrl: q.sourceUrl || '',
+        sourceTitle: q.sourceTitle || '',
+      }
+    })
+    .filter(Boolean)
+  if (!questions.length) throw new Error('El JSON no contiene preguntas válidas.')
+  return {
+    title: data.title || 'Cuestionario importado',
+    description: data.description || `${questions.length} preguntas importadas.`,
+    domains:
+      data.domains ||
+      Object.fromEntries(Object.entries(DOMAIN_THEMES).map(([k, v]) => [k, v.label])),
+    bank: questions,
+    fixedPack: true,
+    type: 'import',
+    examType: 'import',
+    passPercent: data.passPercent ?? DEFAULT_PASS_PERCENT,
+    scoring: null,
+  }
+}
+
 export function isMultipleQuestion(q) {
   return (
     q?.answerType === 'multiple' ||
@@ -168,6 +250,9 @@ export function defaultQuizSession() {
     scoring: null,
     answersLog: [],
     attemptSaved: false,
+    flow: loadFlowStyle(),
+    importedPack: false,
+    hintOpen: false,
   }
 }
 
@@ -181,6 +266,7 @@ function shuffle(arr) {
 }
 
 export function rebuildQueue(quiz, { shuffleItems = false } = {}) {
+  clearAutoAdvance(quiz)
   let list = [...quiz.bank]
   if (!quiz.fixedPack && quiz.domainFilter !== 'all') {
     list = list.filter((q) => q.domain === quiz.domainFilter)
@@ -200,6 +286,20 @@ export function rebuildQueue(quiz, { shuffleItems = false } = {}) {
   quiz.finished = false
   quiz.answersLog = []
   quiz.attemptSaved = false
+  quiz.hintOpen = false
+}
+
+function advanceQuestion(quiz, { allowUnchecked = false } = {}) {
+  if (!quiz.checked && !allowUnchecked) return {}
+  if (quiz.index >= quiz.queue.length - 1) {
+    quiz.finished = true
+    return { finished: true }
+  }
+  quiz.index += 1
+  quiz.selected = []
+  quiz.checked = false
+  quiz.hintOpen = false
+  return {}
 }
 
 export async function loadManifest(baseUrl) {
@@ -317,6 +417,39 @@ function renderTestGoalTrack(quiz, escapeHtml) {
     </div>`
 }
 
+function applyCheck(quiz) {
+  const q = quiz.queue[quiz.index]
+  const sel = selectedIndices(quiz)
+  if (!q || quiz.checked || !canCheckSelection(q, sel)) return null
+  quiz.checked = true
+  quiz.answered += 1
+  const ok = isAnswerCorrect(q, sel)
+  if (ok) quiz.correct += 1
+  quiz.answersLog.push({ questionId: q.id, ok })
+  return { ok }
+}
+
+function optionInlineNote(q, quiz, i, escapeHtml) {
+  if (!quiz.checked) return ''
+  const correct = getCorrectIndices(q)
+  const selected = selectedIndices(quiz)
+  const isCorrect = correct.includes(i)
+  const isSel = selected.includes(i)
+  if (isSel && !isCorrect) {
+    const txt =
+      q.wrongNotes?.[i] ||
+      (q.hint ? `Pista: ${q.hint}` : 'Respuesta incorrecta.')
+    return `<p class="quiz-option-note is-bad">${escapeHtml(txt)}</p>`
+  }
+  if (isCorrect) {
+    const detail = q.hint || q.explanation || q.whyCorrect || ''
+    const short = detail.length > 220 ? `${detail.slice(0, 217)}…` : detail
+    const line = short ? `Respuesta correcta. ${short}` : 'Respuesta correcta.'
+    return `<p class="quiz-option-note is-ok">${escapeHtml(line)}</p>`
+  }
+  return ''
+}
+
 function optionClass(q, quiz, i) {
   const selected = selectedIndices(quiz)
   const correct = getCorrectIndices(q)
@@ -351,8 +484,18 @@ export function renderQuiz(quiz, escapeHtml) {
         <label class="quiz-pick-pack">Elige examen
           <select data-quiz="pack-select">${packOptions(quiz.manifest, quiz.packId)}</select>
         </label>
-        <button type="button" class="primary" data-quiz="load">Empezar</button>
-        <p class="help">Contenido: 13 URLs del notebook + material emberize. Regenerar: <code>node scripts/build-exam-packs.mjs</code></p>
+        <label class="quiz-pick-flow">Estilo
+          <select data-quiz="flow">
+            <option value="instant" ${quiz.flow !== 'exam' ? 'selected' : ''}>Práctica rápida (revelar al elegir)</option>
+            <option value="exam" ${quiz.flow === 'exam' ? 'selected' : ''}>Modo examen (Comprobar)</option>
+          </select>
+        </label>
+        <div class="row wrap">
+          <button type="button" class="primary" data-quiz="load">Empezar</button>
+          <button type="button" class="ghost" data-quiz="import-json">Importar JSON</button>
+        </div>
+        <p class="help">Importar: pide a NotebookLM un JSON con <code>title</code> y <code>questions</code> (ver <code>public/exams/notebook-import.example.json</code>). Regenerar packs: <code>node scripts/build-exam-packs.mjs</code></p>
+        <input type="file" id="quiz-import-file" accept="application/json,.json" hidden />
       </section>
     `
   }
@@ -447,21 +590,27 @@ export function renderQuiz(quiz, escapeHtml) {
   const selected = selectedIndices(quiz)
   const correct = getCorrectIndices(q)
 
+  const isInstant = quiz.flow === 'instant'
+
   const options = q.options
     .map((text, i) => {
       const key = OPTION_KEYS[i] || String(i + 1)
       const role = multi ? 'checkbox' : 'radio'
+      const inline = isInstant ? optionInlineNote(q, quiz, i, escapeHtml) : ''
       return `
       <button type="button" class="${optionClass(q, quiz, i)}"
         data-quiz="pick" data-index="${i}" ${quiz.checked ? 'disabled' : ''} role="${role}" aria-checked="${selected.includes(i)}">
         <span class="quiz-key">${key}</span>
-        <span class="quiz-option-text">${escapeHtml(text)}</span>
+        <span class="quiz-option-body">
+          <span class="quiz-option-text">${escapeHtml(text)}</span>
+          ${inline}
+        </span>
       </button>`
     })
     .join('')
 
   let feedback = ''
-  if (quiz.checked) {
+  if (quiz.checked && !isInstant) {
     const ok = isAnswerCorrect(q, selected)
     const correctLabels = correct.map((i) => OPTION_KEYS[i]).join(', ')
     const correctTexts =
@@ -511,22 +660,47 @@ export function renderQuiz(quiz, escapeHtml) {
         </label>`
 
   const checkDisabled = !canCheckSelection(q, selected)
+  const showCheckBtn = !isInstant || (multi && !quiz.checked)
   const primaryBtn = quiz.checked
     ? `<button type="button" class="primary" data-quiz="next">${quiz.index >= quiz.queue.length - 1 ? 'Ver resultado' : 'Siguiente →'}</button>`
-    : `<button type="button" class="primary" data-quiz="check" ${checkDisabled ? 'disabled' : ''}>Comprobar</button>`
+    : showCheckBtn
+      ? `<button type="button" class="primary" data-quiz="check" ${checkDisabled ? 'disabled' : ''}>Comprobar</button>`
+      : ''
+  const instantNav = isInstant
+    ? `<div class="quiz-nav row">
+        <button type="button" class="ghost" data-quiz="prev" ${quiz.index === 0 ? 'disabled' : ''}>← Anterior</button>
+        <span class="quiz-step-badge">${quiz.index + 1} / ${quiz.queue.length}</span>
+        <button type="button" class="ghost" data-quiz="next-skip">${quiz.index >= quiz.queue.length - 1 ? 'Resultado' : 'Saltar →'}</button>
+      </div>`
+    : ''
+  const hintBlock =
+    isInstant && q.hint
+      ? `<div class="quiz-hint-wrap">
+          <button type="button" class="ghost quiz-hint-btn" data-quiz="hint">${quiz.hintOpen ? 'Ocultar pista' : 'Pista'}</button>
+          ${quiz.hintOpen ? `<p class="quiz-hint-box">${escapeHtml(q.hint)}</p>` : ''}
+        </div>`
+      : ''
   const actionsBlock = `
       <div class="quiz-actions row">
+        ${instantNav}
         ${primaryBtn}
-        ${quiz.checked ? '<p class="quiz-continue-hint">No hace falta acertar: pulsa <strong>Siguiente</strong> o <strong>Enter</strong> para continuar.</p>' : ''}
+        ${quiz.checked && isInstant ? '<p class="quiz-continue-hint">Siguiente en ~2 s · o pulsa <strong>Siguiente</strong> / <strong>Enter</strong></p>' : ''}
+        ${quiz.checked && !isInstant ? '<p class="quiz-continue-hint">No hace falta acertar: pulsa <strong>Siguiente</strong> o <strong>Enter</strong> para continuar.</p>' : ''}
       </div>`
-  const hintsLine = quiz.checked
-    ? 'Enter o Espacio → siguiente pregunta (las teclas 1–4 no cambian la respuesta ya enviada)'
-    : multi
-      ? 'Marca todas las que apliquen · Enter comprueba'
-      : 'Teclas 1–4 eligen · Enter comprueba'
+  const hintsLine = isInstant
+    ? quiz.checked
+      ? 'Enter o Espacio → siguiente'
+      : multi
+        ? 'Marca varias y Comprobar · 1–4 eligen · flechas navegan'
+        : 'Elige una opción (se revela al instante) · flechas ← → navegan'
+    : quiz.checked
+      ? 'Enter o Espacio → siguiente pregunta (las teclas 1–4 no cambian la respuesta ya enviada)'
+      : multi
+        ? 'Marca todas las que apliquen · Enter comprueba'
+        : 'Teclas 1–4 eligen · Enter comprueba'
 
   return `
-    <section class="quiz quiz-panel domain-${domainKey} ${quiz.focusMode ? 'is-focus' : ''} ${multi ? 'is-multi' : ''} ${quiz.checked ? 'is-awaiting-next' : ''}" data-domain="${domainKey}">
+    <section class="quiz quiz-panel domain-${domainKey} ${quiz.focusMode ? 'is-focus' : ''} ${multi ? 'is-multi' : ''} ${isInstant ? 'is-instant-flow' : ''} ${quiz.checked ? 'is-awaiting-next' : ''}" data-domain="${domainKey}">
       <div class="quiz-toolbar">
         ${extraTools}
         <button type="button" class="ghost" data-quiz="shuffle">Barajar orden</button>
@@ -549,6 +723,7 @@ export function renderQuiz(quiz, escapeHtml) {
       <span class="quiz-domain-pill">${escapeHtml(q.domainLabel || DOMAIN_THEMES[domainKey]?.label || '')}</span>
       ${multi ? '<p class="quiz-multi-hint">Respuesta múltiple: marca <strong>todas</strong> las opciones correctas (puedes comprobar con al menos una marcada).</p>' : ''}
       <h2 class="quiz-question">${escapeHtml(q.question)}</h2>
+      ${hintBlock}
       <div class="quiz-options" role="${multi ? 'group' : 'radiogroup'}" aria-label="Opciones de respuesta">${options}</div>
       ${quiz.checked ? '' : actionsBlock}
       ${feedback}
@@ -585,6 +760,18 @@ export function handleQuizAction(quiz, action, detail) {
     quiz.packFile = detail.file
     return {}
   }
+  if (action === 'flow') {
+    quiz.flow = detail === 'exam' ? 'exam' : 'instant'
+    saveFlowStyle(quiz.flow)
+    return {}
+  }
+  if (action === 'import-json') {
+    return { importJson: true }
+  }
+  if (action === 'hint') {
+    quiz.hintOpen = !quiz.hintOpen
+    return {}
+  }
   if (action === 'domain') {
     quiz.domainFilter = detail
     rebuildQueue(quiz)
@@ -608,30 +795,35 @@ export function handleQuizAction(quiz, action, detail) {
     } else {
       quiz.selected = [idx]
     }
+    if (quiz.flow === 'instant' && !isMultipleQuestion(q)) {
+      const r = applyCheck(quiz)
+      if (r) return { scheduleAdvance: true }
+    }
     return {}
   }
   if (action === 'check') {
-    const q = quiz.queue[quiz.index]
-    const sel = selectedIndices(quiz)
-    if (!q || quiz.checked || !canCheckSelection(q, sel)) return {}
-    quiz.checked = true
-    quiz.answered += 1
-    const ok = isAnswerCorrect(q, sel)
-    if (ok) quiz.correct += 1
-    quiz.answersLog.push({ questionId: q.id, ok })
+    const r = applyCheck(quiz)
+    if (!r) return {}
+    if (quiz.flow === 'instant') return { scheduleAdvance: true }
+    return {}
+  }
+  if (action === 'next-skip') {
+    clearAutoAdvance(quiz)
+    if (quiz.flow !== 'instant') return {}
+    return advanceQuestion(quiz, { allowUnchecked: true })
+  }
+  if (action === 'prev') {
+    clearAutoAdvance(quiz)
+    if (quiz.index <= 0) return {}
+    quiz.index -= 1
+    quiz.selected = []
+    quiz.checked = false
+    quiz.hintOpen = false
     return {}
   }
   if (action === 'next') {
-    if (!quiz.checked) return {}
-    if (quiz.index >= quiz.queue.length - 1) {
-      quiz.finished = true
-      return { finished: true }
-    } else {
-      quiz.index += 1
-      quiz.selected = []
-      quiz.checked = false
-    }
-    return {}
+    clearAutoAdvance(quiz)
+    return advanceQuestion(quiz, { allowUnchecked: quiz.flow === 'instant' })
   }
   return {}
 }
@@ -645,7 +837,24 @@ export function quizKeydown(quiz, event) {
       handleQuizAction(quiz, 'next')
       return true
     }
+    if (quiz.flow === 'instant' && event.key === 'ArrowRight') {
+      event.preventDefault()
+      handleQuizAction(quiz, 'next')
+      return true
+    }
     return false
+  }
+  if (quiz.flow === 'instant') {
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault()
+      handleQuizAction(quiz, 'prev')
+      return true
+    }
+    if (event.key === 'ArrowRight') {
+      event.preventDefault()
+      handleQuizAction(quiz, 'next-skip')
+      return true
+    }
   }
   const num = Number(event.key)
   const maxKey = q?.options?.length || 4

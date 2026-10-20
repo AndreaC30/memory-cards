@@ -1,0 +1,28 @@
+{
+  "title": "Cuestionario NotebookLM — Datadog (ejemplo)",
+  "description": "Copia este formato. En NotebookLM: «Exporta el cuestionario como JSON con title, questions[], cada una con question, options[], correctIndex (0-based), hint y explanation».",
+  "passPercent": 70,
+  "questions": [
+    {
+      "id": "nb-1",
+      "question": "¿Cuál es la función principal de las Application Keys en Datadog?",
+      "options": [
+        "Cifrar el tráfico entre contenedores Docker",
+        "Dar acceso a la API programática junto con la API key",
+        "Asignar licencias de pago a los hosts",
+        "Autenticar solo el envío de métricas de host"
+      ],
+      "correctIndex": 1,
+      "hint": "Se usan junto con la API key para llamadas a la API, no para cifrar red ni licencias.",
+      "explanation": "Las application keys permiten solicitudes autenticadas a los endpoints de la API de Datadog."
+    },
+    {
+      "id": "nb-2",
+      "question": "¿Qué puerto UDP usa DogStatsD por defecto?",
+      "options": ["8080", "8125", "443", "9090"],
+      "correctIndex": 1,
+      "hint": "Es el puerto clásico de StatsD/DogStatsD.",
+      "explanation": "DogStatsD escucha en el puerto UDP 8125 por defecto."
+    }
+  ]
+}

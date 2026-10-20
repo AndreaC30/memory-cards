@@ -8,6 +8,10 @@ import {
   renderQuiz,
   handleQuizAction,
   quizKeydown,
+  parseImportedPack,
+  scheduleAutoAdvance,
+  clearAutoAdvance,
+  defaultFlowForPack,
 } from './quiz.js'
 import {
   loadState,
@@ -100,6 +104,33 @@ function bumpWeight(delta) {
   persist()
   const label = app.querySelector('.weight strong')
   if (label) label.textContent = String(sessionWeight(state, card.id))
+}
+
+function finishQuizInteraction(action, result) {
+  if (result?.importJson) {
+    document.getElementById('quiz-import-file')?.click()
+    return
+  }
+  if (result?.async) {
+    loadQuizBank()
+    return
+  }
+  render()
+  if (result?.scheduleAdvance) {
+    scheduleAutoAdvance(quiz, () => {
+      clearAutoAdvance(quiz)
+      handleQuizAction(quiz, 'next')
+      render()
+    })
+  } else if (action === 'next' || action === 'prev' || action === 'next-skip' || action === 'shuffle') {
+    clearAutoAdvance(quiz)
+  }
+  if (
+    quiz.checked &&
+    (action === 'check' || action === 'next' || action === 'pick' || result?.scheduleAdvance)
+  ) {
+    focusQuizContinueButton()
+  }
 }
 
 function focusQuizContinueButton() {
@@ -345,6 +376,8 @@ async function loadQuizBank() {
     quiz.attemptSaved = false
     quiz.loaded = true
     quiz.loadError = ''
+    quiz.importedPack = false
+    quiz.flow = quiz.examType === 'simulacro90' ? 'exam' : defaultFlowForPack(quiz.examType)
     rebuildQueue(quiz)
     state.deckTitle = data.title
     notice = `${data.title}: ${data.bank.length} preguntas.`
@@ -390,12 +423,7 @@ app.addEventListener('click', (event) => {
     let detail
     if (action === 'pick') detail = Number(quizBtn.dataset.index)
     const result = handleQuizAction(quiz, action, detail)
-    if (result?.async) {
-      loadQuizBank()
-      return
-    }
-    render()
-    if (action === 'check' || action === 'next') focusQuizContinueButton()
+    finishQuizInteraction(action, result)
     return
   }
 
@@ -511,6 +539,43 @@ app.addEventListener('change', (event) => {
     render()
     return
   }
+  if (event.target.dataset.quiz === 'flow') {
+    handleQuizAction(quiz, 'flow', event.target.value)
+    return
+  }
+  if (event.target.id === 'quiz-import-file') {
+    const file = event.target.files?.[0]
+    event.target.value = ''
+    if (!file) return
+    file
+      .text()
+      .then((text) => {
+        const data = parseImportedPack(JSON.parse(text))
+        quiz.bank = data.bank
+        quiz.domains = data.domains
+        quiz.title = data.title
+        quiz.packDescription = data.description
+        quiz.fixedPack = true
+        quiz.passPercent = data.passPercent
+        quiz.examType = data.examType
+        quiz.scoring = data.scoring
+        quiz.importedPack = true
+        quiz.packId = 'import'
+        quiz.flow = 'instant'
+        quiz.answersLog = []
+        quiz.attemptSaved = false
+        quiz.loaded = true
+        quiz.loadError = ''
+        rebuildQueue(quiz)
+        notice = `${data.title}: ${data.bank.length} preguntas importadas.`
+        render()
+      })
+      .catch((err) => {
+        notice = err instanceof Error ? err.message : 'JSON no válido.'
+        render()
+      })
+    return
+  }
   if (event.target.dataset.action === 'unique') {
     state.session.unique = event.target.checked
     persist()
@@ -567,9 +632,11 @@ window.addEventListener('keydown', (event) => {
   if (tab === 'quiz') {
     const tag = event.target.tagName
     if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') {
+      const wasChecked = quiz.checked
       if (quizKeydown(quiz, event)) {
-        render()
-        if (quiz.checked) focusQuizContinueButton()
+        const schedule =
+          quiz.flow === 'instant' && !wasChecked && quiz.checked ? { scheduleAdvance: true } : {}
+        finishQuizInteraction('keydown', schedule)
       }
     }
     return
