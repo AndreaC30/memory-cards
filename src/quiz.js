@@ -147,51 +147,14 @@ export function scheduleAutoAdvance(quiz, onAdvance) {
   }, AUTO_ADVANCE_MS)
 }
 
-function stripOptionPrefix(text) {
-  return String(text).replace(/^[A-F]\)\s*/i, '').trim()
-}
+import { notebookLmEsToStandard } from './notebooklm-format.js'
 
-function resolveCorrectIndex(options, answer) {
-  const raw = String(answer ?? '').trim()
-  if (!raw) return -1
-  const exact = options.findIndex((o) => String(o).trim() === raw)
-  if (exact >= 0) return exact
-  const want = stripOptionPrefix(raw)
-  return options.findIndex((o) => stripOptionPrefix(o) === want)
-}
-
-/** Formato NotebookLM en español: titulo, preguntas[], opciones[], respuesta_correcta */
-export function notebookLmEsToStandard(data) {
-  const preguntas = data?.preguntas
-  if (!Array.isArray(preguntas) || !preguntas.length) return data
-  return {
-    title: data.titulo || data.title || 'Cuestionario NotebookLM',
-    description: data.descripcion || data.description || '',
-    passPercent: data.passPercent ?? DEFAULT_PASS_PERCENT,
-    questions: preguntas.map((q, i) => {
-      const rawOpts = q.opciones || q.options || []
-      const options = rawOpts.map((o) => stripOptionPrefix(o))
-      let correctIndex = resolveCorrectIndex(rawOpts, q.respuesta_correcta ?? q.respuesta)
-      if (correctIndex < 0) correctIndex = resolveCorrectIndex(options, q.respuesta_correcta)
-      const tema = q.fuente_tema || q.tema || ''
-      return {
-        id: `nb-${q.id ?? i + 1}`,
-        question: q.pregunta || q.question,
-        options,
-        correctIndex: correctIndex >= 0 ? correctIndex : 0,
-        explanation: q.explicacion || q.explanation || '',
-        whyCorrect: q.explicacion || q.explanation || '',
-        hint: q.pista || q.hint || (tema ? `Tema: ${tema}` : ''),
-        domainLabel: tema,
-        sourceTitle: tema || 'NotebookLM',
-        answerType: 'single',
-      }
-    }),
-  }
-}
+export { notebookLmEsToStandard } from './notebooklm-format.js'
 
 export function parseImportedPack(data) {
-  if (Array.isArray(data?.preguntas)) data = notebookLmEsToStandard(data)
+  if (Array.isArray(data?.preguntas)) {
+    data = notebookLmEsToStandard(data, { defaultPassPercent: DEFAULT_PASS_PERCENT })
+  }
   const raw = data?.questions || data?.items || []
   const questions = raw
     .map((q, i) => {
@@ -544,7 +507,7 @@ export function renderQuiz(quiz, escapeHtml) {
           <button type="button" class="primary" data-quiz="load">Empezar</button>
           <button type="button" class="ghost" data-quiz="import-json">Importar JSON</button>
         </div>
-        <p class="help">Importar: pide a NotebookLM un JSON con <code>title</code> y <code>questions</code> (ver <code>public/exams/notebook-import.example.json</code>). Regenerar packs: <code>node scripts/build-exam-packs.mjs</code></p>
+        <p class="help">NotebookLM: JSON con <code>titulo</code> y <code>preguntas[]</code> (ver <code>notebook-import.example.json</code>). Al importar, sustituye <code>data/notebooklm/preguntas_datadog.json</code> y regenera con <code>node scripts/build-exam-packs.mjs</code>.</p>
         <input type="file" id="quiz-import-file" accept="application/json,.json" hidden />
       </section>
     `

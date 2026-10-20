@@ -1,28 +1,29 @@
 {
-  "title": "Cuestionario NotebookLM — Datadog (ejemplo)",
-  "description": "Formato inglés (title/questions) o español NotebookLM (titulo/preguntas/opciones/respuesta_correcta). También: node scripts/import-notebooklm-json.mjs tu-archivo.json",
-  "passPercent": 70,
-  "questions": [
+  "titulo": "Cuestionario de Estudio - Datadog",
+  "descripcion": "Formato que exporta NotebookLM (español). Sustituye o amplía data/notebooklm/preguntas_datadog.json y ejecuta node scripts/build-exam-packs.mjs",
+  "total_preguntas": 2,
+  "preguntas": [
     {
-      "id": "nb-1",
-      "question": "¿Cuál es la función principal de las Application Keys en Datadog?",
-      "options": [
-        "Cifrar el tráfico entre contenedores Docker",
-        "Dar acceso a la API programática junto con la API key",
-        "Asignar licencias de pago a los hosts",
-        "Autenticar solo el envío de métricas de host"
+      "id": 1,
+      "fuente_tema": "Datadog Agent - Basado en Host",
+      "pregunta": "¿Cuál es el archivo principal de configuración del Agent v7 en host?",
+      "opciones": [
+        "A) datadog.conf",
+        "B) datadog.yaml",
+        "C) agent.json",
+        "D) datadog.env"
       ],
-      "correctIndex": 1,
-      "hint": "Se usan junto con la API key para llamadas a la API, no para cifrar red ni licencias.",
-      "explanation": "Las application keys permiten solicitudes autenticadas a los endpoints de la API de Datadog."
+      "respuesta_correcta": "B) datadog.yaml",
+      "explicacion": "En v6/v7 la configuración principal está en datadog.yaml.",
+      "pista": "Opcional; si no hay pista, en la app se usa fuente_tema como pista."
     },
     {
-      "id": "nb-2",
-      "question": "¿Qué puerto UDP usa DogStatsD por defecto?",
-      "options": ["8080", "8125", "443", "9090"],
-      "correctIndex": 1,
-      "hint": "Es el puerto clásico de StatsD/DogStatsD.",
-      "explanation": "DogStatsD escucha en el puerto UDP 8125 por defecto."
+      "id": 2,
+      "fuente_tema": "DogStatsD",
+      "pregunta": "¿Puerto UDP por defecto de DogStatsD?",
+      "opciones": ["A) 8080", "B) 8125", "C) 443", "D) 9090"],
+      "respuesta_correcta": "B) 8125",
+      "explicacion": "DogStatsD escucha en UDP 8125."
     }
   ]
 }

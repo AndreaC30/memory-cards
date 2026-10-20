@@ -2,7 +2,7 @@
   "id": "test-02",
   "title": "Test 2 — 20 preguntas",
   "type": "test20",
-  "description": "Incluye ~2 preguntas de respuesta múltiple. Aprobado de referencia: ≥70%.",
+  "description": "Incluye preguntas NotebookLM (repartidas entre tests) y ~2 de respuesta múltiple. Aprobado: ≥70%.",
   "passPercent": 70,
   "count": 20,
   "domains": {
@@ -15,95 +15,209 @@
   },
   "questions": [
     {
-      "id": "doc-infra-list-5",
-      "domain": "viz",
-      "domainLabel": "Visualización y uso",
-      "question": "En Lista de infraestructura: «Exportar» — ¿cuál afirmación es correcta?",
+      "id": "doc-getting-started-1",
+      "domain": "essential",
+      "domainLabel": "Conceptos esenciales",
+      "question": "En Guía de inicio rápido: «Aprende más» — ¿cuál afirmación es correcta?",
       "options": [
-        "Haga clic en Export > Open in DDSQL Editor , luego descargue los resultados desde el DDSQL Editor . También puede exportar a un dashboard, notebook o hoja de cálculo. Para obtener una lista en formato JSON de sus servidores que reportan a…",
-        "ddtrace-run will trace supported web frameworks and database modules without the need for changing your code: $ ddtrace-run -h Execute the given Python program, after configuring it to emit Datadog traces. Append command line arguments to…",
-        "RED para un servicio (no para un disco): - Rate · tráfico (requests/s) - Errors · % o count de fallos - Duration · latencia (p95/p99) En Datadog: monitor APM (traces), o métricas trace.<svc>.request.*. Otros tipos (Logs, RUM, Synthetics,…",
-        "JSON https://ip-ranges.<tu-site>/ (p. ej. ip-ranges.datadoghq.eu). Hay secciones agents, api, apm, logs, process… Añade todo el set: las IPs activas rotan. El tráfico lo inicia el Agent (SSL). Datadog no abre sesión hacia tus hosts."
+        "Métricas Por defecto, el agente de Docker recopila métricas con las siguientes verificaciones básicas. Para recopilar métricas de otras tecnologías, consulta la sección Integraciones . Verificación Métricas Contenedor Métricas CPU System…",
+        "La lista de servidores le ofrece un inventario en tiempo real de todos los servidores que reportan a Datadog a través del Agent o integraciones en la nube. De forma predeterminada, muestra los servidores con actividad en los últimos 15…",
+        "Documentación, enlaces y artículos útiles adicionales: Recopile sus registros DOCUMENTACIÓN Recopile sus procesos DOCUMENTACIÓN Recopile sus trazas DOCUMENTACIÓN ¿Por qué instalar el Agente en instancias en la nube? DOCUMENTACIÓN No tema…",
+        "Únete a una sesión de seminario web de habilitación Esta sesión de habilitación fundamental ayuda a responder la pregunta clave: \"¿Qué es Datadog y qué puede hacer por mí?\" Aprenderás cómo enviar datos a Datadog y qué páginas visitar para…"
       ],
-      "correctIndex": 0,
-      "explanation": "Haga clic en Export > Open in DDSQL Editor , luego descargue los resultados desde el DDSQL Editor . También puede exportar a un dashboard, notebook o hoja de cálculo. Para obtener una lista en formato JSON de sus servidores que reportan a Datadog, también puede usar una de las siguientes opciones: The host overview report . The search hosts API puntos de conexión . Consulte el developer guide para ver un ejemplo. Audit Agent versions Para auditar qué versiones de Agent se están ejecutando en sus",
-      "whyCorrect": "En la documentación «Lista de infraestructura» (sección «Exportar»), la opción correcta resume lo que indica Datadog oficialmente. Haga clic en Export > Open in DDSQL Editor , luego descargue los resultados desde el DDSQL Editor . También puede exportar a un dashboard, notebook o hoja de cálculo. Para obtener una lista en formato JSON de sus servidores que reportan a Datadog, también puede usar una de las siguientes opciones: The host overview report . The search hosts API puntos de conexión . Consulte el developer guide para ver un ejemplo. Audit Agent versions Para auditar qué versiones de Agent se están ejecutando en sus",
-      "sourceUrl": "https://docs.datadoghq.com/es/infrastructure/list/",
-      "sourceTitle": "Lista de infraestructura",
-      "sourceTag": "infra-list",
+      "correctIndex": 3,
+      "explanation": "Únete a una sesión de seminario web de habilitación Esta sesión de habilitación fundamental ayuda a responder la pregunta clave: \"¿Qué es Datadog y qué puede hacer por mí?\" Aprenderás cómo enviar datos a Datadog y qué páginas visitar para comprender mejor el estado de tus diversos entornos, aplicaciones e infraestructura. REGÍSTRATE Toma un curso El Centro de Aprendizaje de Datadog ofrece experiencia práctica con la plataforma de Datadog. Los cursos de Introducción cubren prácticas de observabil",
+      "whyCorrect": "Según Guía de inicio rápido, la respuesta correcta («Únete a una sesión de seminario web de habilitación Esta sesión de habilitación fundamental ayuda a responder la pregunta clave: \"¿Qué es Datadog y qué puede hacer por mí?\" Aprenderás cómo enviar datos a Datadog y qué pá») encaja con la documentación porque: Únete a una sesión de seminario web de habilitación Esta sesión de habilitación fundamental ayuda a responder la pregunta clave: \"¿Qué es Datadog y qué puede hacer por mí?\" Aprenderás cómo enviar datos a Datadog y qué páginas visitar para comprender mejor el estado de tus diversos entornos, aplicaciones e infraestructura. REGÍSTRATE Toma un curso El Centro de Aprendizaje de Datadog ofrece experiencia práctica con la plataforma de Datadog. Los cursos de Introducción cubren prácticas de observabil",
+      "sourceUrl": "https://docs.datadoghq.com/es/getting_started/",
+      "sourceTitle": "Guía de inicio rápido",
+      "sourceTag": "emberize",
       "answerType": "single"
     },
     {
-      "id": "lc-aws-2",
-      "domain": "collection",
-      "domainLabel": "Recolección de datos",
-      "question": "¿Cómo llegan los logs de AWS y qué aporta el Agent además de CloudWatch?",
+      "id": "doc-infra-list-5",
+      "domain": "viz",
+      "domainLabel": "Visualización y uso",
+      "question": "(Lista de infraestructura) ¿Qué describe la documentación sobre «Exportar»?",
       "options": [
-        "El tipo decide cómo se agrega en el flush (~10 s): - Count · total de eventos en el flush. DogStatsD lo muestra en la UI como RATE (por segundo) para comparar Agents. - Rate · ya normalizado por segundo. - Gauge · último valor del…",
-        "¡Nuestros amables y expertos ingenieros de soluciones están aquí para ayudarle! Contáctenos Producto Observabilidad Infrastructure Infrastructure Monitoring Custom Metrics Network Monitoring Container Monitoring Kubernetes Autoscaling…",
-        "Logs AWS: CloudWatch Logs → Lambda Datadog Forwarder (push). El Agent en EC2 no lee todos los logs de Lambda por arte de magia. El Agent encima del crawler: +200 checks en el host, DogStatsD (custom), APM (ddtrace). CloudWatch solo no te…",
-        "Para eliminar una clave de aplicación de Datadog, navegue a Configuración de la organización > Claves de aplicación . Si tiene el permiso para crear y administrar claves de aplicación, puede ver sus propias claves y hacer clic en Revoke…"
+        "Haga clic en Export > Open in DDSQL Editor , luego descargue los resultados desde el DDSQL Editor . También puede exportar a un dashboard, notebook o hoja de cálculo. Para obtener una lista en formato JSON de sus servidores que reportan a…",
+        "ddtrace-run will trace supported web frameworks and database modules without the need for changing your code: $ ddtrace-run -h Execute the given Python program, after configuring it to emit Datadog traces. Append command line arguments to…",
+        "El monitor es una máquina de estados. En su Status page ves transiciones: - OK — query por debajo del umbral - Warn — cruzó el warning (si lo definiste) - Alert — cruzó el critical → notifica - No Data — dejó de llegar la métrica (Agent…",
+        "Keys que Datadog ya usa para correlacionar (docs de tagging): - host · métricas, traces, procesos y logs de la misma máquina - device · disco/interfaz - source · logs / pipelines - service · ámbito de la app (también UST) - env · ámbito…"
+      ],
+      "correctIndex": 0,
+      "explanation": "Haga clic en Export > Open in DDSQL Editor , luego descargue los resultados desde el DDSQL Editor . También puede exportar a un dashboard, notebook o hoja de cálculo. Para obtener una lista en formato JSON de sus servidores que reportan a Datadog, también puede usar una de las siguientes opciones: The host overview report . The search hosts API puntos de conexión . Consulte el developer guide para ver un ejemplo. Audit Agent versions Para auditar qué versiones de Agent se están ejecutando en sus",
+      "whyCorrect": "Según Consulta al gráfico, la respuesta correcta («Haga clic en Export > Open in DDSQL Editor , luego descargue los resultados desde el DDSQL Editor . También puede exportar a un dashboard, notebook o hoja de cálculo. Para obtener una lista en formato JSON de sus servido») encaja con la documentación porque: Haga clic en Export > Open in DDSQL Editor , luego descargue los resultados desde el DDSQL Editor . También puede exportar a un dashboard, notebook o hoja de cálculo. Para obtener una lista en formato JSON de sus servidores que reportan a Datadog, también puede usar una de las siguientes opciones: The host overview report . The search hosts API puntos de conexión . Consulte el developer guide para ver un ejemplo. Audit Agent versions Para auditar qué versiones de Agent se están ejecutando en sus",
+      "sourceUrl": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+      "sourceTitle": "Consulta al gráfico",
+      "sourceTag": "emberize",
+      "answerType": "single"
+    },
+    {
+      "id": "e2b",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿Qué tipos de recurso agrupa Infrastructure Monitoring?",
+      "options": [
+        "Managing the Agent with Fleet Automation (recomendado) Fleet Automation es el flujo de trabajo principal en la aplicación para instalar, actualizar, configurar y solucionar problemas del Agente de Datadog a gran escala. View configuration…",
+        "Cuatro sitios donde Datadog pinta infra (no son productos distintos que instales): - Hosts: VMs/bare metal con Agent. Infrastructure List + Host Map. - Containers: Docker/K8s. El Agent monta el socket y ve pods/cgroups. - Process: Process…",
+        "Métricas docker.container.open_fds (gauge) El número de descriptores de archivo abiertos Se muestra como archivo docker.container.size_rootfs (gauge) Tamaño total de todos los archivos del contenedor Se muestra en bytes…",
+        "Compose y el Datadog Agent DogStatsD y Docker El problema de la monitorización en Docker (serie) Cómo monitorizar las métricas de recursos de Docker Cómo recopilar métricas de Docker 8 datos sorprendentes sobre la adopción real de Docker…"
+      ],
+      "correctIndex": 1,
+      "explanation": "Cuatro sitios donde Datadog pinta infra (no son productos distintos que instales): - Hosts: VMs/bare metal con Agent. Infrastructure List + Host Map. - Containers: Docker/K8s. El Agent monta el socket y ve pods/cgroups. - Process: Process Agent lista procesos y CPU por PID (live processes). - Serverless: Lambda/funciones. No es el Agent clásico: forwarder/extensión + integración de la cuenta.",
+      "whyCorrect": "Según Datadog Agent (host), la respuesta correcta («Cuatro sitios donde Datadog pinta infra (no son productos distintos que instales): - Hosts: VMs/bare metal con Agent. Infrastructure List + Host Map. - Containers: Docker/K8s. El Agent monta el socket y ve pods/cgroups. ») encaja con la documentación porque: Cuatro sitios donde Datadog pinta infra (no son productos distintos que instales): - Hosts: VMs/bare metal con Agent. Infrastructure List + Host Map. - Containers: Docker/K8s. El Agent monta el socket y ve pods/cgroups. - Process: Process Agent lista procesos y CPU por PID (live processes). - Serverless: Lambda/funciones. No es el Agent clásico: forwarder/extensión + integración de la cuenta.",
+      "sourceUrl": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "sourceTitle": "Datadog Agent (host)",
+      "sourceTag": "emberize",
+      "answerType": "single"
+    },
+    {
+      "id": "v6-multi",
+      "domain": "viz",
+      "domainLabel": "Visualización y uso",
+      "question": "Marca todas las opciones correctas: ¿Cuáles son los estados de un monitor",
+      "options": [
+        "RED para un servicio (no para un disco): - Rate · tráfico (requests/s) - Errors · % o count de fallos - Duration · latencia (p95/p99) En Datadog: monitor APM (traces), o métricas trace.<svc>.request.*. Otros tipos (Logs, RUM, Synthetics,…",
+        "Después de que el Agente de Docker de Datadog esté en funcionamiento, puedes configurar integraciones de Datadog para recopilar métricas y registros automáticamente de tus contenedores de aplicación. La Autodiscovery de Contenedores de…",
+        "Operator (recomendado): 1. helm repo add datadog https://helm.datadoghq.com 2. helm install datadog-operator datadog/datadog-operator 3. kubectl create secret generic datadog-secret --from-literal api-key=<API_KEY> 4. Crea…",
+        "El monitor es una máquina de estados. En su Status page ves transiciones: - OK — query por debajo del umbral - Warn — cruzó el warning (si lo definiste) - Alert — cruzó el critical → notifica - No Data — dejó de llegar la métrica (Agent…"
+      ],
+      "correctIndex": 3,
+      "explanation": "El monitor es una máquina de estados. En su Status page ves transiciones: - OK — query por debajo del umbral - Warn — cruzó el warning (si lo definiste) - Alert — cruzó el critical → notifica - No Data — dejó de llegar la métrica (Agent caído o query vacía) Desde ahí mute (silencio puntual de notificaciones) o resolve (cierras este incidente; si la query sigue mala, puede volver a Alert).",
+      "whyCorrect": "Según Consulta al gráfico, la respuesta correcta («El monitor es una máquina de estados. En su Status page ves transiciones: - OK — query por debajo del umbral - Warn — cruzó el warning (si lo definiste) - Alert — cruzó el critical → notifica - No Data — dejó de llegar l») encaja con la documentación porque: El monitor es una máquina de estados. En su Status page ves transiciones: - OK — query por debajo del umbral - Warn — cruzó el warning (si lo definiste) - Alert — cruzó el critical → notifica - No Data — dejó de llegar la métrica (Agent caído o query vacía) Desde ahí mute (silencio puntual de notificaciones) o resolve (cierras este incidente; si la query sigue mala, puede volver a Alert).",
+      "sourceUrl": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
+      "sourceTitle": "Consulta al gráfico",
+      "sourceTag": "emberize",
+      "answerType": "single"
+    },
+    {
+      "id": "lc-cnm-1",
+      "domain": "network",
+      "domainLabel": "Red y configuración",
+      "question": "¿Qué visibilidad aporta Cloud Network Monitoring (CNM)?",
+      "options": [
+        "Documentación, enlaces y artículos útiles adicionales: Toma un curso para comenzar con Datadog CENTRO DE APRENDIZAJE Conoce los nuevos productos y características de Datadog, integraciones y más BLOG Explora la Guía de Inicio Rápido APP…",
+        "CNM mira flujos de red, no CPU. Sirve cuando el síntoma es “va lento entre servicios” y el host está bien. Ves tráfico entre: servicios, contenedores, zonas (az) o el tag que elijas. Qué detectas: DNS que falla, latencia, pérdida de…",
+        "La máquina (física o virtual) donde corre el Agent. En la UI sale como una fila o un hexágono. Cada host tiene un nombre. Si dos Agents usan el mismo nombre, Datadog cree que es una máquina y mezcla las métricas.",
+        "Por razones de seguridad, las claves de API no pueden utilizarse para enviar datos desde un navegador, una aplicación móvil o de TV, ya que quedarían expuestas en el lado del cliente. En su lugar, las aplicaciones orientadas al usuario…"
+      ],
+      "correctIndex": 1,
+      "explanation": "CNM mira flujos de red, no CPU. Sirve cuando el síntoma es “va lento entre servicios” y el host está bien. Ves tráfico entre: servicios, contenedores, zonas (az) o el tag que elijas. Qué detectas: DNS que falla, latencia, pérdida de paquetes, dependencias reales (quién habla con quién), coste cross-region, picos raros. También on-prem e híbrido: no es solo AWS. Se habilita en el Agent (network_config / Helm networkMonitoring).",
+      "whyCorrect": "Según Datadog Agent (host), la respuesta correcta («CNM mira flujos de red, no CPU. Sirve cuando el síntoma es “va lento entre servicios” y el host está bien. Ves tráfico entre: servicios, contenedores, zonas (az) o el tag que elijas. Qué detectas: DNS que falla, latencia») encaja con la documentación porque: CNM mira flujos de red, no CPU. Sirve cuando el síntoma es “va lento entre servicios” y el host está bien. Ves tráfico entre: servicios, contenedores, zonas (az) o el tag que elijas. Qué detectas: DNS que falla, latencia, pérdida de paquetes, dependencias reales (quién habla con quién), coste cross-region, picos raros. También on-prem e híbrido: no es solo AWS. Se habilita en el Agent (network_config / Helm networkMonitoring).",
+      "sourceUrl": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "sourceTitle": "Datadog Agent (host)",
+      "sourceTag": "emberize",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-docker-agent-0",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "(Agente Docker en contenedores) ¿Qué describe la documentación sobre «Instala el Agente de Docker de Datadog»?",
+      "options": [
+        "Organización (org): tu cuenta de empresa. Ahí viven los datos, las personas y las claves. Site: *en qué nube de Datadog* está esa cuenta. US = datadoghq.com. Europa = datadoghq.eu. Si el Agent apunta al site equivocado, tu web está vacía:…",
+        "status es el informe de salud del Agent. No adivines: léelo en este orden. 1. ¿El servicio vive? sudo systemctl status datadog-agent (active). Si no, sudo systemctl start datadog-agent. 2. sudo datadog-agent status: - Forwarder: API key…",
+        "Sigue el flujo de instalación en la aplicación en Datadog . Este es el flujo recomendado, que te ayuda a crear tu docker run comando con tu clave de API, las configuraciones mínimas requeridas y opciones para varias características de…",
+        "Tres caminos distintos. Si bloqueas el puerto, esa telemetría muere. 1. UDP 8125 — DogStatsD. La app manda custom metrics a localhost:8125. El Agent las agrupa ~10 s y las sube. En Docker, otras apps necesitan…"
       ],
       "correctIndex": 2,
-      "explanation": "Logs AWS: CloudWatch Logs → Lambda Datadog Forwarder (push). El Agent en EC2 no lee todos los logs de Lambda por arte de magia. El Agent encima del crawler: +200 checks en el host, DogStatsD (custom), APM (ddtrace). CloudWatch solo no te da traces ni 15 s de CPU. Recomendación del curso: Agent en compute + integración IAM para el resto (RDS, ELB…). La integración trae +100 dashboards OOTB.",
-      "whyCorrect": "Según Métricas, la respuesta correcta («Logs AWS: CloudWatch Logs → Lambda Datadog Forwarder (push). El Agent en EC2 no lee todos los logs de Lambda por arte de magia. El Agent encima del crawler: +200 checks en el host, DogStatsD (custom), APM (ddtrace). Clou») encaja con la documentación porque: Logs AWS: CloudWatch Logs → Lambda Datadog Forwarder (push). El Agent en EC2 no lee todos los logs de Lambda por arte de magia. El Agent encima del crawler: +200 checks en el host, DogStatsD (custom), APM (ddtrace). CloudWatch solo no te da traces ni 15 s de CPU. Recomendación del curso: Agent en compute + integración IAM para el resto (RDS, ELB…). La integración trae +100 dashboards OOTB.",
+      "explanation": "Sigue el flujo de instalación en la aplicación en Datadog . Este es el flujo recomendado, que te ayuda a crear tu docker run comando con tu clave de API, las configuraciones mínimas requeridas y opciones para varias características de Datadog.",
+      "whyCorrect": "Según Datadog Agent (host), la respuesta correcta («Sigue el flujo de instalación en la aplicación en Datadog . Este es el flujo recomendado, que te ayuda a crear tu docker run comando con tu clave de API, las configuraciones mínimas requeridas y opciones para varias cara») encaja con la documentación porque: Sigue el flujo de instalación en la aplicación en Datadog . Este es el flujo recomendado, que te ayuda a crear tu docker run comando con tu clave de API, las configuraciones mínimas requeridas y opciones para varias características de Datadog.",
+      "sourceUrl": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
+      "sourceTitle": "Datadog Agent (host)",
+      "sourceTag": "emberize",
+      "answerType": "single"
+    },
+    {
+      "id": "nb-2",
+      "domain": "infra",
+      "domainLabel": "Infraestructura y Agent",
+      "question": "¿En qué puerto se inicia localmente la interfaz gráfica (Agent Manager GUI) del Datadog Agent en Windows y macOS?",
+      "options": [
+        "Puerto 8125",
+        "Puerto 5000",
+        "Puerto 5002",
+        "Puerto 9090"
+      ],
+      "correctIndex": 2,
+      "explanation": "El Agent Manager GUI se ejecuta por defecto en el puerto local 5002.",
+      "whyCorrect": "El Agent Manager GUI se ejecuta por defecto en el puerto local 5002.",
+      "hint": "Tema: Datadog Agent - GUI",
+      "sourceTitle": "Datadog Agent - GUI",
+      "sourceTag": "notebooklm",
+      "answerType": "single"
+    },
+    {
+      "id": "nb-8",
+      "domain": "troubleshoot",
+      "domainLabel": "Troubleshooting",
+      "question": "¿Para qué sirve específicamente un 'Outlier Monitor' (Monitor de Valores Atípicos)?",
+      "options": [
+        "Para predecir cuándo se agotará el espacio en disco en los próximos 30 días.",
+        "Para alertar cuando un miembro de un grupo (ej. un servidor en un clúster) se comporta de forma significativamente diferente al resto del grupo.",
+        "Para monitorear únicamente la disponibilidad de la red mediante pings ICMP.",
+        "Para evaluar patrones estacionales comparados con la misma hora de la semana anterior."
+      ],
+      "correctIndex": 1,
+      "explanation": "Outlier Detection utiliza algoritmos para identificar elementos de un grupo cuyo comportamiento se desvía estadísticamente del promedio de sus pares.",
+      "whyCorrect": "Outlier Detection utiliza algoritmos para identificar elementos de un grupo cuyo comportamiento se desvía estadísticamente del promedio de sus pares.",
+      "hint": "Tema: Tipos de Monitores - Outlier",
+      "sourceTitle": "Tipos de Monitores - Outlier",
+      "sourceTag": "notebooklm",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-metrics-api-4",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "(API de métricas) ¿Qué describe la documentación sobre «Edit metric metadata →»?",
+      "options": [
+        "PUT https://api.ap1.datadoghq.com/api/v1/metrics/{metric_name} https://api.ap2.datadoghq.com/api/v1/metrics/{metric_name} https://api.datadoghq.eu/api/v1/metrics/{metric_name} https://api.ddog-gov.com/api/v1/metrics/{metric_name}…",
+        "El endpoint 'POST /api/v1/series' acepta un objeto JSON con puntos de datos de series temporales para ingestar métricas directamente en Datadog.",
+        "DogStatsD y StatsD son ampliamente similares; sin embargo, DogStatsD contiene características avanzadas que son específicas de Datadog, incluyendo tipos de datos disponibles, eventos, verificaciones de servicio y etiquetas: Documentación,…",
+        "¿Necesitas ayuda? Ponte en contacto con el soporte de Datadog ."
+      ],
+      "correctIndex": 0,
+      "explanation": "PUT https://api.ap1.datadoghq.com/api/v1/metrics/{metric_name} https://api.ap2.datadoghq.com/api/v1/metrics/{metric_name} https://api.datadoghq.eu/api/v1/metrics/{metric_name} https://api.ddog-gov.com/api/v1/metrics/{metric_name} https://api.us2.ddog-gov.com/api/v1/metrics/{metric_name} https://api.uk1.datadoghq.com/api/v1/metrics/{metric_name} https://api.datadoghq.com/api/v1/metrics/{metric_name} https://api.us3.datadoghq.com/api/v1/metrics/{metric_name} https://api.us5.datadoghq.com/ap",
+      "whyCorrect": "Según Métricas, la respuesta correcta («PUT https://api.ap1.datadoghq.com/api/v1/metrics/{metric_name} https://api.ap2.datadoghq.com/api/v1/metrics/{metric_name} https://api.datadoghq.eu/api/v1/metrics/{metric_name} https://api.ddog-gov.com/api/v1/metrics/{met») encaja con la documentación porque: PUT https://api.ap1.datadoghq.com/api/v1/metrics/{metric_name} https://api.ap2.datadoghq.com/api/v1/metrics/{metric_name} https://api.datadoghq.eu/api/v1/metrics/{metric_name} https://api.ddog-gov.com/api/v1/metrics/{metric_name} https://api.us2.ddog-gov.com/api/v1/metrics/{metric_name} https://api.uk1.datadoghq.com/api/v1/metrics/{metric_name} https://api.datadoghq.com/api/v1/metrics/{metric_name} https://api.us3.datadoghq.com/api/v1/metrics/{metric_name} https://api.us5.datadoghq.com/ap",
       "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
       "sourceTitle": "Métricas",
       "sourceTag": "emberize",
       "answerType": "single"
     },
     {
-      "id": "d-fw",
-      "domain": "network",
-      "domainLabel": "Red y configuración",
-      "question": "Si el firewall no admite wildcards DNS, ¿de dónde sacas las IPs de Datadog?",
+      "id": "nb-20",
+      "domain": "viz",
+      "domainLabel": "Visualización y uso",
+      "question": "¿Cuáles son los cuatro agregadores temporales/espaciales principales disponibles al consultar métricas en los gráficos de Datadog?",
       "options": [
-        "Para agregar, eliminar o reordenar columnas, haga clic en Columnas sobre la Lista de servidores. Puede agregar cualquiera de los siguientes elementos como columna: Atributos del servidor : Propiedades del servidor, como el nombre del…",
-        "Un evento es un suceso puntual (deploy, cambio de config), no una serie numérica. Lo mandas por DogStatsD (título + texto). Lo ves en Event Management / stream del dashboard. Retención ~15 meses frente a 7–30 días de logs: sirve para…",
-        "The Datadog OpenTracing tracer is deprecated and will be removed in a future release. Please use the Datadog Tracer or the OpenTelemetry API instead.",
-        "JSON https://ip-ranges.<tu-site>/ (p. ej. ip-ranges.datadoghq.eu). Hay secciones agents, api, apm, logs, process… Añade todo el set: las IPs activas rotan. El tráfico lo inicia el Agent (SSL). Datadog no abre sesión hacia tus hosts."
+        "avg, sum, min, max",
+        "top, bottom, median, mode",
+        "count, distinct, filter, limit",
+        "mean, dev, variance, std"
       ],
-      "correctIndex": 3,
-      "explanation": "JSON https://ip-ranges.<tu-site>/ (p. ej. ip-ranges.datadoghq.eu). Hay secciones agents, api, apm, logs, process… Añade todo el set: las IPs activas rotan. El tráfico lo inicia el Agent (SSL). Datadog no abre sesión hacia tus hosts.",
-      "whyCorrect": "Según Datadog Agent (host), la respuesta correcta («JSON https://ip-ranges.<tu-site>/ (p. ej. ip-ranges.datadoghq.eu). Hay secciones agents, api, apm, logs, process… Añade todo el set: las IPs activas rotan. El tráfico lo inicia el Agent (SSL). Datadog no abre sesión haci») encaja con la documentación porque: JSON https://ip-ranges.<tu-site>/ (p. ej. ip-ranges.datadoghq.eu). Hay secciones agents, api, apm, logs, process… Añade todo el set: las IPs activas rotan. El tráfico lo inicia el Agent (SSL). Datadog no abre sesión hacia tus hosts.",
-      "sourceUrl": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
-      "sourceTitle": "Datadog Agent (host)",
-      "sourceTag": "emberize",
+      "correctIndex": 0,
+      "explanation": "Los métodos básicos de agregación en la sintaxis de consultas de gráficos de Datadog son 'avg' (promedio), 'sum' (suma), 'min' (mínimo) y 'max' (máximo).",
+      "whyCorrect": "Los métodos básicos de agregación en la sintaxis de consultas de gráficos de Datadog son 'avg' (promedio), 'sum' (suma), 'min' (mínimo) y 'max' (máximo).",
+      "hint": "Tema: Consulta al Gráfico - Agregadores",
+      "sourceTitle": "Consulta al Gráfico - Agregadores",
+      "sourceTag": "notebooklm",
       "answerType": "single"
     },
     {
-      "id": "i4c",
-      "domain": "infra",
-      "domainLabel": "Infraestructura y Agent",
-      "question": "Además de un contenedor Compose, ¿cómo despliegas el Agent en orquestadores?",
-      "options": [
-        "Después de que su integración se publique, puede liberar actualizaciones a través de Developer Platform. Aumentando la versión de una integración Se requiere un aumento de versión cada vez que se agregue, se elimine o se modifique alguna…",
-        "Métricas docker.container.open_fds (gauge) El número de descriptores de archivo abiertos Se muestra como archivo docker.container.size_rootfs (gauge) Tamaño total de todos los archivos del contenedor Se muestra en bytes…",
-        "ECS En la task definition, un contenedor sidecar public.ecr.aws/datadog/agent (o datadog/agent) con DD_API_KEY, DD_SITE y montaje del socket Docker. La app va en el otro contenedor de la misma task. EKS / AKS / GKE Un Agent por nodo:…",
-        "POST https://api.ap1.datadoghq.com/api/v2/series https://api.ap2.datadoghq.com/api/v2/series https://api.datadoghq.eu/api/v2/series https://api.ddog-gov.com/api/v2/series https://api.us2.ddog-gov.com/api/v2/series…"
-      ],
-      "correctIndex": 2,
-      "explanation": "ECS En la task definition, un contenedor sidecar public.ecr.aws/datadog/agent (o datadog/agent) con DD_API_KEY, DD_SITE y montaje del socket Docker. La app va en el otro contenedor de la misma task. EKS / AKS / GKE Un Agent por nodo: DaemonSet (Operator o Helm). Un Deployment de 1 réplica no ve los otros nodos. Cluster Agent: otro Deployment. Los Node Agents le preguntan a él la API de K8s (menos RBAC por nodo).",
-      "whyCorrect": "Según Datadog Agent (host), la respuesta correcta («ECS En la task definition, un contenedor sidecar public.ecr.aws/datadog/agent (o datadog/agent) con DD_API_KEY, DD_SITE y montaje del socket Docker. La app va en el otro contenedor de la misma task. EKS / AKS / GKE Un Ag») encaja con la documentación porque: ECS En la task definition, un contenedor sidecar public.ecr.aws/datadog/agent (o datadog/agent) con DD_API_KEY, DD_SITE y montaje del socket Docker. La app va en el otro contenedor de la misma task. EKS / AKS / GKE Un Agent por nodo: DaemonSet (Operator o Helm). Un Deployment de 1 réplica no ve los otros nodos. Cluster Agent: otro Deployment. Los Node Agents le preguntan a él la API de K8s (menos RBAC por nodo).",
-      "sourceUrl": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
-      "sourceTitle": "Datadog Agent (host)",
-      "sourceTag": "emberize",
-      "answerType": "single"
-    },
-    {
-      "id": "doc-metrics-api-7",
+      "id": "doc-metrics-2",
       "domain": "collection",
       "domainLabel": "Recolección de datos",
-      "question": "(API de métricas) ¿Qué describe la documentación sobre «Search metrics → deprecated»?",
+      "question": "En Métricas: «Lectura adicional» — ¿cuál afirmación es correcta?",
       "options": [
-        "Las integraciones basadas en agentes se distribuyen como archivos de rueda de Python (.whl) que los clientes instalan a través del Agente de Datadog. Antes de publicar su integración, puede probarla localmente construyéndola e instalando…",
-        "POST https://api.ap1.datadoghq.com/api/v2/series https://api.ap2.datadoghq.com/api/v2/series https://api.datadoghq.eu/api/v2/series https://api.ddog-gov.com/api/v2/series https://api.us2.ddog-gov.com/api/v2/series…",
-        "GET https://api.ap1.datadoghq.com/api/v1/search https://api.ap2.datadoghq.com/api/v1/search https://api.datadoghq.eu/api/v1/search https://api.ddog-gov.com/api/v1/search https://api.us2.ddog-gov.com/api/v1/search…",
-        "¡Nuestros amables y expertos ingenieros de soluciones están aquí para ayudarle! Contáctenos Producto Observabilidad Infrastructure Infrastructure Monitoring Custom Metrics Network Monitoring Container Monitoring Kubernetes Autoscaling…"
+        "¡Nuestros amables y expertos ingenieros de soluciones están aquí para ayudarle! Contáctenos Producto Observabilidad Infrastructure Infrastructure Monitoring Custom Metrics Network Monitoring Container Monitoring Kubernetes Autoscaling…",
+        "Operator (recomendado): 1. helm repo add datadog https://helm.datadoghq.com 2. helm install datadog-operator datadog/datadog-operator 3. kubectl create secret generic datadog-secret --from-literal api-key=<API_KEY> 4. Crea…",
+        "Dónde corre: cualquier máquina que puedas instalar (VM, cloud, bare metal). Linux, Windows; macOS en el Agent open source. En K8s no es “un binario en el nodo a mano”: DaemonSet. Checks de serie (hay que activar YAML, no salen solos): -…",
+        "Para continuar con métricas, consulte: Filtrado Avanzado - Filtra tus datos para reducir el alcance de las métricas devueltas. Métricas de Distribución - Calcula percentiles globales en todo tu conjunto de datos. Métricas sin Límites™ -…"
       ],
-      "correctIndex": 2,
-      "explanation": "GET https://api.ap1.datadoghq.com/api/v1/search https://api.ap2.datadoghq.com/api/v1/search https://api.datadoghq.eu/api/v1/search https://api.ddog-gov.com/api/v1/search https://api.us2.ddog-gov.com/api/v1/search https://api.uk1.datadoghq.com/api/v1/search https://api.datadoghq.com/api/v1/search https://api.us3.datadoghq.com/api/v1/search https://api.us5.datadoghq.com/api/v1/search",
-      "whyCorrect": "Según Métricas, la respuesta correcta («GET https://api.ap1.datadoghq.com/api/v1/search https://api.ap2.datadoghq.com/api/v1/search https://api.datadoghq.eu/api/v1/search https://api.ddog-gov.com/api/v1/search https://api.us2.ddog-gov.com/api/v1/search…») encaja con la documentación porque: GET https://api.ap1.datadoghq.com/api/v1/search https://api.ap2.datadoghq.com/api/v1/search https://api.datadoghq.eu/api/v1/search https://api.ddog-gov.com/api/v1/search https://api.us2.ddog-gov.com/api/v1/search https://api.uk1.datadoghq.com/api/v1/search https://api.datadoghq.com/api/v1/search https://api.us3.datadoghq.com/api/v1/search https://api.us5.datadoghq.com/api/v1/search",
+      "correctIndex": 3,
+      "explanation": "Para continuar con métricas, consulte: Filtrado Avanzado - Filtra tus datos para reducir el alcance de las métricas devueltas. Métricas de Distribución - Calcula percentiles globales en todo tu conjunto de datos. Métricas sin Límites™ - Aprende cómo controlar los volúmenes de métricas personalizadas con configuraciones de etiquetas utilizando Métricas sin Límites™. Habilitación de Fundamentos - Únete a una sesión interactiva para desbloquear el potencial completo de las métricas. Introducción a",
+      "whyCorrect": "Según Métricas, la respuesta correcta («Para continuar con métricas, consulte: Filtrado Avanzado - Filtra tus datos para reducir el alcance de las métricas devueltas. Métricas de Distribución - Calcula percentiles globales en todo tu conjunto de datos. Métrica») encaja con la documentación porque: Para continuar con métricas, consulte: Filtrado Avanzado - Filtra tus datos para reducir el alcance de las métricas devueltas. Métricas de Distribución - Calcula percentiles globales en todo tu conjunto de datos. Métricas sin Límites™ - Aprende cómo controlar los volúmenes de métricas personalizadas con configuraciones de etiquetas utilizando Métricas sin Límites™. Habilitación de Fundamentos - Únete a una sesión interactiva para desbloquear el potencial completo de las métricas. Introducción a",
       "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
       "sourceTitle": "Métricas",
       "sourceTag": "emberize",
@@ -117,10 +231,10 @@
       "question": "Marca todas las opciones correctas: ¿En qué se diferencia observability de monitoring",
       "options": [
         "Añade logs y traces",
-        "avg · media (CPU típico)",
-        "Integraciones: el crawler hereda tags del recurso (AWS Name, k8s labels) y los convierte en tags Datadog.",
+        "count · cuántos puntos (no el valor) Rollup: en un rango largo compacta (p. ej. 1 punto/hora) para ver tendencia. En la query: avg:system.cpu.user{*}.rollup(max, 60). El avg: del principio es el space aggregation (entre series); el rollup es en el tiempo.",
+        "Forwarder: API key valid y envíos OK",
         "Dashboards y alertas Observability",
-        "Host map · hexágonos, hotspot de flota"
+        "{env:prod} · filtra (quita series). No es un promedio."
       ],
       "correctIndices": [
         0,
@@ -134,40 +248,97 @@
       "sourceTag": "emberize"
     },
     {
-      "id": "doc-docker-agent-6",
-      "domain": "infra",
-      "domainLabel": "Infraestructura y Agent",
-      "question": "(Agente Docker en contenedores) ¿Qué describe la documentación sobre «Desinstalar Instrumentación APM de Un Solo Paso»?",
+      "id": "doc-api-keys-8",
+      "domain": "essential",
+      "domainLabel": "Conceptos esenciales",
+      "question": "(Claves API y aplicación) ¿Qué describe la documentación sobre «Retraso en la propagación de claves y consistencia eventual»?",
       "options": [
-        "Para continuar con métricas, consulte: Filtrado Avanzado - Filtra tus datos para reducir el alcance de las métricas devueltas. Métricas de Distribución - Calcula percentiles globales en todo tu conjunto de datos. Métricas sin Límites™ -…",
-        "Si instalaste el Agente de Docker de Datadog con Instrumentación APM de Un Solo Paso, y deseas desinstalar el Agente, necesitas ejecutar comandos adicionales para desinstalar la Instrumentación APM.",
-        "Misma query mental en los tres productos: tags iguales. 1. Unified Service Tagging: env + service + version en métrica, log y traza. 2. En un dashboard o APM, filtras {service:api,env:prod} y el Log Explorer usa el mismo filtro. 3. En…",
-        "Un evento es un suceso puntual (deploy, cambio de config), no una serie numérica. Lo mandas por DogStatsD (título + texto). Lo ves en Event Management / stream del dashboard. Retención ~15 meses frente a 7–30 días de logs: sirve para…"
+        "No, si la org ya recibe datos. El Agent recolecta en el host/contenedor. La UI consulta lo que ya está en Datadog.",
+        "¡Nuestros amables y expertos ingenieros de soluciones están aquí para ayudarle! Contáctenos Producto Observabilidad Infrastructure Infrastructure Monitoring Custom Metrics Network Monitoring Container Monitoring Kubernetes Autoscaling…",
+        "Las claves de API y de aplicación de Datadog siguen un modelo de consistencia eventual. Debido a la naturaleza distribuida de los sistemas de Datadog, las actualizaciones de las claves, como la creación y la revocación, pueden tardar unos…",
+        "ECS En la task definition, un contenedor sidecar public.ecr.aws/datadog/agent (o datadog/agent) con DD_API_KEY, DD_SITE y montaje del socket Docker. La app va en el otro contenedor de la misma task. EKS / AKS / GKE Un Agent por nodo:…"
       ],
-      "correctIndex": 1,
-      "explanation": "Si instalaste el Agente de Docker de Datadog con Instrumentación APM de Un Solo Paso, y deseas desinstalar el Agente, necesitas ejecutar comandos adicionales para desinstalar la Instrumentación APM.",
-      "whyCorrect": "Según Datadog Agent (host), la respuesta correcta («Si instalaste el Agente de Docker de Datadog con Instrumentación APM de Un Solo Paso, y deseas desinstalar el Agente, necesitas ejecutar comandos adicionales para desinstalar la Instrumentación APM.») encaja con la documentación porque: Si instalaste el Agente de Docker de Datadog con Instrumentación APM de Un Solo Paso, y deseas desinstalar el Agente, necesitas ejecutar comandos adicionales para desinstalar la Instrumentación APM.",
-      "sourceUrl": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
-      "sourceTitle": "Datadog Agent (host)",
+      "correctIndex": 2,
+      "explanation": "Las claves de API y de aplicación de Datadog siguen un modelo de consistencia eventual. Debido a la naturaleza distribuida de los sistemas de Datadog, las actualizaciones de las claves, como la creación y la revocación, pueden tardar unos segundos en propagarse por completo. Como resultado: No utilice claves de API o de aplicación nuevas inmediatamente en flujos de trabajo críticos. Permita un breve período (unos segundos) para la propagación. Puede implementar una estrategia de reintento con re",
+      "whyCorrect": "Según Guía de inicio rápido, la respuesta correcta («Las claves de API y de aplicación de Datadog siguen un modelo de consistencia eventual. Debido a la naturaleza distribuida de los sistemas de Datadog, las actualizaciones de las claves, como la creación y la revocación, ») encaja con la documentación porque: Las claves de API y de aplicación de Datadog siguen un modelo de consistencia eventual. Debido a la naturaleza distribuida de los sistemas de Datadog, las actualizaciones de las claves, como la creación y la revocación, pueden tardar unos segundos en propagarse por completo. Como resultado: No utilice claves de API o de aplicación nuevas inmediatamente en flujos de trabajo críticos. Permita un breve período (unos segundos) para la propagación. Puede implementar una estrategia de reintento con re",
+      "sourceUrl": "https://docs.datadoghq.com/es/getting_started/",
+      "sourceTitle": "Guía de inicio rápido",
       "sourceTag": "emberize",
       "answerType": "single"
     },
     {
-      "id": "v3-multi",
-      "domain": "viz",
-      "domainLabel": "Visualización y uso",
-      "question": "Marca todas las opciones correctas: ¿Qué widgets típicos tiene un dashboard",
+      "id": "doc-agent-integration-4",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "(Integración basada en Agent) ¿Qué describe la documentación sobre «Actualizando su integración»?",
       "options": [
-        "ddtrace uses a Python Logger instance called “ddtrace” to submit its log output. You can configure this logger instance independently from other loggers in your program’s logger hierarchy. This is useful when you have configured your…",
-        "Haga clic en Export > Open in DDSQL Editor , luego descargue los resultados desde el DDSQL Editor . También puede exportar a un dashboard, notebook o hoja de cálculo. Para obtener una lista en formato JSON de sus servidores que reportan a…",
-        "Dashboards > New Dashboard, añades widgets según la pregunta: - Timeseries · CPU/latencia en el tiempo - Query value · un número grande (error rate ahora) - Top list · ranking de hosts/servicios - Heatmap · densidad (cuántos hosts en cada…",
-        "¡Nuestros amables y expertos ingenieros de soluciones están aquí para ayudarle! Contáctenos Producto Observabilidad Infrastructure Infrastructure Monitoring Custom Metrics Network Monitoring Container Monitoring Kubernetes Autoscaling…"
+        "Instalación Para recopilar métricas de Docker sobre todos tus contenedores, ejecuta un Datadog Agent en cada host. Hay dos maneras de ejecutar el Agent: directamente en cada host, o dentro de un contenedor docker-dd-agent (recomendado).…",
+        "Utilice el panel de filtros a la izquierda para restringir la lista de servidores: Teams : Utilice el filtro de equipo para mostrar solo los servidores asociados con los Teams que seleccione. Filtros rápidos : Utilice las casillas de…",
+        "Después de que su integración se publique, puede liberar actualizaciones a través de Developer Platform. Aumentando la versión de una integración Se requiere un aumento de versión cada vez que se agregue, se elimine o se modifique alguna…",
+        "Paquete para soporte Datadog cuando status no basta. sudo datadog-agent flare <CASE_ID> 1. Junta configs (redacta API keys, passwords, proxy, SNMP) + logs. 2. Te pide confirmar en pantalla. 3. Lo sube al case. Si usas APM, puede ir tracer…"
       ],
       "correctIndex": 2,
-      "explanation": "Dashboards > New Dashboard, añades widgets según la pregunta: - Timeseries · CPU/latencia en el tiempo - Query value · un número grande (error rate ahora) - Top list · ranking de hosts/servicios - Heatmap · densidad (cuántos hosts en cada bucket de CPU) - Host map · hexágonos, hotspot de flota - Logs / event stream · líneas vivas junto a los gráficos Bits es el asistente de chat de la org, no un widget ni un tipo de dashboard. Un board en blanco no es Bits. El lab puede no tener dashboards OOTB con un nombre concreto (p. ej. Containers-Overview). El widget sin query/tags no enseña nada: cada uno lleva una query avg:...{*}.",
-      "whyCorrect": "Según Consulta al gráfico, la respuesta correcta («Dashboards > New Dashboard, añades widgets según la pregunta: - Timeseries · CPU/latencia en el tiempo - Query value · un número grande (error rate ahora) - Top list · ranking de hosts/servicios - Heatmap · densidad (cuá») encaja con la documentación porque: Dashboards > New Dashboard, añades widgets según la pregunta: - Timeseries · CPU/latencia en el tiempo - Query value · un número grande (error rate ahora) - Top list · ranking de hosts/servicios - Heatmap · densidad (cuántos hosts en cada bucket de CPU) - Host map · hexágonos, hotspot de flota - Logs / event stream · líneas vivas junto a los gráficos Bits es el asistente de chat de la org, no un widget ni un tipo de dashboard. Un board en blanco no es Bits. El lab puede no tener dashboards OOTB con un nombre concreto (p. ej. Containers-Overview). El widget sin query/tags no enseña nada: cada uno lleva una query avg:...{*}.",
-      "sourceUrl": "https://docs.datadoghq.com/es/dashboards/guide/query-to-the-graph/",
-      "sourceTitle": "Consulta al gráfico",
+      "explanation": "Después de que su integración se publique, puede liberar actualizaciones a través de Developer Platform. Aumentando la versión de una integración Se requiere un aumento de versión cada vez que se agregue, se elimine o se modifique alguna funcionalidad (por ejemplo, al introducir nuevas métricas, actualizar tableros o cambiar el código de integración). No es necesario para actualizaciones no funcionales, como cambios en el contenido escrito, la marca, los logotipos o las imágenes. En Developer Pl",
+      "whyCorrect": "Según Métricas, la respuesta correcta («Después de que su integración se publique, puede liberar actualizaciones a través de Developer Platform. Aumentando la versión de una integración Se requiere un aumento de versión cada vez que se agregue, se elimine o se») encaja con la documentación porque: Después de que su integración se publique, puede liberar actualizaciones a través de Developer Platform. Aumentando la versión de una integración Se requiere un aumento de versión cada vez que se agregue, se elimine o se modifique alguna funcionalidad (por ejemplo, al introducir nuevas métricas, actualizar tableros o cambiar el código de integración). No es necesario para actualizaciones no funcionales, como cambios en el contenido escrito, la marca, los logotipos o las imágenes. En Developer Pl",
+      "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
+      "sourceTitle": "Métricas",
+      "sourceTag": "emberize",
+      "answerType": "single"
+    },
+    {
+      "id": "lc-int-1",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Cuáles son los tres tipos de integraciones?",
+      "options": [
+        "La cláusula 'by {tag_key}' divide y agrupa la serie temporal resultante según los valores individuales de esa etiqueta.",
+        "Las claves de API y de aplicación de Datadog siguen un modelo de consistencia eventual. Debido a la naturaleza distribuida de los sistemas de Datadog, las actualizaciones de las claves, como la creación y la revocación, pueden tardar unos…",
+        "Las integraciones basadas en agentes se distribuyen como archivos de rueda de Python (.whl) que los clientes instalan a través del Agente de Datadog. Antes de publicar su integración, puede probarla localmente construyéndola e instalando…",
+        "Tres formas de meter datos. Eliges según dónde vive el sistema: 1. Agent-based: un check Python en el host (conf.d/nginx.d/conf.yaml). El Agent habla con Nginx/Postgres en local. 2. Crawler / auth: no hay Agent en cada RDS. En Datadog…"
+      ],
+      "correctIndex": 3,
+      "explanation": "Tres formas de meter datos. Eliges según dónde vive el sistema: 1. Agent-based: un check Python en el host (conf.d/nginx.d/conf.yaml). El Agent habla con Nginx/Postgres en local. 2. Crawler / auth: no hay Agent en cada RDS. En Datadog pegas un rol IAM / service principal y Datadog llama a la API de AWS/Azure/GCP (pull). 3. Library / trace: código (ddtrace, cliente DogStatsD). La app empuja traces o custom metrics. Hay +800 en el catálogo Integrations. Muchas combinan Agent + crawler.",
+      "whyCorrect": "Según Métricas, la respuesta correcta («Tres formas de meter datos. Eliges según dónde vive el sistema: 1. Agent-based: un check Python en el host (conf.d/nginx.d/conf.yaml). El Agent habla con Nginx/Postgres en local. 2. Crawler / auth: no hay Agent en cada R») encaja con la documentación porque: Tres formas de meter datos. Eliges según dónde vive el sistema: 1. Agent-based: un check Python en el host (conf.d/nginx.d/conf.yaml). El Agent habla con Nginx/Postgres en local. 2. Crawler / auth: no hay Agent en cada RDS. En Datadog pegas un rol IAM / service principal y Datadog llama a la API de AWS/Azure/GCP (pull). 3. Library / trace: código (ddtrace, cliente DogStatsD). La app empuja traces o custom metrics. Hay +800 en el catálogo Integrations. Muchas combinan Agent + crawler.",
+      "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
+      "sourceTitle": "Métricas",
+      "sourceTag": "emberize",
+      "answerType": "single"
+    },
+    {
+      "id": "nb-14",
+      "domain": "collection",
+      "domainLabel": "Recolección de datos",
+      "question": "¿Qué método HTTP y endpoint de la API REST se utiliza para enviar métricas de series temporales directamente a Datadog sin usar el Agent?",
+      "options": [
+        "GET /api/v1/metrics",
+        "POST /api/v1/series",
+        "PUT /api/v2/metrics/upload",
+        "POST /api/v1/ingest/metrics"
+      ],
+      "correctIndex": 1,
+      "explanation": "El endpoint 'POST /api/v1/series' acepta un objeto JSON con puntos de datos de series temporales para ingestar métricas directamente en Datadog.",
+      "whyCorrect": "El endpoint 'POST /api/v1/series' acepta un objeto JSON con puntos de datos de series temporales para ingestar métricas directamente en Datadog.",
+      "hint": "Tema: API de Métricas",
+      "sourceTitle": "API de Métricas",
+      "sourceTag": "notebooklm",
+      "answerType": "single"
+    },
+    {
+      "id": "doc-api-keys-5",
+      "domain": "essential",
+      "domainLabel": "Conceptos esenciales",
+      "question": "(Claves API y aplicación) ¿Qué describe la documentación sobre «Restaurar una clave de API»?",
+      "options": [
+        "Métricas Por defecto, el agente de Docker recopila métricas con las siguientes verificaciones básicas. Para recopilar métricas de otras tecnologías, consulta la sección Integraciones . Verificación Métricas Contenedor Métricas CPU System…",
+        "GET https://api.ap1.datadoghq.com/api/v1/metrics https://api.ap2.datadoghq.com/api/v1/metrics https://api.datadoghq.eu/api/v1/metrics https://api.ddog-gov.com/api/v1/metrics https://api.us2.ddog-gov.com/api/v1/metrics…",
+        "Si revoca una clave de API por error, puede restaurarla dentro de los 7 días posteriores a la revocación. Después de 7 días, una clave de API revocada se elimina permanentemente y no se puede recuperar. Para restaurar una clave de API:…",
+        "Para agregar una clave de Datadog API o un token de cliente: Vaya a la configuración de la organización y, a continuación, haga clic en la pestaña Claves de API o Tokens de cliente . Haga clic en el botón New Key o New Client Token ,…"
+      ],
+      "correctIndex": 2,
+      "explanation": "Si revoca una clave de API por error, puede restaurarla dentro de los 7 días posteriores a la revocación. Después de 7 días, una clave de API revocada se elimina permanentemente y no se puede recuperar. Para restaurar una clave de API: Navegue a Configuración de la organización y, luego, haga clic en la pestaña Claves de API . En el filtro Status , seleccione Revoked . Localice la clave que desea restaurar. Haga clic en el icono Unrevoke junto a la clave. La clave vuelve al estado Active con su",
+      "whyCorrect": "Según Guía de inicio rápido, la respuesta correcta («Si revoca una clave de API por error, puede restaurarla dentro de los 7 días posteriores a la revocación. Después de 7 días, una clave de API revocada se elimina permanentemente y no se puede recuperar. Para restaurar un») encaja con la documentación porque: Si revoca una clave de API por error, puede restaurarla dentro de los 7 días posteriores a la revocación. Después de 7 días, una clave de API revocada se elimina permanentemente y no se puede recuperar. Para restaurar una clave de API: Navegue a Configuración de la organización y, luego, haga clic en la pestaña Claves de API . En el filtro Status , seleccione Revoked . Localice la clave que desea restaurar. Haga clic en el icono Unrevoke junto a la clave. La clave vuelve al estado Active con su",
+      "sourceUrl": "https://docs.datadoghq.com/es/getting_started/",
+      "sourceTitle": "Guía de inicio rápido",
       "sourceTag": "emberize",
       "answerType": "single"
     },
@@ -179,7 +350,7 @@
       "question": "Marca todas las opciones correctas: ¿Qué dimensiones de tags usas además de Unified Service Tagging",
       "options": [
         "Ownership: team, owner — a quién pagina el monitor.",
-        "Serverless: Lambda/funciones. No es el Agent clásico: forwarder/extensión + integración de la cuenta.",
+        "JSON: labels de Autodiscovery, cuerpo de la API, templates com.datadoghq.ad.checks.",
         "Únete a una sesión interactiva para desbloquear el potencial completo de las métricas. Introducción a",
         "Function: service, role:web — qué hace el host.",
         "Business: business_unit, cost_center — coste y reporting."
@@ -197,212 +368,41 @@
       "sourceTag": "emberize"
     },
     {
-      "id": "doc-getting-started-2",
-      "domain": "essential",
-      "domainLabel": "Conceptos esenciales",
-      "question": "En Guía de inicio rápido: «Prueba un producto o función de vista previa» — ¿cuál afirmación es correcta?",
-      "options": [
-        "Los equipos de producto de Datadog están agregando frecuentemente nuevas funciones que podrían ayudarte. Puedes probar algunas de ellas antes de que estén disponibles en general para ver si te ayudan y para darnos retroalimentación que…",
-        "DELETE https://api.ap1.datadoghq.com/api/v2/metrics/{metric_name}/tags https://api.ap2.datadoghq.com/api/v2/metrics/{metric_name}/tags https://api.datadoghq.eu/api/v2/metrics/{metric_name}/tags…",
-        "Consulta las guías de comandos del agente para descubrir todos los comandos del agente de Docker.",
-        "- integrations-extras: abres un PR. Si entra, otras orgs lo instalan y esas métricas salen del cupo custom. - Marketplace: producto de un partner (precio, contrato). No es el mismo flujo que un extra community."
-      ],
-      "correctIndex": 0,
-      "explanation": "Los equipos de producto de Datadog están agregando frecuentemente nuevas funciones que podrían ayudarte. Puedes probar algunas de ellas antes de que estén disponibles en general para ver si te ayudan y para darnos retroalimentación que nos permita mejorarlas. Para ver una lista completa de vistas previas activas, obtener más información y registrarte para participar, visita Programa de Vista Previa de Productos de Datadog .",
-      "whyCorrect": "En la documentación «Guía de inicio rápido» (sección «Prueba un producto o función de vista previa»), la opción correcta resume lo que indica Datadog oficialmente. Los equipos de producto de Datadog están agregando frecuentemente nuevas funciones que podrían ayudarte. Puedes probar algunas de ellas antes de que estén disponibles en general para ver si te ayudan y para darnos retroalimentación que nos permita mejorarlas. Para ver una lista completa de vistas previas activas, obtener más información y registrarte para participar, visita Programa de Vista Previa de Productos de Datadog .",
-      "sourceUrl": "https://docs.datadoghq.com/es/getting_started/",
-      "sourceTitle": "Guía de inicio rápido",
-      "sourceTag": "getting-started",
-      "answerType": "single"
-    },
-    {
-      "id": "doc-agent-integration-3",
+      "id": "doc-ddtrace-2",
       "domain": "collection",
       "domainLabel": "Recolección de datos",
-      "question": "(Integración basada en Agent) ¿Qué describe la documentación sobre «Envíe su código para revisión»?",
+      "question": "(ddtrace (APM)) ¿Qué describe la documentación sobre «Distributed Tracing #»?",
       "options": [
-        "Para agregar una clave de Datadog API o un token de cliente: Vaya a la configuración de la organización y, a continuación, haga clic en la pestaña Claves de API o Tokens de cliente . Haga clic en el botón New Key o New Client Token ,…",
-        "¡Nuestros amables y expertos ingenieros de soluciones están aquí para ayudarle! Contáctenos Producto Observabilidad Infrastructure Infrastructure Monitoring Custom Metrics Network Monitoring Container Monitoring Kubernetes Autoscaling…",
-        "Abra una solicitud de extracción con su directorio de integración en el repositorio apropiado, ya sea Datadog/integrations-extras o Datadog/marketplace . La solicitud de extracción se revisa en paralelo con su envío a Developer Platform.",
-        "Instalación Para recopilar métricas de Docker sobre todos tus contenedores, ejecuta un Datadog Agent en cada host. Hay dos maneras de ejecutar el Agent: directamente en cada host, o dentro de un contenedor docker-dd-agent (recomendado).…"
-      ],
-      "correctIndex": 2,
-      "explanation": "Abra una solicitud de extracción con su directorio de integración en el repositorio apropiado, ya sea Datadog/integrations-extras o Datadog/marketplace . La solicitud de extracción se revisa en paralelo con su envío a Developer Platform.",
-      "whyCorrect": "Según Métricas, la respuesta correcta («Abra una solicitud de extracción con su directorio de integración en el repositorio apropiado, ya sea Datadog/integrations-extras o Datadog/marketplace . La solicitud de extracción se revisa en paralelo con su envío a De») encaja con la documentación porque: Abra una solicitud de extracción con su directorio de integración en el repositorio apropiado, ya sea Datadog/integrations-extras o Datadog/marketplace . La solicitud de extracción se revisa en paralelo con su envío a Developer Platform.",
-      "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
-      "sourceTitle": "Métricas",
-      "sourceTag": "emberize",
-      "answerType": "single"
-    },
-    {
-      "id": "doc-metrics-api-3",
-      "domain": "collection",
-      "domainLabel": "Recolección de datos",
-      "question": "(API de métricas) ¿Qué describe la documentación sobre «List tag configuration by name →»?",
-      "options": [
-        "Son procesos del mismo paquete. Si uno está caído, falla esa telemetría. - Collector: ejecuta los checks (CPU, disco, Nginx…) y arma las métricas. - Forwarder: hace el POST HTTPS a Datadog. Si este falla, el Collector corre pero la UI…",
-        "GET https://api.ap1.datadoghq.com/api/v2/metrics/{metric_name}/tags https://api.ap2.datadoghq.com/api/v2/metrics/{metric_name}/tags https://api.datadoghq.eu/api/v2/metrics/{metric_name}/tags…",
-        "Documentación, enlaces y artículos útiles adicionales: Notificaciones de monitores DOCUMENTACIÓN Gestionar los monitores DOCUMENTACIÓN Detectar fallos en checks de calidad con las reglas de protección de despliegues de GitHub y Datadog…",
-        "Consulta las guías de comandos del agente para descubrir todos los comandos del agente de Docker."
+        "La lista de servidores le ofrece un inventario en tiempo real de todos los servidores que reportan a Datadog a través del Agent o integraciones en la nube. De forma predeterminada, muestra los servidores con actividad en los últimos 15…",
+        "To trace requests across hosts, the spans on the secondary hosts must be linked together using the ddtrace HTTPPropagator . On the server side, it means to read propagated attributes and set them to the active tracing context. On the…",
+        "No, si la org ya recibe datos. El Agent recolecta en el host/contenedor. La UI consulta lo que ya está en Datadog.",
+        "Primero la máquina, luego la app: - Host: ¿el Agent vive? CPU/mem/disco del servidor (system.cpu.user, system.disk.in_use). - Integration: un check (Nginx, Postgres) CRITICAL. - Network: conectividad / CNM. - Service Check: estado 0/2 de…"
       ],
       "correctIndex": 1,
-      "explanation": "GET https://api.ap1.datadoghq.com/api/v2/metrics/{metric_name}/tags https://api.ap2.datadoghq.com/api/v2/metrics/{metric_name}/tags https://api.datadoghq.eu/api/v2/metrics/{metric_name}/tags https://api.ddog-gov.com/api/v2/metrics/{metric_name}/tags https://api.us2.ddog-gov.com/api/v2/metrics/{metric_name}/tags https://api.uk1.datadoghq.com/api/v2/metrics/{metric_name}/tags https://api.datadoghq.com/api/v2/metrics/{metric_name}/tags https://api.us3.datadoghq.com/api/v2/metrics/{metric_nam",
-      "whyCorrect": "Según Métricas, la respuesta correcta («GET https://api.ap1.datadoghq.com/api/v2/metrics/{metric_name}/tags https://api.ap2.datadoghq.com/api/v2/metrics/{metric_name}/tags https://api.datadoghq.eu/api/v2/metrics/{metric_name}/tags…») encaja con la documentación porque: GET https://api.ap1.datadoghq.com/api/v2/metrics/{metric_name}/tags https://api.ap2.datadoghq.com/api/v2/metrics/{metric_name}/tags https://api.datadoghq.eu/api/v2/metrics/{metric_name}/tags https://api.ddog-gov.com/api/v2/metrics/{metric_name}/tags https://api.us2.ddog-gov.com/api/v2/metrics/{metric_name}/tags https://api.uk1.datadoghq.com/api/v2/metrics/{metric_name}/tags https://api.datadoghq.com/api/v2/metrics/{metric_name}/tags https://api.us3.datadoghq.com/api/v2/metrics/{metric_nam",
+      "explanation": "To trace requests across hosts, the spans on the secondary hosts must be linked together using the ddtrace HTTPPropagator . On the server side, it means to read propagated attributes and set them to the active tracing context. On the client side, it means to propagate the attributes, commonly as a header/metadata. Note that ddtrace makes use of lazy sampling, essentially making the sampling decision for a trace at the latest possible moment. This includes before making an outgoing request via HT",
+      "whyCorrect": "Según Métricas, la respuesta correcta («To trace requests across hosts, the spans on the secondary hosts must be linked together using the ddtrace HTTPPropagator . On the server side, it means to read propagated attributes and set them to the active tracing co») encaja con la documentación porque: To trace requests across hosts, the spans on the secondary hosts must be linked together using the ddtrace HTTPPropagator . On the server side, it means to read propagated attributes and set them to the active tracing context. On the client side, it means to propagate the attributes, commonly as a header/metadata. Note that ddtrace makes use of lazy sampling, essentially making the sampling decision for a trace at the latest possible moment. This includes before making an outgoing request via HT",
       "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
       "sourceTitle": "Métricas",
       "sourceTag": "emberize",
       "answerType": "single"
     },
     {
-      "id": "doc-agent-host-0",
+      "id": "doc-docker-agent-5",
       "domain": "infra",
       "domainLabel": "Infraestructura y Agent",
-      "question": "(Datadog Agent (host)) ¿Qué describe la documentación sobre «Gestionando el Agente»?",
+      "question": "En Agente Docker en contenedores: «Datos recopilados» — ¿cuál afirmación es correcta?",
       "options": [
-        "Managing the Agent with Fleet Automation (recomendado) Fleet Automation es el flujo de trabajo principal en la aplicación para instalar, actualizar, configurar y solucionar problemas del Agente de Datadog a gran escala. View configuration…",
-        "- Métrica: un número en el tiempo. “CPU al 80 % a las 10:02”. - Log: una línea de texto que escribió la app. “Error al cobrar el pedido 12”. - Traza: el viaje de una petición por varios servicios (web → API → base de datos) y cuánto tardó…",
-        "¡Nuestros amables y expertos ingenieros de soluciones están aquí para ayudarle! Contáctenos Producto Observabilidad Infrastructure Infrastructure Monitoring Custom Metrics Network Monitoring Container Monitoring Kubernetes Autoscaling…",
-        "DogStatsD acepta Custom Metrics , eventos y verificaciones de servicio a través de UDP y las agrega y reenvía periódicamente a Datadog. Debido a que utiliza UDP, tu aplicación puede enviar métricas a DogStatsD y continuar su trabajo sin…"
+        "Documentación, enlaces y artículos útiles adicionales: Cree una integración. DOCUMENTACIÓN Python para el desarrollo de integraciones basadas en Agent. DOCUMENTACIÓN Aprenda a desarrollar en la plataforma de Datadog. DOCUMENTACIÓN Cree…",
+        "Un ejemplo del consumo de recursos del Agente de Datadog se muestra a continuación. Se realizaron pruebas en una instancia de máquina Amazon EC2 c5.xlarge (4 VCPU/ 8GB RAM) y se observó un rendimiento comparable en instancias basadas en…",
+        "Métricas Por defecto, el agente de Docker recopila métricas con las siguientes verificaciones básicas. Para recopilar métricas de otras tecnologías, consulta la sección Integraciones . Verificación Métricas Contenedor Métricas CPU System…",
+        "CLI por subcomando: datadog-agent <sub> (en Docker: agent <sub>). - hostname · el tag host canónico - check <nombre> · ejecuta un check ya (Nginx, redisdb) sin esperar el intervalo - configcheck · config resuelta (Autodiscovery) -…"
       ],
-      "correctIndex": 0,
-      "explanation": "Managing the Agent with Fleet Automation (recomendado) Fleet Automation es el flujo de trabajo principal en la aplicación para instalar, actualizar, configurar y solucionar problemas del Agente de Datadog a gran escala. View configuration & history : Ver cada Agente en tu flota, su versión, productos habilitados, archivos de configuración y cambios históricos desde una sola página. Actualizar Agentes desactualizados : Iniciar actualizaciones remotas para tus Agentes y mantener tu flota actualiza",
-      "whyCorrect": "Según Datadog Agent (host), la respuesta correcta («Managing the Agent with Fleet Automation (recomendado) Fleet Automation es el flujo de trabajo principal en la aplicación para instalar, actualizar, configurar y solucionar problemas del Agente de Datadog a gran escala. ») encaja con la documentación porque: Managing the Agent with Fleet Automation (recomendado) Fleet Automation es el flujo de trabajo principal en la aplicación para instalar, actualizar, configurar y solucionar problemas del Agente de Datadog a gran escala. View configuration & history : Ver cada Agente en tu flota, su versión, productos habilitados, archivos de configuración y cambios históricos desde una sola página. Actualizar Agentes desactualizados : Iniciar actualizaciones remotas para tus Agentes y mantener tu flota actualiza",
+      "correctIndex": 2,
+      "explanation": "Métricas Por defecto, el agente de Docker recopila métricas con las siguientes verificaciones básicas. Para recopilar métricas de otras tecnologías, consulta la sección Integraciones . Verificación Métricas Contenedor Métricas CPU System Disco Disco Docker Docker Manejador de Archivos System IO System Carga System Memoria System Red Network NTP NTP Tiempo de actividad System Eventos El agente de Docker envía eventos a Datadog al iniciarse o reiniciarse. Verificaciones de servicio datadog.agent.u",
+      "whyCorrect": "Según Datadog Agent (host), la respuesta correcta («Métricas Por defecto, el agente de Docker recopila métricas con las siguientes verificaciones básicas. Para recopilar métricas de otras tecnologías, consulta la sección Integraciones . Verificación Métricas Contenedor Mé») encaja con la documentación porque: Métricas Por defecto, el agente de Docker recopila métricas con las siguientes verificaciones básicas. Para recopilar métricas de otras tecnologías, consulta la sección Integraciones . Verificación Métricas Contenedor Métricas CPU System Disco Disco Docker Docker Manejador de Archivos System IO System Carga System Memoria System Red Network NTP NTP Tiempo de actividad System Eventos El agente de Docker envía eventos a Datadog al iniciarse o reiniciarse. Verificaciones de servicio datadog.agent.u",
       "sourceUrl": "https://docs.datadoghq.com/es/agent/?tab=Host-based",
       "sourceTitle": "Datadog Agent (host)",
       "sourceTag": "emberize",
-      "answerType": "single"
-    },
-    {
-      "id": "doc-docker-agent-7",
-      "domain": "infra",
-      "domainLabel": "Infraestructura y Agent",
-      "question": "En Agente Docker en contenedores: «Lectura Adicional» — ¿cuál afirmación es correcta?",
-      "options": [
-        "Documentación, enlaces y artículos útiles adicionales: ¡Consulta las últimas versiones de Datadog Containers! (Se requiere inicio de sesión en la aplicación). NOTAS DE LA VERSIÓN Recopila los registros de tu aplicación DOCUMENTACIÓN…",
-        "The PyTorch profiler can be used to trace CPU and GPU events that occur when running inference or training on a PyTorch model. The PyTorch profiler as it’s typically used , will output a trace json file to local disk that can be loaded in…",
-        "In ddtrace “context management” is the management of which ddtrace.trace.Span or ddtrace.trace.Context is active in an execution (thread, task, etc). There can only be one active span or context per execution at a time. Context management…",
-        "¡Nuestros amables y expertos ingenieros de soluciones están aquí para ayudarle! Contáctenos Producto Observabilidad Infrastructure Infrastructure Monitoring Custom Metrics Network Monitoring Container Monitoring Kubernetes Autoscaling…"
-      ],
-      "correctIndex": 0,
-      "explanation": "Documentación, enlaces y artículos útiles adicionales: ¡Consulta las últimas versiones de Datadog Containers! (Se requiere inicio de sesión en la aplicación). NOTAS DE LA VERSIÓN Recopila los registros de tu aplicación DOCUMENTACIÓN Recopila las trazas de tu aplicación DOCUMENTACIÓN Recopila tus métricas de Prometheus DOCUMENTACIÓN Recopila automáticamente las métricas y registros de tu aplicación DOCUMENTACIÓN Limita la recopilación de datos a un subconjunto de contenedores solamente DOCUMENTAC",
-      "whyCorrect": "En la documentación «Agente Docker en contenedores» (sección «Lectura Adicional»), la opción correcta resume lo que indica Datadog oficialmente. Documentación, enlaces y artículos útiles adicionales: ¡Consulta las últimas versiones de Datadog Containers! (Se requiere inicio de sesión en la aplicación). NOTAS DE LA VERSIÓN Recopila los registros de tu aplicación DOCUMENTACIÓN Recopila las trazas de tu aplicación DOCUMENTACIÓN Recopila tus métricas de Prometheus DOCUMENTACIÓN Recopila automáticamente las métricas y registros de tu aplicación DOCUMENTACIÓN Limita la recopilación de datos a un subconjunto de contenedores solamente DOCUMENTAC",
-      "sourceUrl": "https://docs.datadoghq.com/es/containers/docker/?tab=linux",
-      "sourceTitle": "Agente Docker en contenedores",
-      "sourceTag": "docker-agent",
-      "answerType": "single"
-    },
-    {
-      "id": "doc-metrics-api-1",
-      "domain": "collection",
-      "domainLabel": "Recolección de datos",
-      "question": "(API de métricas) ¿Qué describe la documentación sobre «Get active metrics list →»?",
-      "options": [
-        "¡Nuestros amables y expertos ingenieros de soluciones están aquí para ayudarle! Contáctenos Producto Observabilidad Infrastructure Infrastructure Monitoring Custom Metrics Network Monitoring Container Monitoring Kubernetes Autoscaling…",
-        "Core Están en el Agent. Carpeta conf.d/<check>.d/ ya existe. Datadog las mantiene (bugs, métricas). Activar = copiar conf.yaml y restart. Extras (comunidad) GitHub integrations-extras. No vienen instaladas. Las copias al Agent…",
-        "RED para un servicio (no para un disco): - Rate · tráfico (requests/s) - Errors · % o count de fallos - Duration · latencia (p95/p99) En Datadog: monitor APM (traces), o métricas trace.<svc>.request.*. Otros tipos (Logs, RUM, Synthetics,…",
-        "GET https://api.ap1.datadoghq.com/api/v1/metrics https://api.ap2.datadoghq.com/api/v1/metrics https://api.datadoghq.eu/api/v1/metrics https://api.ddog-gov.com/api/v1/metrics https://api.us2.ddog-gov.com/api/v1/metrics…"
-      ],
-      "correctIndex": 3,
-      "explanation": "GET https://api.ap1.datadoghq.com/api/v1/metrics https://api.ap2.datadoghq.com/api/v1/metrics https://api.datadoghq.eu/api/v1/metrics https://api.ddog-gov.com/api/v1/metrics https://api.us2.ddog-gov.com/api/v1/metrics https://api.uk1.datadoghq.com/api/v1/metrics https://api.datadoghq.com/api/v1/metrics https://api.us3.datadoghq.com/api/v1/metrics https://api.us5.datadoghq.com/api/v1/metrics",
-      "whyCorrect": "Según Métricas, la respuesta correcta («GET https://api.ap1.datadoghq.com/api/v1/metrics https://api.ap2.datadoghq.com/api/v1/metrics https://api.datadoghq.eu/api/v1/metrics https://api.ddog-gov.com/api/v1/metrics https://api.us2.ddog-gov.com/api/v1/metrics…») encaja con la documentación porque: GET https://api.ap1.datadoghq.com/api/v1/metrics https://api.ap2.datadoghq.com/api/v1/metrics https://api.datadoghq.eu/api/v1/metrics https://api.ddog-gov.com/api/v1/metrics https://api.us2.ddog-gov.com/api/v1/metrics https://api.uk1.datadoghq.com/api/v1/metrics https://api.datadoghq.com/api/v1/metrics https://api.us3.datadoghq.com/api/v1/metrics https://api.us5.datadoghq.com/api/v1/metrics",
-      "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
-      "sourceTitle": "Métricas",
-      "sourceTag": "emberize",
-      "answerType": "single"
-    },
-    {
-      "id": "doc-dogstatsd-1",
-      "domain": "collection",
-      "domainLabel": "Recolección de datos",
-      "question": "(DogStatsD) ¿Qué describe la documentación sobre «Configuración»?",
-      "options": [
-        "DogStatsD consiste en un servidor, que se incluye con el Agente de Datadog, y una biblioteca cliente, que está disponible en múltiples lenguajes. El servidor de DogStatsD está habilitado por defecto a través del puerto UDP 8125 para el…",
-        "¡Nuestros amables y expertos ingenieros de soluciones están aquí para ayudarle! Contáctenos Producto Observabilidad Infrastructure Infrastructure Monitoring Custom Metrics Network Monitoring Container Monitoring Kubernetes Autoscaling…",
-        "DELETE https://api.ap1.datadoghq.com/api/v2/metrics/{metric_name}/tags https://api.ap2.datadoghq.com/api/v2/metrics/{metric_name}/tags https://api.datadoghq.eu/api/v2/metrics/{metric_name}/tags…",
-        "Si instalaste el Agente de Docker de Datadog con Instrumentación APM de Un Solo Paso, y deseas desinstalar el Agente, necesitas ejecutar comandos adicionales para desinstalar la Instrumentación APM."
-      ],
-      "correctIndex": 0,
-      "explanation": "DogStatsD consiste en un servidor, que se incluye con el Agente de Datadog, y una biblioteca cliente, que está disponible en múltiples lenguajes. El servidor de DogStatsD está habilitado por defecto a través del puerto UDP 8125 para el Agente v6+. Puedes establecer un puerto personalizado para el servidor si es necesario. Configura tu cliente para que coincida con la dirección y el puerto del servidor DogStatsD del Agente de Datadog. Servidor DogStatsD del Agente de Datadog Si necesitas cambiar",
-      "whyCorrect": "Según Métricas, la respuesta correcta («DogStatsD consiste en un servidor, que se incluye con el Agente de Datadog, y una biblioteca cliente, que está disponible en múltiples lenguajes. El servidor de DogStatsD está habilitado por defecto a través del puerto U») encaja con la documentación porque: DogStatsD consiste en un servidor, que se incluye con el Agente de Datadog, y una biblioteca cliente, que está disponible en múltiples lenguajes. El servidor de DogStatsD está habilitado por defecto a través del puerto UDP 8125 para el Agente v6+. Puedes establecer un puerto personalizado para el servidor si es necesario. Configura tu cliente para que coincida con la dirección y el puerto del servidor DogStatsD del Agente de Datadog. Servidor DogStatsD del Agente de Datadog Si necesitas cambiar",
-      "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
-      "sourceTitle": "Métricas",
-      "sourceTag": "emberize",
-      "answerType": "single"
-    },
-    {
-      "id": "doc-api-keys-4",
-      "domain": "essential",
-      "domainLabel": "Conceptos esenciales",
-      "question": "(Claves API y aplicación) ¿Qué describe la documentación sobre «Revocar claves de API o eliminar tokens de cliente»?",
-      "options": [
-        "Paquete para soporte Datadog cuando status no basta. sudo datadog-agent flare <CASE_ID> 1. Junta configs (redacta API keys, passwords, proxy, SNMP) + logs. 2. Te pide confirmar en pantalla. 3. Lo sube al case. Si usas APM, puede ir tracer…",
-        "Tres tipos de dato del mismo servicio. Sin tags comunes no saltas de uno a otro. - Métricas: números en el tiempo (CPU, peticiones/s). Van a dashboards y umbrales. - Traces (APM): un request recorre servicios. La app usa ddtrace → Agent…",
-        "Para revocar una clave de Datadog API, vaya a la lista de claves y haga clic en el Revoke icono junto a la clave. Para eliminar un token de cliente, vaya a la lista de tokens y haga clic en el Delete icono junto al token. Una clave de API…",
-        "Si la cuenta de un usuario está deshabilitada, cualquier clave de aplicación que el usuario haya creado será revocada. Cualquier clave de API que haya sido creada por la cuenta deshabilitada no se elimina y sigue siendo válida."
-      ],
-      "correctIndex": 2,
-      "explanation": "Para revocar una clave de Datadog API, vaya a la lista de claves y haga clic en el Revoke icono junto a la clave. Para eliminar un token de cliente, vaya a la lista de tokens y haga clic en el Delete icono junto al token. Una clave de API revocada permanece en la lista con un estado de Revoked durante 7 días, periodo durante el cual puede restaurarla. Consulte Restaurar una clave de API . Los tokens de cliente no admiten esta ventana de restauración; una vez que elimina un token de cliente, no s",
-      "whyCorrect": "Según Guía de inicio rápido, la respuesta correcta («Para revocar una clave de Datadog API, vaya a la lista de claves y haga clic en el Revoke icono junto a la clave. Para eliminar un token de cliente, vaya a la lista de tokens y haga clic en el Delete icono junto al token») encaja con la documentación porque: Para revocar una clave de Datadog API, vaya a la lista de claves y haga clic en el Revoke icono junto a la clave. Para eliminar un token de cliente, vaya a la lista de tokens y haga clic en el Delete icono junto al token. Una clave de API revocada permanece en la lista con un estado de Revoked durante 7 días, periodo durante el cual puede restaurarla. Consulte Restaurar una clave de API . Los tokens de cliente no admiten esta ventana de restauración; una vez que elimina un token de cliente, no s",
-      "sourceUrl": "https://docs.datadoghq.com/es/getting_started/",
-      "sourceTitle": "Guía de inicio rápido",
-      "sourceTag": "emberize",
-      "answerType": "single"
-    },
-    {
-      "id": "doc-metrics-2",
-      "domain": "collection",
-      "domainLabel": "Recolección de datos",
-      "question": "En Métricas: «Lectura adicional» — ¿cuál afirmación es correcta?",
-      "options": [
-        "Después de que su integración se publique, puede liberar actualizaciones a través de Developer Platform. Aumentando la versión de una integración Se requiere un aumento de versión cada vez que se agregue, se elimine o se modifique alguna…",
-        "Infrastructure > Infrastructure List: tabla de hosts que están enviando. Cada fila: nombre (host), tags, CPU/load, última actividad (si lleva horas, el Agent murió). Úsala para confirmar “¿llegó el install?”. Si no está la fila, el…",
-        "En contenedores no copias conf.yaml a mano para cada Redis que nace y muere. Autodiscovery (ON por defecto): 1. El Agent ve el socket Docker / kubelet: contenedor create/stop. 2. Si el contenedor tiene labels/annotations AD, aplica el…",
-        "Para continuar con métricas, consulte: Filtrado Avanzado - Filtra tus datos para reducir el alcance de las métricas devueltas. Métricas de Distribución - Calcula percentiles globales en todo tu conjunto de datos. Métricas sin Límites™ -…"
-      ],
-      "correctIndex": 3,
-      "explanation": "Para continuar con métricas, consulte: Filtrado Avanzado - Filtra tus datos para reducir el alcance de las métricas devueltas. Métricas de Distribución - Calcula percentiles globales en todo tu conjunto de datos. Métricas sin Límites™ - Aprende cómo controlar los volúmenes de métricas personalizadas con configuraciones de etiquetas utilizando Métricas sin Límites™. Habilitación de Fundamentos - Únete a una sesión interactiva para desbloquear el potencial completo de las métricas. Introducción a",
-      "whyCorrect": "En la documentación «Métricas» (sección «Lectura adicional»), la opción correcta resume lo que indica Datadog oficialmente. Para continuar con métricas, consulte: Filtrado Avanzado - Filtra tus datos para reducir el alcance de las métricas devueltas. Métricas de Distribución - Calcula percentiles globales en todo tu conjunto de datos. Métricas sin Límites™ - Aprende cómo controlar los volúmenes de métricas personalizadas con configuraciones de etiquetas utilizando Métricas sin Límites™. Habilitación de Fundamentos - Únete a una sesión interactiva para desbloquear el potencial completo de las métricas. Introducción a",
-      "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
-      "sourceTitle": "Métricas",
-      "sourceTag": "metrics",
-      "answerType": "single"
-    },
-    {
-      "id": "lc-int-1b",
-      "domain": "collection",
-      "domainLabel": "Recolección de datos",
-      "question": "¿Qué es ddtrace y a dónde envía traces?",
-      "options": [
-        "Documentación, enlaces y artículos útiles adicionales: Notificaciones de monitores DOCUMENTACIÓN Gestionar los monitores DOCUMENTACIÓN Detectar fallos en checks de calidad con las reglas de protección de despliegues de GitHub y Datadog…",
-        "Cada datapoint lleva nombre, valor, timestamp y tags. - Simple staging: en {staging} filtras. No puedes by {env} porque no hay key. - key:value env:staging: {env:staging} y by {env} (una serie prod, una staging). Usa siempre key:value…",
-        "JSON https://ip-ranges.<tu-site>/ (p. ej. ip-ranges.datadoghq.eu). Hay secciones agents, api, apm, logs, process… Añade todo el set: las IPs activas rotan. El tráfico lo inicia el Agent (SSL). Datadog no abre sesión hacia tus hosts.",
-        "ddtrace es la librería APM que instrumenta la app (Python, Java, Go…). 1. La instalas en el código o sidecars (DD_TRACE_ENABLED). 2. Exporta traces al Agent en TCP 8126 (DD_AGENT_HOST = hostname del Agent, en K8s el hostIP o…"
-      ],
-      "correctIndex": 3,
-      "explanation": "ddtrace es la librería APM que instrumenta la app (Python, Java, Go…). 1. La instalas en el código o sidecars (DD_TRACE_ENABLED). 2. Exporta traces al Agent en TCP 8126 (DD_AGENT_HOST = hostname del Agent, en K8s el hostIP o datadog.kube-system). 3. No mandes traces directo a SaaS: el Agent las muestrea y las sube por 443. Sin Agent alcanzable en 8126, el APM está vacío.",
-      "whyCorrect": "Según Métricas, la respuesta correcta («ddtrace es la librería APM que instrumenta la app (Python, Java, Go…). 1. La instalas en el código o sidecars (DD_TRACE_ENABLED). 2. Exporta traces al Agent en TCP 8126 (DD_AGENT_HOST = hostname del Agent, en K8s el host») encaja con la documentación porque: ddtrace es la librería APM que instrumenta la app (Python, Java, Go…). 1. La instalas en el código o sidecars (DD_TRACE_ENABLED). 2. Exporta traces al Agent en TCP 8126 (DD_AGENT_HOST = hostname del Agent, en K8s el hostIP o datadog.kube-system). 3. No mandes traces directo a SaaS: el Agent las muestrea y las sube por 443. Sin Agent alcanzable en 8126, el APM está vacío.",
-      "sourceUrl": "https://docs.datadoghq.com/es/metrics/",
-      "sourceTitle": "Métricas",
-      "sourceTag": "emberize",
-      "answerType": "single"
-    },
-    {
-      "id": "doc-api-keys-6",
-      "domain": "essential",
-      "domainLabel": "Conceptos esenciales",
-      "question": "En Claves API y aplicación: «Agregar claves de aplicación» — ¿cuál afirmación es correcta?",
-      "options": [
-        "Por razones de seguridad, las claves de API no pueden utilizarse para enviar datos desde un navegador, una aplicación móvil o de TV, ya que quedarían expuestas en el lado del cliente. En su lugar, las aplicaciones orientadas al usuario…",
-        "Para agregar una clave de aplicación de Datadog, navegue a Configuración de la organización > Claves de aplicación . Si tiene el permiso para crear claves de aplicación, haga clic en New Key . Asegúrese de almacenar de forma segura su…",
-        "Tres tipos de dato del mismo servicio. Sin tags comunes no saltas de uno a otro. - Métricas: números en el tiempo (CPU, peticiones/s). Van a dashboards y umbrales. - Traces (APM): un request recorre servicios. La app usa ddtrace → Agent…",
-        "Funciones puede aplicarse a la aritmética en el cuadro Fórmula cuando se crean gráficas de datos. La mayoría de las funciones se aplican en el último paso. A partir de los ~300 puntos obtenidos tras las agregaciones temporales (paso 2) y…"
-      ],
-      "correctIndex": 1,
-      "explanation": "Para agregar una clave de aplicación de Datadog, navegue a Configuración de la organización > Claves de aplicación . Si tiene el permiso para crear claves de aplicación, haga clic en New Key . Asegúrese de almacenar de forma segura su clave de aplicación inmediatamente después de crearla. El secreto de la clave no se puede recuperar más tarde. Si su organización tiene habilitado el modo de lectura única (OTR), asegúrese de almacenar de forma segura su clave de aplicación inmediatamente después d",
-      "whyCorrect": "En la documentación «Claves API y aplicación» (sección «Agregar claves de aplicación»), la opción correcta resume lo que indica Datadog oficialmente. Para agregar una clave de aplicación de Datadog, navegue a Configuración de la organización > Claves de aplicación . Si tiene el permiso para crear claves de aplicación, haga clic en New Key . Asegúrese de almacenar de forma segura su clave de aplicación inmediatamente después de crearla. El secreto de la clave no se puede recuperar más tarde. Si su organización tiene habilitado el modo de lectura única (OTR), asegúrese de almacenar de forma segura su clave de aplicación inmediatamente después d",
-      "sourceUrl": "https://docs.datadoghq.com/es/account_management/api-app-keys/",
-      "sourceTitle": "Claves API y aplicación",
-      "sourceTag": "api-keys",
       "answerType": "single"
     }
   ]

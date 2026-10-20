@@ -12,8 +12,11 @@ import { NOTEBOOK_SOURCES, DOMAIN_LABELS } from "./sources.mjs"
 import { buildWhyCorrect, stripMarkdown } from "./rationale.mjs"
 import { buildMultiQuestions } from "./multi-questions.mjs"
 import { examOptionText, summarizeOptionText } from "./option-text.mjs"
+import { notebookLmEsToStandard } from "../src/notebooklm-format.js"
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..")
+const NOTEBOOK_DATA = join(root, "data", "notebooklm", "preguntas_datadog.json")
+const TEST_PACK_COUNT = 6
 
 function mulberry32(seed) {
   return function () {
@@ -185,6 +188,31 @@ function isMulti(q) {
   return q.answerType === "multiple"
 }
 
+function loadNotebookLmQuestions() {
+  try {
+    const raw = JSON.parse(readFileSync(NOTEBOOK_DATA, "utf8"))
+    const std = notebookLmEsToStandard(raw)
+    return std.questions || []
+  } catch (err) {
+    console.warn("NotebookLM (data/notebooklm/preguntas_datadog.json):", err.message)
+    return []
+  }
+}
+
+function notebookSliceForTest(notebookQs, testIndex) {
+  return notebookQs.filter((_, i) => i % TEST_PACK_COUNT === testIndex - 1)
+}
+
+/** Mezcla preguntas NotebookLM (repartidas entre tests) con el banco generado. */
+function composeTestPack(pool, notebookQs, total, multiCount, seed, testIndex) {
+  const nbPick = notebookSliceForTest(notebookQs, testIndex)
+  const allNbIds = new Set(notebookQs.map((q) => q.id))
+  const restPool = pool.filter((q) => !allNbIds.has(q.id))
+  const need = Math.max(0, total - nbPick.length)
+  const rest = composePack(restPool, need, multiCount, seed, false)
+  return shuffleWithSeed([...nbPick, ...rest], seed + 7).slice(0, total)
+}
+
 function composePack(pool, total, multiCount, seed, allowRepeat = false) {
   const multis = pool.filter(isMulti)
   const singles = pool.filter((q) => !isMulti(q))
@@ -245,9 +273,17 @@ async function main() {
   console.log("Descargando docs (13 URLs)…")
   const fromDocs = await fetchFacts()
   const raw = [...emberize, ...fromDocs]
-  const pool = buildPool(raw)
+  const notebookQs = loadNotebookLmQuestions()
+  const generated = buildPool(raw)
+  const nbKeys = new Set(notebookQs.map((q) => q.question.toLowerCase().slice(0, 90)))
+  const pool = [
+    ...notebookQs,
+    ...generated.filter((q) => !nbKeys.has(q.question.toLowerCase().slice(0, 90))),
+  ]
   const multiN = pool.filter(isMulti).length
-  console.log(`Banco total: ${pool.length} preguntas (${multiN} de respuesta múltiple)`)
+  console.log(
+    `Banco total: ${pool.length} preguntas (${notebookQs.length} NotebookLM, ${multiN} múltiple)`,
+  )
 
   const outDir = join(root, "public", "exams")
   mkdirSync(outDir, { recursive: true })
@@ -256,17 +292,43 @@ async function main() {
     generatedAt: new Date().toISOString(),
     poolSize: pool.length,
     notebookSources: NOTEBOOK_SOURCES.map((s) => s.url),
+    notebooklmFile: "data/notebooklm/preguntas_datadog.json",
+    notebooklmQuestions: notebookQs.length,
     tests20: [],
     simulacros90: [],
+    notebooklm: [],
+  }
+
+  if (notebookQs.length) {
+    writePack(
+      outDir,
+      "notebooklm-datadog-20",
+      {
+        id: "notebooklm-datadog",
+        title: JSON.parse(readFileSync(NOTEBOOK_DATA, "utf8")).titulo || "NotebookLM — Datadog",
+        type: "test20",
+        description: "Las 20 preguntas del cuaderno NotebookLM (mismo JSON que alimenta los tests).",
+        passPercent: 70,
+      },
+      notebookQs,
+    )
+    manifest.notebooklm.push({
+      id: "notebooklm-datadog",
+      file: "notebooklm-datadog-20.json",
+      title: "NotebookLM — Datadog (20)",
+    })
   }
 
   for (let i = 1; i <= 6; i++) {
-    const questions = composePack(pool, 20, 2, 1000 + i * 17, false)
+    const questions = notebookQs.length
+      ? composeTestPack(pool, notebookQs, 20, 2, 1000 + i * 17, i)
+      : composePack(pool, 20, 2, 1000 + i * 17, false)
     const file = writePack(outDir, `test-${String(i).padStart(2, "0")}`, {
       id: `test-${String(i).padStart(2, "0")}`,
       title: `Test ${i} — 20 preguntas`,
       type: "test20",
-      description: "Incluye ~2 preguntas de respuesta múltiple. Aprobado de referencia: ≥70%.",
+      description:
+        "Incluye preguntas NotebookLM (repartidas entre tests) y ~2 de respuesta múltiple. Aprobado: ≥70%.",
       passPercent: 70,
     }, questions)
     manifest.tests20.push({ id: `test-${String(i).padStart(2, "0")}`, file, title: `Test ${i} (20)` })
